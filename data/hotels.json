@@ -1,0 +1,146 @@
+[
+  {
+    "hotel_id": "H001",
+    "name": "Sea View Resort",
+    "city": "Goa",
+    "rating": 4.0,
+    "price_per_night": 3200,
+    "amenities": ["Pool", "Beach Access", "WiFi", "Restaurant"],
+    "location": "Baga Beach"
+  },
+  {
+    "hotel_id": "H002",
+    "name": "Goa Paradise Hotel",
+    "city": "Goa",
+    "rating": 4.5,
+    "price_per_night": 4500,
+    "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Bar"],
+    "location": "Candolim"
+  },
+  {
+    "hotel_id": "H003",
+    "name": "Budget Stay Goa",
+    "city": "Goa",
+    "rating": 3.5,
+    "price_per_night": 2000,
+    "amenities": ["WiFi", "Restaurant"],
+    "location": "Calangute"
+  },
+  {
+    "hotel_id": "H004",
+    "name": "Luxury Beach Resort",
+    "city": "Goa",
+    "rating": 5.0,
+    "price_per_night": 8000,
+    "amenities": ["Pool", "Beach Access", "Spa", "WiFi", "Restaurant", "Bar", "Gym"],
+    "location": "Anjuna"
+  },
+  {
+    "hotel_id": "H005",
+    "name": "Royal Heritage Hotel",
+    "city": "Jaipur",
+    "rating": 4.5,
+    "price_per_night": 3500,
+    "amenities": ["WiFi", "Restaurant", "Pool", "Heritage Property"],
+    "location": "Old City"
+  },
+  {
+    "hotel_id": "H006",
+    "name": "Pink City Palace",
+    "city": "Jaipur",
+    "rating": 4.0,
+    "price_per_night": 2800,
+    "amenities": ["WiFi", "Restaurant", "Rooftop"],
+    "location": "City Center"
+  },
+  {
+    "hotel_id": "H007",
+    "name": "Budget Inn Jaipur",
+    "city": "Jaipur",
+    "rating": 3.0,
+    "price_per_night": 1500,
+    "amenities": ["WiFi", "Restaurant"],
+    "location": "Near Railway Station"
+  },
+  {
+    "hotel_id": "H008",
+    "name": "Marine Drive Hotel",
+    "city": "Mumbai",
+    "rating": 4.5,
+    "price_per_night": 5500,
+    "amenities": ["WiFi", "Restaurant", "Bar", "Gym", "Sea View"],
+    "location": "Marine Drive"
+  },
+  {
+    "hotel_id": "H009",
+    "name": "Gateway Residency",
+    "city": "Mumbai",
+    "rating": 4.0,
+    "price_per_night": 4200,
+    "amenities": ["WiFi", "Restaurant", "Pool"],
+    "location": "Colaba"
+  },
+  {
+    "hotel_id": "H010",
+    "name": "Mumbai Budget Stay",
+    "city": "Mumbai",
+    "rating": 3.5,
+    "price_per_night": 2500,
+    "amenities": ["WiFi", "Restaurant"],
+    "location": "Andheri"
+  },
+  {
+    "hotel_id": "H011",
+    "name": "Tech Park Hotel",
+    "city": "Bangalore",
+    "rating": 4.0,
+    "price_per_night": 3800,
+    "amenities": ["WiFi", "Restaurant", "Gym", "Conference Room"],
+    "location": "Whitefield"
+  },
+  {
+    "hotel_id": "H012",
+    "name": "Garden City Resort",
+    "city": "Bangalore",
+    "rating": 4.5,
+    "price_per_night": 4800,
+    "amenities": ["WiFi", "Restaurant", "Pool", "Spa", "Garden"],
+    "location": "MG Road"
+  },
+  {
+    "hotel_id": "H013",
+    "name": "Bangalore Express Inn",
+    "city": "Bangalore",
+    "rating": 3.5,
+    "price_per_night": 2200,
+    "amenities": ["WiFi", "Restaurant"],
+    "location": "Electronic City"
+  },
+  {
+    "hotel_id": "H014",
+    "name": "Backwater Paradise",
+    "city": "Kerala",
+    "rating": 5.0,
+    "price_per_night": 7500,
+    "amenities": ["WiFi", "Restaurant", "Houseboat", "Spa", "Ayurveda Center"],
+    "location": "Alleppey"
+  },
+  {
+    "hotel_id": "H015",
+    "name": "Kerala Heritage Stay",
+    "city": "Kerala",
+    "rating": 4.0,
+    "price_per_night": 3500,
+    "amenities": ["WiFi", "Restaurant", "Traditional Architecture"],
+    "location": "Kochi"
+  },
+  {
+    "hotel_id": "H016",
+    "name": "Hill View Resort",
+    "city": "Kerala",
+    "rating": 4.5,
+    "price_per_night": 4500,
+    "amenities": ["WiFi", "Restaurant", "Tea Plantation Tours", "Bonfire"],
+    "location": "Munnar"
+  }
+]

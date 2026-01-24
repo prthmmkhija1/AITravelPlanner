@@ -1,0 +1,167 @@
+[
+  {
+    "flight_id": "F001",
+    "airline": "IndiGo",
+    "source": "Delhi",
+    "destination": "Goa",
+    "departure_time": "14:00",
+    "arrival_time": "16:30",
+    "duration": "2h 30m",
+    "price": 4800,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F002",
+    "airline": "Air India",
+    "source": "Delhi",
+    "destination": "Goa",
+    "departure_time": "10:00",
+    "arrival_time": "12:45",
+    "duration": "2h 45m",
+    "price": 5200,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F003",
+    "airline": "SpiceJet",
+    "source": "Delhi",
+    "destination": "Goa",
+    "departure_time": "18:00",
+    "arrival_time": "20:30",
+    "duration": "2h 30m",
+    "price": 4500,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F004",
+    "airline": "IndiGo",
+    "source": "Mumbai",
+    "destination": "Goa",
+    "departure_time": "08:00",
+    "arrival_time": "09:00",
+    "duration": "1h",
+    "price": 3200,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F005",
+    "airline": "Vistara",
+    "source": "Bangalore",
+    "destination": "Goa",
+    "departure_time": "15:30",
+    "arrival_time": "16:30",
+    "duration": "1h",
+    "price": 3500,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F006",
+    "airline": "IndiGo",
+    "source": "Delhi",
+    "destination": "Jaipur",
+    "departure_time": "09:00",
+    "arrival_time": "10:00",
+    "duration": "1h",
+    "price": 2500,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F007",
+    "airline": "Air India",
+    "source": "Delhi",
+    "destination": "Jaipur",
+    "departure_time": "16:00",
+    "arrival_time": "17:00",
+    "duration": "1h",
+    "price": 2800,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F008",
+    "airline": "IndiGo",
+    "source": "Mumbai",
+    "destination": "Jaipur",
+    "departure_time": "11:00",
+    "arrival_time": "12:30",
+    "duration": "1h 30m",
+    "price": 3800,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F009",
+    "airline": "SpiceJet",
+    "source": "Delhi",
+    "destination": "Mumbai",
+    "departure_time": "07:00",
+    "arrival_time": "09:15",
+    "duration": "2h 15m",
+    "price": 4200,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F010",
+    "airline": "Vistara",
+    "source": "Delhi",
+    "destination": "Mumbai",
+    "departure_time": "13:00",
+    "arrival_time": "15:20",
+    "duration": "2h 20m",
+    "price": 4800,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F011",
+    "airline": "IndiGo",
+    "source": "Delhi",
+    "destination": "Bangalore",
+    "departure_time": "06:00",
+    "arrival_time": "08:45",
+    "duration": "2h 45m",
+    "price": 5500,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F012",
+    "airline": "Air India",
+    "source": "Delhi",
+    "destination": "Bangalore",
+    "departure_time": "19:00",
+    "arrival_time": "21:50",
+    "duration": "2h 50m",
+    "price": 6000,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F013",
+    "airline": "IndiGo",
+    "source": "Mumbai",
+    "destination": "Bangalore",
+    "departure_time": "12:00",
+    "arrival_time": "13:30",
+    "duration": "1h 30m",
+    "price": 3900,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F014",
+    "airline": "SpiceJet",
+    "source": "Delhi",
+    "destination": "Kerala",
+    "departure_time": "08:30",
+    "arrival_time": "11:45",
+    "duration": "3h 15m",
+    "price": 6500,
+    "class": "Economy"
+  },
+  {
+    "flight_id": "F015",
+    "airline": "Vistara",
+    "source": "Delhi",
+    "destination": "Kerala",
+    "departure_time": "17:00",
+    "arrival_time": "20:15",
+    "duration": "3h 15m",
+    "price": 7000,
+    "class": "Economy"
+  }
+]

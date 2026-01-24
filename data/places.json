@@ -1,0 +1,236 @@
+[
+  {
+    "place_id": "P001",
+    "name": "Baga Beach",
+    "city": "Goa",
+    "type": "Beach",
+    "rating": 4.5,
+    "description": "Popular beach known for water sports and nightlife",
+    "average_time": "3-4 hours"
+  },
+  {
+    "place_id": "P002",
+    "name": "Basilica of Bom Jesus",
+    "city": "Goa",
+    "type": "Heritage",
+    "rating": 4.8,
+    "description": "UNESCO World Heritage Site, 16th-century church",
+    "average_time": "1-2 hours"
+  },
+  {
+    "place_id": "P003",
+    "name": "Candolim Market",
+    "city": "Goa",
+    "type": "Shopping",
+    "rating": 4.0,
+    "description": "Local market with handicrafts and souvenirs",
+    "average_time": "2-3 hours"
+  },
+  {
+    "place_id": "P004",
+    "name": "Fort Aguada",
+    "city": "Goa",
+    "type": "Heritage",
+    "rating": 4.5,
+    "description": "17th-century Portuguese fort with lighthouse",
+    "average_time": "2 hours"
+  },
+  {
+    "place_id": "P005",
+    "name": "Calangute Beach",
+    "city": "Goa",
+    "type": "Beach",
+    "rating": 4.3,
+    "description": "Largest beach in North Goa, perfect for water sports",
+    "average_time": "3-4 hours"
+  },
+  {
+    "place_id": "P006",
+    "name": "Dudhsagar Falls",
+    "city": "Goa",
+    "type": "Nature",
+    "rating": 4.7,
+    "description": "Four-tiered waterfall, one of India's tallest",
+    "average_time": "Full day"
+  },
+  {
+    "place_id": "P007",
+    "name": "Amber Fort",
+    "city": "Jaipur",
+    "type": "Heritage",
+    "rating": 4.8,
+    "description": "Majestic fort with stunning architecture",
+    "average_time": "2-3 hours"
+  },
+  {
+    "place_id": "P008",
+    "name": "Hawa Mahal",
+    "city": "Jaipur",
+    "type": "Heritage",
+    "rating": 4.6,
+    "description": "Palace of Winds, iconic pink sandstone structure",
+    "average_time": "1 hour"
+  },
+  {
+    "place_id": "P009",
+    "name": "City Palace",
+    "city": "Jaipur",
+    "type": "Heritage",
+    "rating": 4.7,
+    "description": "Royal residence with museums and courtyards",
+    "average_time": "2-3 hours"
+  },
+  {
+    "place_id": "P010",
+    "name": "Jantar Mantar",
+    "city": "Jaipur",
+    "type": "Heritage",
+    "rating": 4.5,
+    "description": "UNESCO World Heritage astronomical observatory",
+    "average_time": "1-2 hours"
+  },
+  {
+    "place_id": "P011",
+    "name": "Johari Bazaar",
+    "city": "Jaipur",
+    "type": "Shopping",
+    "rating": 4.2,
+    "description": "Famous market for jewelry and textiles",
+    "average_time": "2-3 hours"
+  },
+  {
+    "place_id": "P012",
+    "name": "Gateway of India",
+    "city": "Mumbai",
+    "type": "Heritage",
+    "rating": 4.6,
+    "description": "Iconic monument overlooking Arabian Sea",
+    "average_time": "1 hour"
+  },
+  {
+    "place_id": "P013",
+    "name": "Marine Drive",
+    "city": "Mumbai",
+    "type": "Scenic",
+    "rating": 4.5,
+    "description": "Beautiful seaside promenade, Queen's Necklace",
+    "average_time": "1-2 hours"
+  },
+  {
+    "place_id": "P014",
+    "name": "Elephanta Caves",
+    "city": "Mumbai",
+    "type": "Heritage",
+    "rating": 4.4,
+    "description": "UNESCO World Heritage rock-cut temples",
+    "average_time": "Half day"
+  },
+  {
+    "place_id": "P015",
+    "name": "Colaba Causeway",
+    "city": "Mumbai",
+    "type": "Shopping",
+    "rating": 4.3,
+    "description": "Street shopping and local cafes",
+    "average_time": "2-3 hours"
+  },
+  {
+    "place_id": "P016",
+    "name": "Chhatrapati Shivaji Terminus",
+    "city": "Mumbai",
+    "type": "Heritage",
+    "rating": 4.7,
+    "description": "UNESCO World Heritage Victorian Gothic railway station",
+    "average_time": "30 minutes"
+  },
+  {
+    "place_id": "P017",
+    "name": "Lalbagh Botanical Garden",
+    "city": "Bangalore",
+    "type": "Nature",
+    "rating": 4.6,
+    "description": "Historic botanical garden with glass house",
+    "average_time": "2-3 hours"
+  },
+  {
+    "place_id": "P018",
+    "name": "Bangalore Palace",
+    "city": "Bangalore",
+    "type": "Heritage",
+    "rating": 4.5,
+    "description": "Tudor-style palace with royal artifacts",
+    "average_time": "1-2 hours"
+  },
+  {
+    "place_id": "P019",
+    "name": "Cubbon Park",
+    "city": "Bangalore",
+    "type": "Nature",
+    "rating": 4.4,
+    "description": "Large green space in city center",
+    "average_time": "1-2 hours"
+  },
+  {
+    "place_id": "P020",
+    "name": "ISKCON Temple",
+    "city": "Bangalore",
+    "type": "Religious",
+    "rating": 4.6,
+    "description": "Beautiful temple dedicated to Lord Krishna",
+    "average_time": "1-2 hours"
+  },
+  {
+    "place_id": "P021",
+    "name": "Commercial Street",
+    "city": "Bangalore",
+    "type": "Shopping",
+    "rating": 4.2,
+    "description": "Busy shopping street with diverse stores",
+    "average_time": "2-3 hours"
+  },
+  {
+    "place_id": "P022",
+    "name": "Alleppey Backwaters",
+    "city": "Kerala",
+    "type": "Nature",
+    "rating": 4.9,
+    "description": "Scenic backwater network, houseboat cruises",
+    "average_time": "Full day"
+  },
+  {
+    "place_id": "P023",
+    "name": "Munnar Tea Gardens",
+    "city": "Kerala",
+    "type": "Nature",
+    "rating": 4.8,
+    "description": "Lush tea plantations in hill station",
+    "average_time": "Half day"
+  },
+  {
+    "place_id": "P024",
+    "name": "Fort Kochi",
+    "city": "Kerala",
+    "type": "Heritage",
+    "rating": 4.5,
+    "description": "Historic area with colonial architecture",
+    "average_time": "2-3 hours"
+  },
+  {
+    "place_id": "P025",
+    "name": "Periyar Wildlife Sanctuary",
+    "city": "Kerala",
+    "type": "Nature",
+    "rating": 4.7,
+    "description": "Wildlife reserve with elephant sightings",
+    "average_time": "Full day"
+  },
+  {
+    "place_id": "P026",
+    "name": "Kovalam Beach",
+    "city": "Kerala",
+    "type": "Beach",
+    "rating": 4.6,
+    "description": "Crescent-shaped beach with lighthouse",
+    "average_time": "3-4 hours"
+  }
+]
