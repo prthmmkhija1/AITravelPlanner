@@ -1,5 +1,7 @@
 # Environment
 .env
+.env.local
+.env.*.local
 __pycache__/
 *.pyc
 *.pyo
@@ -8,12 +10,24 @@ __pycache__/
 venv/
 env/
 ENV/
+*.log
 
 # Streamlit
 .streamlit/
+.streamlit/secrets.toml
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# API Keys and Secrets
+*_key.txt
+*_secret.txt
+secrets.json
+config.json
