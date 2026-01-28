@@ -4,51 +4,46 @@
 
 ### 1. Prerequisites Check
 ```bash
-# Check Python version (need 3.8+)
-python --version
+# Check Node version (need 18+)
+node --version
 
-# Check pip is installed
-pip --version
+# Check npm is installed
+npm --version
 ```
 
 ### 2. Install Dependencies
 ```bash
 # Navigate to project directory
-cd ai-travel-planner
+cd AITravelPlanner
 
-# Install all requirements
-pip install -r requirements.txt
+# Install root + server + client dependencies
+npm install
+npm --prefix server install
+npm --prefix client install
 ```
 
-### 3. Get OpenRouter API Key
+### 3. Get Groq API Key
 
-1. Go to [OpenRouter](https://openrouter.ai/)
-2. Sign up for a free account
-3. Navigate to Keys section
-4. Create a new API key
-5. Copy the key
+1. Create a Groq API key from your Groq account
+2. Copy the key
 
 ### 4. Configure Environment
 
 **Option A: Using .env file (Recommended)**
 ```bash
 # Copy example file
-cp .env.example .env
+copy .env.example .env
 
 # Edit .env and paste your API key
-# OPENROUTER_API_KEY=sk-or-v1-xxxxxxxxxxxxx
+# GROQ_API_KEY=gsk_xxx
 ```
-
-**Option B: Direct input in UI**
-- Leave .env empty
-- Enter API key in Streamlit sidebar when app loads
 
 ### 5. Run the Application
 ```bash
-streamlit run app.py
+npm run dev
 ```
 
-The app will open at `http://localhost:8501`
+The app will open at `http://localhost:5173` (API at `http://localhost:3000`)
 
 ---
 

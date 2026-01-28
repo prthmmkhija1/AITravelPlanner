@@ -46,18 +46,14 @@ Planning trips requires switching between multiple websites, comparing inconsist
 ## 🏗️ Project Structure
 
 ```
-ai-travel-planner/
-├── app.py                 # Streamlit UI application
-├── agent.py               # LangChain ReAct agent implementation
-├── tools.py               # All 5 travel planning tools
-├── requirements.txt       # Python dependencies
-├── .env.example          # Environment variable template
-├── .gitignore            # Git ignore rules
-├── README.md             # This file
-└── data/                 # JSON datasets
-    ├── flights.json      # Flight information (15 routes)
-    ├── hotels.json       # Hotel listings (16 properties)
-    └── places.json       # Tourist attractions (26 places)
+AITravelPlanner/
+├── client/                # React + Vite + TypeScript UI
+├── server/                # Express + TypeScript API + LangGraph agent
+├── data/                  # JSON datasets (flights/hotels/places)
+├── package.json           # Root scripts (dev/build/start)
+├── .env.example           # Environment variable template
+├── .gitignore             # Git ignore rules
+└── README.md              # This file
 ```
 
 ---
@@ -65,61 +61,62 @@ ai-travel-planner/
 ## 🚀 Installation & Setup
 
 ### Prerequisites
-- Python 3.8+
-- OpenRouter API key ([Get one here](https://openrouter.ai/))
+- Node.js **18+**
+- Groq API key (set as `GROQ_API_KEY`)
 
-### Step 1: Clone or Download
+### Install dependencies
+
+From the repo root:
+
 ```bash
-cd ai-travel-planner
+npm run setup
 ```
 
-### Step 2: Create Virtual Environment (Recommended)
+Or manually:
+
 ```bash
-python -m venv venv
-
-# Activate on macOS/Linux:
-source venv/bin/activate
-
-# Activate on Windows:
-venv\Scripts\activate
+npm install
+npm --prefix server install
+npm --prefix client install
 ```
 
-### Step 3: Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+### Configure environment
 
-### Step 4: Configure API Key
 Create a `.env` file in the project root:
+
 ```bash
-cp .env.example .env
+copy .env.example .env
 ```
 
-Edit `.env` and add your OpenRouter API key:
+Edit `.env` and set:
+
 ```
-OPENROUTER_API_KEY=your_actual_api_key_here
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ---
 
 ## 🎯 Usage
 
-### Running the Application
+### Run locally (development)
 
-Start the Streamlit app:
+Start the API and frontend together:
+
 ```bash
-streamlit run app.py
+npm run dev
 ```
 
-The app will open in your browser at `http://localhost:8501`
+- Client (Vite): `http://localhost:5173`
+- API (Express): `http://localhost:3000/api/health`
 
-### Using the Interface
+### Build and run (production)
 
-1. **Enter API Key**: Add your OpenRouter API key in the sidebar (if not in `.env`)
-2. **Describe Your Trip**: Use natural language to describe your travel plans
-3. **Click "Plan My Trip"**: Watch the AI agent work through the planning process
-4. **Review Your Itinerary**: Get complete trip details with all recommendations
-5. **Download**: Save your plan as text or JSON
+```bash
+npm run build
+npm start
+```
+
+Then open: `http://localhost:3000`
 
 ### Example Requests
 

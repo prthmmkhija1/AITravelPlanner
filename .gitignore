@@ -31,3 +31,13 @@ Thumbs.db
 *_secret.txt
 secrets.json
 config.json
+
+# Node / TypeScript
+node_modules/
+client/node_modules/
+server/node_modules/
+client/dist/
+server/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
