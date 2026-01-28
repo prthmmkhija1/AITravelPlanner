@@ -1,0 +1,15 @@
+{
+  "name": "ai-travel-planner",
+  "private": true,
+  "description": "AI Travel Planner - React + FastAPI",
+  "scripts": {
+    "setup": "npm --prefix client install && .\\venv\\Scripts\\pip.exe install -r requirements.txt",
+    "client": "npm --prefix client run dev",
+    "server": ".\\venv\\Scripts\\uvicorn.exe api_server:app --reload --host 0.0.0.0 --port 8000",
+    "dev": "echo Run 'npm run client' and 'npm run server' in separate terminals",
+    "build": "npm --prefix client run build"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
