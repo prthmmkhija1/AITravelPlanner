@@ -28,34 +28,34 @@ An intelligent, full-stack travel planning assistant powered by AI. Plan your en
 ┌─────────────────────────────────────────────────────────────────┐
 │                        React Frontend                           │
 │                   (Vite + TypeScript + CSS)                     │
-│     ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐        │
-│     │  Hero   │  │ Feature │  │  Chat   │  │ Footer  │        │
-│     │Component│  │  Cards  │  │  Panel  │  │         │        │
-│     └─────────┘  └─────────┘  └─────────┘  └─────────┘        │
+│     ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐         │
+│     │  Hero   │  │ Feature │  │  Chat   │  │ Footer  │         │
+│     │Component│  │  Cards  │  │  Panel  │  │         │         │
+│     └─────────┘  └─────────┘  └─────────┘  └─────────┘         │
 └────────────────────────────┬────────────────────────────────────┘
                              │ HTTP/REST (Vite Proxy)
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                     FastAPI Backend                              │
+│                     FastAPI Backend                             │
 │                    (Python + Uvicorn)                           │
 │  ┌──────────────────────────────────────────────────────────┐  │
 │  │                    API Endpoints                          │  │
 │  │  /api/plan  │  /api/flights  │  /api/hotels  │  /api/... │  │
 │  └──────────────────────────────────────────────────────────┘  │
-│                             │                                    │
+│                             │                                   │
 │  ┌──────────────────────────▼──────────────────────────────┐   │
 │  │              LangChain ReAct Agent                       │   │
-│  │         (Groq LLM + LangGraph Orchestration)            │   │
+│  │         (Groq LLM + LangGraph Orchestration)             │   │
 │  └──────────────────────────┬──────────────────────────────┘   │
-│                             │                                    │
+│                             │                                   │
 │  ┌──────────────────────────▼──────────────────────────────┐   │
 │  │                   Tool Layer                             │   │
-│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐    │   │
-│  │  │ Flight  │  │  Hotel  │  │Activity │  │  Multi  │    │   │
-│  │  │  Tool   │  │  Tool   │  │  Tool   │  │ System  │    │   │
-│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘    │   │
-│  └───────┼────────────┼───────────┼────────────┼──────────┘   │
-└──────────┼────────────┼───────────┼────────────┼──────────────┘
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐     │   │
+│  │  │ Flight  │  │  Hotel  │  │Activity │  │  Multi  │     │   │
+│  │  │  Tool   │  │  Tool   │  │  Tool   │  │ System  │     │   │
+│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘     │   │
+│  └───────┼────────────┼───────────┼────────────┼───────────┘   │
+└──────────┼────────────┼───────────┼────────────┼───────────────┘
            │            │           │            │
            ▼            ▼           ▼            ▼
     ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐
@@ -96,7 +96,7 @@ An intelligent, full-stack travel planning assistant powered by AI. Plan your en
 ```
 ai-travel-planner/
 │
-├── 🐍 Backend (Python/FastAPI)
+├── 🐍 backend/                      # Python/FastAPI Backend
 │   ├── agent.py                    # LangChain ReAct travel planning agent
 │   ├── api_server.py               # FastAPI server with all endpoints
 │   ├── real_api_tools.py           # LangChain tools wrapping real APIs
@@ -108,32 +108,35 @@ ai-travel-planner/
 │   ├── enhanced_flight_search.py   # Advanced flight search features
 │   └── enhanced_tools.py           # Additional AI tools
 │
-├── ⚛️ Frontend (React/TypeScript)
-│   └── client/
-│       ├── src/
-│       │   ├── App.tsx             # Main application component
-│       │   ├── api.ts              # API client functions
-│       │   ├── types.ts            # TypeScript interfaces
-│       │   ├── styles.css          # Application styles
-│       │   └── components/
-│       │       ├── Hero.tsx        # Landing hero section
-│       │       ├── ChatPanel.tsx   # Chat interface
-│       │       ├── FeatureCards.tsx# Feature showcase
-│       │       └── Footer.tsx      # Footer component
-│       ├── package.json
-│       ├── vite.config.ts          # Vite configuration with proxy
-│       └── tsconfig.json
+├── ⚛️ frontend/                     # React/TypeScript Frontend
+│   ├── src/
+│   │   ├── App.tsx                 # Main application component
+│   │   ├── api.ts                  # API client functions
+│   │   ├── types.ts                # TypeScript interfaces
+│   │   ├── styles.css              # Application styles
+│   │   └── components/
+│   │       ├── Hero.tsx            # Landing hero section
+│   │       ├── ChatPanel.tsx       # Chat interface
+│   │       ├── FeatureCards.tsx    # Feature showcase
+│   │       └── Footer.tsx          # Footer component
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.ts              # Vite configuration with proxy
+│   └── tsconfig.json
 │
-├── 📋 Configuration
+├── 📚 docs/                         # Documentation
+│   ├── API_SETUP_GUIDE.md          # Detailed API setup instructions
+│   ├── HACKATHON_ANALYSIS.md       # Project analysis
+│   └── enhancement_plan.md         # Future improvements
+│
+├── 📋 Configuration (root)
 │   ├── requirements.txt            # Python dependencies
 │   ├── package.json                # Root npm scripts
-│   ├── .env                        # Environment variables (not in repo)
-│   └── .gitignore
+│   ├── .env                        # Environment variables (git-ignored)
+│   ├── .gitignore
+│   └── README.md                   # This file
 │
-└── 📚 Documentation
-    ├── README.md                   # This file
-    ├── API_SETUP_GUIDE.md          # Detailed API setup instructions
-    └── HACKATHON_ANALYSIS.md       # Project analysis
+└── 🔧 venv/                         # Python virtual environment (git-ignored)
 ```
 
 ## 🚀 Quick Start
@@ -199,7 +202,7 @@ FOURSQUARE_API_KEY=your_foursquare_api_key
 #### 4. Install frontend dependencies
 
 ```bash
-cd client
+cd frontend
 npm install
 cd ..
 ```
@@ -213,17 +216,18 @@ cd ..
 npm run server
 
 # Terminal 2 - Start React frontend
-npm run client
+npm run frontend
 ```
 
 #### Option 2: Manual commands
 
 ```bash
 # Terminal 1 - Backend (with venv activated)
+cd backend
 uvicorn api_server:app --reload --host 0.0.0.0 --port 8000
 
 # Terminal 2 - Frontend
-cd client && npm run dev
+cd frontend && npm run dev
 ```
 
 ### Access Points
@@ -306,12 +310,12 @@ curl -X POST http://localhost:8000/api/plan \
 
 ```bash
 # Root directory
-npm run client    # Start React dev server (port 5173)
+npm run frontend  # Start React dev server (port 5173)
 npm run server    # Start FastAPI server (port 8000)
 npm run setup     # Install all dependencies
 
-# Client directory
-cd client
+# Frontend directory
+cd frontend
 npm run dev       # Development mode
 npm run build     # Production build
 npm run preview   # Preview production build
