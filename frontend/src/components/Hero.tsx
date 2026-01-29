@@ -8,22 +8,22 @@ type HeroSlide = {
 
 const HERO_SLIDES: HeroSlide[] = [
   {
-    videoSrc: "/hero 1.mp4",
+    videoSrc: "/hero%201.mp4",
     heading: "Discover Your Next Adventure",
     subtext: "AI-powered trip planning for flights, hotels, and attractions"
   },
   {
-    videoSrc: "/hero 2.mp4",
+    videoSrc: "/hero%202.mp4",
     heading: "Smart Destination Planning",
     subtext: "Tell us where you want to go—we'll handle the rest"
   },
   {
-    videoSrc: "/hero 3.mp4",
+    videoSrc: "/hero%203.mp4",
     heading: "Budget-Aware Suggestions",
     subtext: "Get personalized itineraries that fit your budget"
   },
   {
-    videoSrc: "/hero 4.mp4",
+    videoSrc: "/hero%204.mp4",
     heading: "Budget-Aware Suggestions",
     subtext: "Get personalized itineraries that fit your budget"
   }
@@ -46,6 +46,7 @@ export default function Hero() {
               muted
               loop
               playsInline
+              preload="auto"
             >
               <source src={s.videoSrc} type="video/mp4" />
               Your browser does not support the video tag.

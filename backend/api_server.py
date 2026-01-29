@@ -1,6 +1,5 @@
 """
 FastAPI Server for AI Travel Planner
-Replaces Express.js backend with Python FastAPI
 """
 
 import os

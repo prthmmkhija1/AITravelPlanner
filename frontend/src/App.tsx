@@ -6,6 +6,12 @@ import ChatPanel from "./components/ChatPanel";
 import FeatureCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
+import Navbar from "./components/Navbar";
+import UserProfile from "./components/UserProfile";
+import TravelDashboard from "./components/TravelDashboard";
+import LiveTracking from "./components/LiveTracking";
+import HotDestinations from "./components/HotDestinations";
+import DynamicMap from "./components/DynamicMap";
 
 type HistoryEntry = {
   request: string;
@@ -30,6 +36,12 @@ export default function App() {
   const [planning, setPlanning] = useState(false);
   const [result, setResult] = useState<PlanTripResult | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+  
+  // UI State
+  const [showProfile, setShowProfile] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [showLiveTracking, setShowLiveTracking] = useState(false);
+  const [isLoggedIn] = useState(true); // Set to true for demo
 
   const canPlan = request.trim().length > 0 && !planning;
 
@@ -62,10 +74,43 @@ export default function App() {
     return result.trip_plan ?? "";
   }, [result]);
 
+  const downloadPDF = () => {
+    if (!tripPlanText) return;
+    
+    const pdfContent = `
+AI TRAVEL PLANNER - ITINERARY
+${'='.repeat(50)}
+
+REQUEST:
+${request.trim()}
+
+TRIP PLAN:
+${tripPlanText}
+
+${'='.repeat(50)}
+Generated on: ${new Date().toLocaleString()}
+Powered by AI Travel Planner with Live APIs
+    `.trim();
+    
+    downloadFile("trip_itinerary.txt", pdfContent, "text/plain");
+  };
+
   return (
     <div className="page">
+      <Navbar 
+        onProfileClick={() => setShowProfile(true)}
+        onDashboardClick={() => setShowDashboard(true)}
+        isLoggedIn={isLoggedIn}
+      />
+      
       <Hero />
+      
       <FeatureCards />
+      
+      <HotDestinations />
+      
+      <DynamicMap />
+      
       <ChatPanel />
 
       <div className="action-divider">
@@ -139,6 +184,13 @@ export default function App() {
               <button
                 className="btn"
                 type="button"
+                onClick={downloadPDF}
+              >
+                📄 Download as PDF
+              </button>
+              <button
+                className="btn secondary"
+                type="button"
                 onClick={() => downloadFile("trip_plan.txt", tripPlanText, "text/plain")}
               >
                 Download as Text
@@ -179,6 +231,11 @@ export default function App() {
       </div>
 
       <Footer />
+      
+      {/* Modals */}
+      <UserProfile isVisible={showProfile} onClose={() => setShowProfile(false)} />
+      <TravelDashboard isVisible={showDashboard} onClose={() => setShowDashboard(false)} />
+      <LiveTracking isVisible={showLiveTracking} onClose={() => setShowLiveTracking(false)} />
     </div>
   );
 }
