@@ -3,11 +3,37 @@ import { useState } from 'react';
 interface NavbarProps {
   onProfileClick: () => void;
   onDashboardClick: () => void;
+  onBudgetClick?: () => void;
+  onNotificationClick?: () => void;
+  onFlightTrackerClick?: () => void;
+  onTripTrackingClick?: () => void;
+  onLocationTrackerClick?: () => void;
+  onAuthClick?: () => void;
+  onLogout?: () => void;
   isLoggedIn: boolean;
+  userName?: string;
 }
 
-export default function Navbar({ onProfileClick, onDashboardClick, isLoggedIn }: NavbarProps) {
+export default function Navbar({ 
+  onProfileClick, 
+  onDashboardClick, 
+  onBudgetClick,
+  onNotificationClick,
+  onFlightTrackerClick,
+  onTripTrackingClick,
+  onLocationTrackerClick,
+  onAuthClick,
+  onLogout,
+  isLoggedIn,
+  userName 
+}: NavbarProps) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showTrackingMenu, setShowTrackingMenu] = useState(false);
+
+  const getInitials = (name?: string) => {
+    if (!name) return 'U';
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  };
 
   return (
     <nav className="navbar">
@@ -47,8 +73,64 @@ export default function Navbar({ onProfileClick, onDashboardClick, isLoggedIn }:
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <span>Book Now</span>
+            <span>My Trips</span>
           </button>
+
+          {/* Tracking Dropdown - Available for everyone */}
+          <div className="tracking-menu-wrapper">
+            <button 
+              className="navbar-btn tracking-btn"
+              onClick={() => setShowTrackingMenu(!showTrackingMenu)}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              </svg>
+              <span>Track</span>
+              <svg viewBox="0 0 20 20" fill="currentColor" className="tracking-chevron" style={{width: '12px', height: '12px', marginLeft: '4px'}}>
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+
+            {showTrackingMenu && (
+              <div className="tracking-dropdown">
+                <button className="tracking-dropdown-item" onClick={() => { onFlightTrackerClick?.(); setShowTrackingMenu(false); }}>
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                  </svg>
+                  ✈️ Flight Tracker
+                </button>
+                <button className="tracking-dropdown-item" onClick={() => { onTripTrackingClick?.(); setShowTrackingMenu(false); }}>
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                  </svg>
+                  📍 Trip Progress
+                </button>
+                <button className="tracking-dropdown-item" onClick={() => { onLocationTrackerClick?.(); setShowTrackingMenu(false); }}>
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+                  </svg>
+                  🌍 My Location
+                </button>
+              </div>
+            )}
+          </div>
+
+          {isLoggedIn && (
+            <>
+              <button className="navbar-btn" onClick={onBudgetClick}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Budget</span>
+              </button>
+              <button className="navbar-btn notification-btn" onClick={onNotificationClick}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+                <span>Alerts</span>
+              </button>
+            </>
+          )}
 
           {isLoggedIn ? (
             <div className="navbar-profile-wrapper">
@@ -56,8 +138,8 @@ export default function Navbar({ onProfileClick, onDashboardClick, isLoggedIn }:
                 className="navbar-profile-btn"
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
               >
-                <div className="profile-avatar">JD</div>
-                <span>John Doe</span>
+                <div className="profile-avatar">{getInitials(userName)}</div>
+                <span>{userName || 'User'}</span>
                 <svg viewBox="0 0 20 20" fill="currentColor" className="profile-chevron">
                   <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
@@ -77,20 +159,39 @@ export default function Navbar({ onProfileClick, onDashboardClick, isLoggedIn }:
                     </svg>
                     Travel Dashboard
                   </button>
-                  <button className="profile-dropdown-item">
+                  <button className="profile-dropdown-item" onClick={onBudgetClick}>
+                    <svg viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" />
+                    </svg>
+                    Budget Tracker
+                  </button>
+                  <button className="profile-dropdown-item" onClick={onNotificationClick}>
                     <svg viewBox="0 0 20 20" fill="currentColor">
                       <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                     </svg>
                     Notifications
                   </button>
-                  <button className="profile-dropdown-item">
+                  <hr className="profile-dropdown-divider" />
+                  <button className="profile-dropdown-item" onClick={onFlightTrackerClick}>
                     <svg viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      <path d="M17.5 12h-2.79l-1.01-4.53L9.95 5.76c-.63-.29-.63-1.2 0-1.49l3.75-1.71 1.01-4.53H17.5c.69 0 1.25.56 1.25 1.25v11.47c0 .69-.56 1.25-1.25 1.25z"/>
                     </svg>
-                    Live Tracking
+                    Flight Tracker
+                  </button>
+                  <button className="profile-dropdown-item" onClick={onTripTrackingClick}>
+                    <svg viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                    </svg>
+                    Trip Progress
+                  </button>
+                  <button className="profile-dropdown-item" onClick={onLocationTrackerClick}>
+                    <svg viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12zm0-10a1 1 0 011 1v3.586l2.707 2.707a1 1 0 01-1.414 1.414l-3-3A1 1 0 019 11V7a1 1 0 011-1z" clipRule="evenodd" />
+                    </svg>
+                    My Location
                   </button>
                   <hr className="profile-dropdown-divider" />
-                  <button className="profile-dropdown-item">
+                  <button className="profile-dropdown-item" onClick={onLogout}>
                     <svg viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
                     </svg>
@@ -100,11 +201,11 @@ export default function Navbar({ onProfileClick, onDashboardClick, isLoggedIn }:
               )}
             </div>
           ) : (
-            <button className="navbar-btn-primary" onClick={onProfileClick}>
+            <button className="navbar-btn-primary" onClick={onAuthClick}>
               <svg viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
               </svg>
-              Login
+              Login / Sign Up
             </button>
           )}
         </div>

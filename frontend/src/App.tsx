@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 
-import { planTrip } from "./api";
+import { planTrip, generatePDF, isAuthenticated, getStoredUser, logout, saveTrip } from "./api";
 import type { PlanTripResult } from "./types";
 import ChatPanel from "./components/ChatPanel";
 import FeatureCards from "./components/FeatureCards";
@@ -12,6 +12,13 @@ import TravelDashboard from "./components/TravelDashboard";
 import LiveTracking from "./components/LiveTracking";
 import HotDestinations from "./components/HotDestinations";
 import DynamicMap from "./components/DynamicMap";
+import AuthModal from "./components/AuthModal";
+import BudgetTracker from "./components/BudgetTracker";
+import NotificationCenter from "./components/NotificationCenter";
+import FlightTracker from "./components/FlightTracker";
+import TripTracking from "./components/TripTracking";
+import LocationTracker from "./components/LocationTracker";
+import QuickAccessPanel from "./components/QuickAccessPanel";
 
 type HistoryEntry = {
   request: string;
@@ -41,7 +48,58 @@ export default function App() {
   const [showProfile, setShowProfile] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showLiveTracking, setShowLiveTracking] = useState(false);
-  const [isLoggedIn] = useState(true); // Set to true for demo
+  const [showAuth, setShowAuth] = useState(false);
+  const [showBudget, setShowBudget] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showFlightTracker, setShowFlightTracker] = useState(false);
+  const [showTripTracking, setShowTripTracking] = useState(false);
+  const [showLocationTracker, setShowLocationTracker] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [savingTrip, setSavingTrip] = useState(false);
+
+  // Check auth on mount
+  useEffect(() => {
+    const authenticated = isAuthenticated();
+    setIsLoggedIn(authenticated);
+    if (authenticated) {
+      setUser(getStoredUser());
+    }
+  }, []);
+
+  const handleAuthSuccess = (userData: any) => {
+    setUser(userData);
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    setUser(null);
+    setIsLoggedIn(false);
+  };
+
+  const handleSaveTrip = async () => {
+    if (!result || result.status !== 'success' || !isLoggedIn) return;
+    
+    setSavingTrip(true);
+    try {
+      // Extract destination from request
+      const destMatch = request.match(/to\s+(\w+)/i);
+      const destination = destMatch ? destMatch[1] : 'Trip';
+      
+      await saveTrip({
+        destination,
+        trip_plan: result.trip_plan,
+        user_request: request.trim(),
+      });
+      alert('Trip saved successfully!');
+    } catch (error) {
+      console.error('Failed to save trip:', error);
+    } finally {
+      setSavingTrip(false);
+    }
+  };
 
   const canPlan = request.trim().length > 0 && !planning;
 
@@ -74,10 +132,28 @@ export default function App() {
     return result.trip_plan ?? "";
   }, [result]);
 
-  const downloadPDF = () => {
+  const downloadPDF = async () => {
     if (!tripPlanText) return;
     
-    const pdfContent = `
+    setPdfLoading(true);
+    
+    try {
+      // Try backend PDF generation first
+      const pdfBlob = await generatePDF(tripPlanText, request.trim());
+      
+      if (pdfBlob) {
+        // Download the PDF from backend
+        const url = URL.createObjectURL(pdfBlob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "trip_itinerary.pdf";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      } else {
+        // Fallback to text file if PDF generation fails
+        const pdfContent = `
 AI TRAVEL PLANNER - ITINERARY
 ${'='.repeat(50)}
 
@@ -90,9 +166,17 @@ ${tripPlanText}
 ${'='.repeat(50)}
 Generated on: ${new Date().toLocaleString()}
 Powered by AI Travel Planner with Live APIs
-    `.trim();
-    
-    downloadFile("trip_itinerary.txt", pdfContent, "text/plain");
+        `.trim();
+        
+        downloadFile("trip_itinerary.txt", pdfContent, "text/plain");
+      }
+    } catch (error) {
+      console.error("PDF download error:", error);
+      // Fallback to text
+      downloadFile("trip_itinerary.txt", tripPlanText, "text/plain");
+    } finally {
+      setPdfLoading(false);
+    }
   };
 
   return (
@@ -100,12 +184,31 @@ Powered by AI Travel Planner with Live APIs
       <Navbar 
         onProfileClick={() => setShowProfile(true)}
         onDashboardClick={() => setShowDashboard(true)}
+        onBudgetClick={() => setShowBudget(true)}
+        onNotificationClick={() => setShowNotifications(true)}
+        onFlightTrackerClick={() => setShowFlightTracker(true)}
+        onTripTrackingClick={() => setShowTripTracking(true)}
+        onLocationTrackerClick={() => setShowLocationTracker(true)}
+        onAuthClick={() => setShowAuth(true)}
+        onLogout={handleLogout}
         isLoggedIn={isLoggedIn}
+        userName={user?.username}
       />
       
       <Hero />
       
       <FeatureCards />
+
+      {/* Quick Access Panel for all tracking features */}
+      <QuickAccessPanel
+        onFlightTracker={() => setShowFlightTracker(true)}
+        onTripTracking={() => setShowTripTracking(true)}
+        onLocationTracker={() => setShowLocationTracker(true)}
+        onBudgetTracker={() => setShowBudget(true)}
+        onNotifications={() => setShowNotifications(true)}
+        onDashboard={() => setShowDashboard(true)}
+        isLoggedIn={isLoggedIn}
+      />
       
       <HotDestinations />
       
@@ -184,9 +287,10 @@ Powered by AI Travel Planner with Live APIs
               <button
                 className="btn"
                 type="button"
-                onClick={downloadPDF}
+                onClick={() => void downloadPDF()}
+                disabled={pdfLoading}
               >
-                📄 Download as PDF
+                {pdfLoading ? "⏳ Generating PDF..." : "📄 Download as PDF"}
               </button>
               <button
                 className="btn secondary"
@@ -212,6 +316,16 @@ Powered by AI Travel Planner with Live APIs
               >
                 Download as JSON
               </button>
+              {isLoggedIn && (
+                <button
+                  className="btn secondary"
+                  type="button"
+                  onClick={() => void handleSaveTrip()}
+                  disabled={savingTrip}
+                >
+                  {savingTrip ? "💾 Saving..." : "💾 Save Trip"}
+                </button>
+              )}
             </div>
           </>
         ) : null}
@@ -236,6 +350,31 @@ Powered by AI Travel Planner with Live APIs
       <UserProfile isVisible={showProfile} onClose={() => setShowProfile(false)} />
       <TravelDashboard isVisible={showDashboard} onClose={() => setShowDashboard(false)} />
       <LiveTracking isVisible={showLiveTracking} onClose={() => setShowLiveTracking(false)} />
+      <AuthModal 
+        isVisible={showAuth} 
+        onClose={() => setShowAuth(false)} 
+        onAuthSuccess={handleAuthSuccess}
+      />
+      <BudgetTracker 
+        isVisible={showBudget} 
+        onClose={() => setShowBudget(false)} 
+      />
+      <NotificationCenter 
+        isVisible={showNotifications} 
+        onClose={() => setShowNotifications(false)} 
+      />
+      <FlightTracker 
+        isVisible={showFlightTracker} 
+        onClose={() => setShowFlightTracker(false)} 
+      />
+      <TripTracking 
+        isVisible={showTripTracking} 
+        onClose={() => setShowTripTracking(false)} 
+      />
+      <LocationTracker 
+        isVisible={showLocationTracker} 
+        onClose={() => setShowLocationTracker(false)} 
+      />
     </div>
   );
 }
