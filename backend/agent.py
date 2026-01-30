@@ -16,12 +16,12 @@ load_dotenv()
 
 # Import real API tools (live data)
 try:
-    from real_api_tools import create_real_api_tools
+    from utils.real_api_tools import create_real_api_tools
     USE_REAL_APIS = True
 except ImportError as e:
     USE_REAL_APIS = False
     print(f"⚠️ Real API tools not found: {e}")
-    print("Please ensure real_api_tools.py exists and all dependencies are installed")
+    print("Please ensure utils/real_api_tools.py exists and all dependencies are installed")
     create_real_api_tools = None
 
 
@@ -188,7 +188,7 @@ def create_agent(api_key: str = None) -> TravelPlanningAgent:
 def test_apis():
     """Test all API connections."""
     if USE_REAL_APIS:
-        from real_api_tools import test_all_apis
+        from utils.real_api_tools import test_all_apis
         return test_all_apis()
     else:
         return {"status": "Using static data - no APIs to test"}

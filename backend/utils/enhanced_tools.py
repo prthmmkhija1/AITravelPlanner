@@ -10,16 +10,24 @@ import os
 from typing import List, Dict, Any, Optional
 
 # Import our enhanced modules
-from enhanced_flight_search import enhanced_search_flights
-from customer_manager import get_customer_insights
-from multi_system_integration import (
+from integrations.enhanced_flight_search import enhanced_search_flights
+from services.customer_manager import get_customer_insights
+from utils.multi_system_integration import (
     search_comprehensive_travel_options, 
     search_transfers_and_cars,
     search_activities_experiences
 )
 
 # Original tools (keep for compatibility)
-from tools import search_flights, search_hotels, search_places, get_weather_forecast, estimate_budget
+try:
+    from utils.real_api_tools import search_flights, search_hotels, search_places, get_weather_forecast, estimate_budget
+except ImportError:
+    # Fallback if real_api_tools not available
+    search_flights = None
+    search_hotels = None
+    search_places = None
+    get_weather_forecast = None
+    estimate_budget = None
 
 class CustomerSearchInput(BaseModel):
     """Input schema for customer search."""
@@ -323,21 +331,15 @@ def get_agent_productivity_insights(time_period: str = "today") -> str:
 # Create enhanced tool list
 def create_enhanced_travel_tools():
     """Create the enhanced tool list for the travel agent copilot"""
-    return [
+    tools = [
         # Customer Management
         get_customer_profile_and_insights,
         
         # Enhanced Trip Planning
-        comprehensive_trip_planning,
+        plan_comprehensive_trip,
         search_flights_enhanced,
-        transfer_and_car_search,
-        activity_experience_search,
-        
-        # Original tools (enhanced)
-        search_hotels,
-        search_places,
-        get_weather_forecast,
-        estimate_budget,
+        search_transfers_cars,
+        search_activities,
         
         # Agent-specific tools
         create_price_alert,
@@ -345,6 +347,18 @@ def create_enhanced_travel_tools():
         optimize_group_booking,
         get_agent_productivity_insights
     ]
+    
+    # Add original tools if available
+    if search_hotels:
+        tools.append(search_hotels)
+    if search_places:
+        tools.append(search_places)
+    if get_weather_forecast:
+        tools.append(get_weather_forecast)
+    if estimate_budget:
+        tools.append(estimate_budget)
+    
+    return tools
 
 # For backward compatibility
 def create_travel_tools():

@@ -9,9 +9,9 @@ import json
 import os
 
 # Import real API modules
-from real_flight_api import search_flights_live_api
-from real_hotel_api import search_hotels_live_api
-from real_activities_api import search_activities_live_api
+from integrations.real_flight_api import search_flights_live_api
+from integrations.real_hotel_api import search_hotels_live_api
+from integrations.real_activities_api import search_activities_live_api
 
 # Enhanced tool schemas
 class RealFlightSearchInput(BaseModel):

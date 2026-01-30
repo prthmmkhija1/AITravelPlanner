@@ -10,6 +10,8 @@ interface NavbarProps {
   onLocationTrackerClick?: () => void;
   onAuthClick?: () => void;
   onLogout?: () => void;
+  onAdventureClick?: () => void;
+  onSearch?: (query: string) => void;
   isLoggedIn: boolean;
   userName?: string;
 }
@@ -24,15 +26,86 @@ export default function Navbar({
   onLocationTrackerClick,
   onAuthClick,
   onLogout,
+  onAdventureClick,
+  onSearch,
   isLoggedIn,
   userName 
 }: NavbarProps) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showTrackingMenu, setShowTrackingMenu] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [searchResults, setSearchResults] = useState<{ type: string; name: string; description: string }[]>([]);
 
   const getInitials = (name?: string) => {
     if (!name) return 'U';
     return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  };
+
+  // Popular destinations and search suggestions
+  const searchDatabase = [
+    { type: 'destination', name: 'Paris, France', description: 'City of Lights - Eiffel Tower, Louvre Museum' },
+    { type: 'destination', name: 'Tokyo, Japan', description: 'Ancient temples & modern skyscrapers' },
+    { type: 'destination', name: 'New York, USA', description: 'The Big Apple - Times Square, Central Park' },
+    { type: 'destination', name: 'Bali, Indonesia', description: 'Tropical paradise - beaches & temples' },
+    { type: 'destination', name: 'Dubai, UAE', description: 'Luxury shopping & ultramodern architecture' },
+    { type: 'destination', name: 'Rome, Italy', description: 'Ancient history - Colosseum, Vatican' },
+    { type: 'destination', name: 'London, UK', description: 'Royal palaces & historic landmarks' },
+    { type: 'destination', name: 'Sydney, Australia', description: 'Opera House & beautiful harbors' },
+    { type: 'destination', name: 'Maldives', description: 'Crystal clear waters & overwater villas' },
+    { type: 'destination', name: 'Barcelona, Spain', description: 'Gaudí architecture & Mediterranean beaches' },
+    { type: 'hotel', name: 'Luxury Hotels', description: 'Find 5-star accommodations worldwide' },
+    { type: 'hotel', name: 'Budget Hotels', description: 'Affordable stays without compromise' },
+    { type: 'hotel', name: 'Beach Resorts', description: 'Oceanfront paradise destinations' },
+    { type: 'flight', name: 'Direct Flights', description: 'Non-stop flight options' },
+    { type: 'flight', name: 'Business Class', description: 'Premium flight experiences' },
+    { type: 'activity', name: 'Adventure Tours', description: 'Hiking, diving & extreme sports' },
+    { type: 'activity', name: 'City Tours', description: 'Guided cultural experiences' },
+    { type: 'activity', name: 'Food Tours', description: 'Culinary adventures worldwide' },
+  ];
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    if (query.length > 0) {
+      const filtered = searchDatabase.filter(item =>
+        item.name.toLowerCase().includes(query.toLowerCase()) ||
+        item.description.toLowerCase().includes(query.toLowerCase()) ||
+        item.type.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(filtered.slice(0, 6));
+      setShowSearchResults(true);
+    } else {
+      setSearchResults([]);
+      setShowSearchResults(false);
+    }
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim() && onSearch) {
+      onSearch(searchQuery);
+      setShowSearchResults(false);
+    }
+  };
+
+  const handleResultClick = (result: { type: string; name: string }) => {
+    setSearchQuery(result.name);
+    setShowSearchResults(false);
+    if (onSearch) {
+      onSearch(`Plan a trip to ${result.name}`);
+    }
+  };
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'destination': return '📍';
+      case 'hotel': return '🏨';
+      case 'flight': return '✈️';
+      case 'activity': return '🎯';
+      default: return '🔍';
+    }
   };
 
   return (
@@ -45,19 +118,45 @@ export default function Navbar({
           <span className="navbar-title">Adventure Travel Planner</span>
         </div>
 
-        <div className="navbar-search">
-          <svg className="search-icon" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-          </svg>
-          <input
-            type="text"
-            placeholder="Search destinations, hotels, flights..."
-            className="navbar-search-input"
-          />
+        <div className="navbar-search" style={{ position: 'relative' }}>
+          <form onSubmit={handleSearchSubmit}>
+            <svg className="search-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search destinations, hotels, flights..."
+              className="navbar-search-input"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onFocus={() => searchQuery && setShowSearchResults(true)}
+              onBlur={() => setTimeout(() => setShowSearchResults(false), 200)}
+            />
+          </form>
+          
+          {/* Search Results Dropdown */}
+          {showSearchResults && searchResults.length > 0 && (
+            <div className="search-results-dropdown">
+              {searchResults.map((result, index) => (
+                <div 
+                  key={index} 
+                  className="search-result-item"
+                  onClick={() => handleResultClick(result)}
+                >
+                  <span className="search-result-icon">{getTypeIcon(result.type)}</span>
+                  <div className="search-result-content">
+                    <div className="search-result-name">{result.name}</div>
+                    <div className="search-result-description">{result.description}</div>
+                  </div>
+                  <span className="search-result-type">{result.type}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="navbar-actions">
-          <button className="navbar-btn">
+          <button className="navbar-btn" onClick={onAdventureClick}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>

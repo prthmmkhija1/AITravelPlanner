@@ -4,6 +4,7 @@ import { getTrips, updateTrip, deleteTrip, isAuthenticated } from '../api';
 interface TravelDashboardProps {
   isVisible: boolean;
   onClose: () => void;
+  onPlanNewTrip?: () => void;
 }
 
 interface Trip {
@@ -20,7 +21,7 @@ interface Trip {
   rating: number | null;
 }
 
-export default function TravelDashboard({ isVisible, onClose }: TravelDashboardProps) {
+export default function TravelDashboard({ isVisible, onClose, onPlanNewTrip }: TravelDashboardProps) {
   const [activeTab, setActiveTab] = useState<'current' | 'past' | 'saved'>('current');
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(false);
@@ -201,7 +202,7 @@ Generated on: ${new Date().toLocaleDateString()}
               )}
 
               <div className="itinerary-card add-new">
-                <div className="add-new-content" onClick={onClose}>
+                <div className="add-new-content" onClick={() => { onPlanNewTrip?.(); onClose(); }}>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                   </svg>

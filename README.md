@@ -8,12 +8,11 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.128-009688?logo=fastapi)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.14-3776AB?logo=python)](https://python.org)
-[![LangChain](https://img.shields.io/badge/LangChain-1.2-green)](https://langchain.com)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python)](https://python.org)
+[![LangChain](https://img.shields.io/badge/LangChain-AI_Agent-green)](https://langchain.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)](https://typescriptlang.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-[Features](#-features) • [Demo](#-demo) • [Installation](#-installation) • [API Setup](#-api-setup) • [Documentation](#-documentation)
+[Features](#-features) • [Demo](#-screenshots) • [Installation](#-installation) • [API Setup](#-api-setup) • [Documentation](#-documentation)
 
 </div>
 
@@ -28,6 +27,18 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 | **Natural Language Planning** | Describe your trip in plain English - AI creates complete itineraries |
 | **LangChain ReAct Agent**     | Intelligent agent that reasons and acts to find the best options      |
 | **Groq LLM (Llama 3.3 70B)**  | Ultra-fast AI responses with state-of-the-art language model          |
+| **Floating Chatbot**          | Always-accessible AI assistant popup in bottom-right corner           |
+| **Form-Based Planning**       | Easy trip planning with dropdown menus and date pickers               |
+
+### 🔐 Authentication & User Management
+
+| Feature                  | Description                                               |
+| ------------------------ | --------------------------------------------------------- |
+| **Google OAuth Sign-In** | One-click login with your Google account                  |
+| **Demo Account**         | Try the app instantly without registration                |
+| **Email Registration**   | Traditional signup with email and password                |
+| **User Profiles**        | Personalized profiles with Google profile picture support |
+| **Loyalty Program**      | Bronze, Silver, Gold, Platinum membership tiers           |
 
 ### ✈️ Real-Time Travel Data
 
@@ -47,6 +58,15 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 | **Interactive Maps**         | OpenStreetMap + Leaflet   | FREE      |
 | **Flight Status Monitoring** | Amadeus Flight Status API | FREE tier |
 
+### 🔍 Smart Search
+
+| Feature                       | Description                                                    |
+| ----------------------------- | -------------------------------------------------------------- |
+| **Global Search Bar**         | Search destinations, hotels, flights from navbar               |
+| **Auto-Complete Suggestions** | Real-time suggestions as you type                              |
+| **Categorized Results**       | Results organized by destinations, hotels, flights, activities |
+| **Direct Chat Integration**   | Search results open chatbot with your query                    |
+
 ### 💰 Budget & Alerts
 
 | Feature                  | Description                                                      |
@@ -55,14 +75,14 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 | **Price Alerts**         | Get notified when flight/hotel prices drop                       |
 | **Notifications Center** | Centralized notification management                              |
 
-### 👤 User Management
+### 🎨 Modern UI/UX
 
-| Feature            | Description                                       |
-| ------------------ | ------------------------------------------------- |
-| **Authentication** | Secure login/registration with session management |
-| **User Profiles**  | Travel preferences, loyalty tiers, history        |
-| **Trip Dashboard** | View current, past, and saved trips               |
-| **PDF Export**     | Download professionally formatted itineraries     |
+| Feature                | Description                                                    |
+| ---------------------- | -------------------------------------------------------------- |
+| **Adventure Modal**    | Explore adventure categories (Beach, Mountain, City, Wildlife) |
+| **Responsive Design**  | Works beautifully on desktop, tablet, and mobile               |
+| **Centered Modals**    | All modals appear as proper popups, not inline                 |
+| **Hero Video Section** | Auto-playing travel video backgrounds                          |
 
 ---
 
@@ -72,8 +92,8 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 ┌────────────────────────────────────────────────────────────────────┐
 │                         FRONTEND (React + TypeScript)               │
 │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ │
-│  │  Navbar  │ │   Hero   │ │   Chat   │ │ Tracking │ │Dashboard │ │
-│  │  + Auth  │ │ + Cards  │ │  Panel   │ │  Suite   │ │ + Budget │ │
+│  │  Navbar  │ │   Hero   │ │ ChatBot  │ │ Tracking │ │Dashboard │ │
+│  │ + Search │ │ + Cards  │ │  Popup   │ │  Suite   │ │ + Budget │ │
 │  └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ │
 └────────────────────────────────┬───────────────────────────────────┘
                                  │ REST API + WebSocket
@@ -88,11 +108,6 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 │  ┌─────────────────────────────▼───────────────────────────────┐  │
 │  │              LangChain ReAct Agent (agent.py)                │  │
 │  │         Reasoning + Acting with Tool Selection               │  │
-│  └─────────────────────────────┬───────────────────────────────┘  │
-│                                │                                   │
-│  ┌─────────────────────────────▼───────────────────────────────┐  │
-│  │                    Services Layer                            │  │
-│  │  NotificationService │ PDFGenerator │ CustomerManager        │  │
 │  └─────────────────────────────┬───────────────────────────────┘  │
 │                                │                                   │
 │  ┌─────────────────────────────▼───────────────────────────────┐  │
@@ -119,8 +134,6 @@ ai-travel-planner/
 ├── 📁 backend/                          # Python FastAPI Backend
 │   ├── agent.py                         # LangChain ReAct travel planning agent
 │   ├── api_server.py                    # FastAPI server - all REST endpoints
-│   ├── auth.py                          # Authentication (login, register, sessions)
-│   ├── database.py                      # SQLite database operations
 │   │
 │   ├── 📁 api/                          # API route handlers
 │   │   └── auth.py                      # Authentication endpoints
@@ -153,23 +166,21 @@ ai-travel-planner/
 │   │   ├── styles.css                   # Global styles
 │   │   │
 │   │   ├── 📁 components/
-│   │   │   ├── AuthModal.tsx            # Login/Register modal
+│   │   │   ├── AuthModal.tsx            # Login/Register with Google OAuth
+│   │   │   ├── ChatBotPopup.tsx         # Floating AI chatbot
+│   │   │   ├── TripPlannerForm.tsx      # Form-based trip planning
+│   │   │   ├── AdventureModal.tsx       # Adventure categories modal
 │   │   │   ├── FlightTracker.tsx        # Flight status & delays
 │   │   │   ├── LocationTracker.tsx      # GPS location tracking
 │   │   │   ├── TripTracking.tsx         # Trip progress tracking
 │   │   │   ├── TrackingMap.tsx          # Leaflet map component
-│   │   │   ├── LiveTracking.tsx         # Real-time price tracking
-│   │   │   ├── TravelDashboard.tsx      # Trip management
 │   │   │   ├── BudgetTracker.tsx        # Budget management
 │   │   │   ├── NotificationCenter.tsx   # Alerts & notifications
-│   │   │   ├── UserProfile.tsx          # User profile
-│   │   │   ├── ChatPanel.tsx            # AI chat interface
-│   │   │   ├── DynamicMap.tsx           # Interactive India map
-│   │   │   ├── Navbar.tsx               # Navigation bar
-│   │   │   ├── Hero.tsx                 # Hero section
-│   │   │   ├── Footer.tsx               # Footer
+│   │   │   ├── UserProfile.tsx          # User profile with Google data
+│   │   │   ├── TravelDashboard.tsx      # Trip management
+│   │   │   ├── Navbar.tsx               # Navigation with search
+│   │   │   ├── Hero.tsx                 # Video hero section
 │   │   │   ├── FeatureCards.tsx         # Feature showcase
-│   │   │   ├── HotDestinations.tsx      # Popular destinations
 │   │   │   └── QuickAccessPanel.tsx     # Quick access buttons
 │   │   │
 │   │   ├── 📁 hooks/
@@ -178,6 +189,7 @@ ai-travel-planner/
 │   │   └── 📁 services/
 │   │       └── locationService.ts       # Geolocation service
 │   │
+│   ├── .env                             # Frontend environment (Google OAuth)
 │   ├── index.html
 │   ├── package.json
 │   ├── vite.config.ts
@@ -187,85 +199,17 @@ ai-travel-planner/
 │   ├── API_SETUP_GUIDE.md               # API keys setup guide
 │   ├── LIVE_TRACKING_GUIDE.md           # Live tracking documentation
 │   ├── QUICK_START_GUIDE.md             # Getting started
-│   ├── UI_DESIGN_GUIDE.md               # UI/UX guidelines
-│   └── ...                              # Additional docs
+│   └── UI_DESIGN_GUIDE.md               # UI/UX guidelines
 │
 ├── 📁 Assets/                           # Static assets (images)
+├── 📁 client/public/                    # Hero videos
 │
-├── .env                                 # Environment variables (git-ignored)
+├── .env                                 # Backend environment variables
 ├── .gitignore
 ├── requirements.txt                     # Python dependencies
 ├── package.json                         # Root npm scripts
 └── README.md                            # This file
 ```
-
----
-
-## 📋 File Summaries
-
-### Backend Files
-
-| File            | Purpose                                                                 |
-| --------------- | ----------------------------------------------------------------------- |
-| `agent.py`      | LangChain ReAct agent that orchestrates AI trip planning using Groq LLM |
-| `api_server.py` | FastAPI server exposing 25+ REST endpoints for all features             |
-| `auth.py`       | User authentication: registration, login, sessions, password management |
-| `database.py`   | SQLite database with tables for users, trips, budgets, notifications    |
-
-### Backend Services
-
-| File                      | Purpose                                                     |
-| ------------------------- | ----------------------------------------------------------- |
-| `notification_service.py` | Manages alerts, price monitoring, background price checking |
-| `pdf_generator.py`        | Generates professional PDF itineraries using ReportLab      |
-| `customer_manager.py`     | Customer profiles, preferences, loyalty tiers, trip history |
-
-### Backend Integrations
-
-| File                        | Purpose                               | API                     |
-| --------------------------- | ------------------------------------- | ----------------------- |
-| `real_flight_api.py`        | Live flight search with pricing       | Amadeus (FREE)          |
-| `real_hotel_api.py`         | Hotel search with availability        | Hotels.com via RapidAPI |
-| `real_activities_api.py`    | Activities & attractions              | Foursquare (FREE)       |
-| `flight_tracking.py`        | Flight status & delay predictions     | Amadeus (FREE)          |
-| `enhanced_flight_search.py` | Advanced flight search with fallbacks | Amadeus                 |
-
-### Backend Utils
-
-| File                          | Purpose                                                         |
-| ----------------------------- | --------------------------------------------------------------- |
-| `enhanced_tools.py`           | LangChain tools for customer insights, transfers, policy checks |
-| `real_api_tools.py`           | Tool wrappers for all external APIs                             |
-| `multi_system_integration.py` | Coordinates car rentals, transfers, experiences                 |
-
-### Frontend Components
-
-| Component                | Purpose                                            |
-| ------------------------ | -------------------------------------------------- |
-| `App.tsx`                | Main application with 13+ modal states and routing |
-| `Navbar.tsx`             | Navigation with auth, tracking dropdown, user menu |
-| `Hero.tsx`               | Auto-playing video hero section                    |
-| `ChatPanel.tsx`          | AI-powered conversational trip planning            |
-| `FlightTracker.tsx`      | Flight status, delays, route search                |
-| `LocationTracker.tsx`    | GPS tracking with coordinates display              |
-| `TripTracking.tsx`       | Real-time trip progress with WebSocket             |
-| `TrackingMap.tsx`        | Leaflet map with path visualization                |
-| `BudgetTracker.tsx`      | Expense tracking across 7 categories               |
-| `NotificationCenter.tsx` | Alerts and price drop notifications                |
-| `TravelDashboard.tsx`    | Current/past/saved trips management                |
-| `UserProfile.tsx`        | Profile with preferences and stats                 |
-| `QuickAccessPanel.tsx`   | 6 quick-access feature cards                       |
-| `DynamicMap.tsx`         | Interactive India map with weather                 |
-| `HotDestinations.tsx`    | Popular destination showcase                       |
-| `FeatureCards.tsx`       | 4 feature highlights                               |
-
-### Frontend Services
-
-| File                 | Purpose                                     |
-| -------------------- | ------------------------------------------- |
-| `api.ts`             | 25+ API functions for all backend endpoints |
-| `useWebSocket.ts`    | WebSocket hook with auto-reconnection       |
-| `locationService.ts` | Browser Geolocation API wrapper             |
 
 ---
 
@@ -311,30 +255,34 @@ npm install
 
 ### Step 4: Configure Environment
 
-Create `.env` file in the project root:
+**Backend `.env`** (in project root):
 
 ```env
-# ═══════════════════════════════════════════════════════════
 # REQUIRED - AI Language Model
-# ═══════════════════════════════════════════════════════════
 GROQ_API_KEY=your_groq_api_key
 
-# ═══════════════════════════════════════════════════════════
-# OPTIONAL - Real API Integrations (Enhanced Features)
-# ═══════════════════════════════════════════════════════════
-
-# Amadeus - Flights (FREE: 2000 req/month)
+# OPTIONAL - Real API Integrations
 AMADEUS_API_KEY=your_amadeus_api_key
 AMADEUS_API_SECRET=your_amadeus_api_secret
-
-# RapidAPI - Hotels (FREE: 500 req/month)
 RAPIDAPI_KEY=your_rapidapi_key
-
-# Foursquare - Activities (FREE: 1000 req/day)
 FOURSQUARE_API_KEY=your_foursquare_api_key
 ```
 
-### Step 5: Run the Application
+**Frontend `.env`** (in frontend folder):
+
+```env
+# Google OAuth (Optional - for Google Sign-In)
+VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
+```
+
+### Step 5: Google OAuth Setup (Optional)
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+2. Create OAuth 2.0 Client ID
+3. Add authorized JavaScript origins: `http://localhost:5173`, `http://localhost:5174`
+4. Copy Client ID to `frontend/.env`
+
+### Step 6: Run the Application
 
 **Terminal 1 - Backend:**
 
@@ -358,63 +306,70 @@ npm run dev
 
 ### Getting API Keys (All FREE Tiers)
 
-| API            | Sign Up                                                        | Free Limits        |
-| -------------- | -------------------------------------------------------------- | ------------------ |
-| **Groq**       | [console.groq.com](https://console.groq.com)                   | Generous free tier |
-| **Amadeus**    | [developers.amadeus.com](https://developers.amadeus.com)       | 2,000 req/month    |
-| **RapidAPI**   | [rapidapi.com](https://rapidapi.com)                           | Varies by API      |
-| **Foursquare** | [foursquare.com/developers](https://foursquare.com/developers) | 1,000 req/day      |
+| API              | Sign Up                                                        | Free Limits        |
+| ---------------- | -------------------------------------------------------------- | ------------------ |
+| **Groq**         | [console.groq.com](https://console.groq.com)                   | Generous free tier |
+| **Amadeus**      | [developers.amadeus.com](https://developers.amadeus.com)       | 2,000 req/month    |
+| **RapidAPI**     | [rapidapi.com](https://rapidapi.com)                           | Varies by API      |
+| **Foursquare**   | [foursquare.com/developers](https://foursquare.com/developers) | 1,000 req/day      |
+| **Google OAuth** | [console.cloud.google.com](https://console.cloud.google.com)   | Unlimited          |
 
 > 📖 See [docs/API_SETUP_GUIDE.md](docs/API_SETUP_GUIDE.md) for detailed instructions.
 
 ---
 
-## 🖥️ UI Features Summary
+## 📸 Screenshots
 
-### Navigation Bar
+### Home Page with Hero Section
 
-- **Logo & Search** - Brand identity and global search
-- **Quick Links** - Adventure, About, My Trips
-- **Tracking Menu** - Flight Tracker, Trip Progress, My Location
-- **User Menu** - Profile, Budget, Notifications, Logout
+- Auto-playing video backgrounds
+- Quick feature cards
+- AI-powered trip planning
 
-### Hero Section
+### Google Sign-In
 
-- Auto-playing video backgrounds with travel themes
-- Call-to-action for trip planning
+- One-click authentication
+- Profile picture integration
+- Secure OAuth 2.0
 
-### Quick Access Panel
+### AI Chatbot Popup
 
-6 quick-access cards for all major features:
-
-- ✈️ Flight Tracker (FREE)
-- 🗺️ Trip Progress (FREE)
-- 📍 My Location (FREE)
-- 💰 Budget Tracker (Login required)
-- 🔔 Price Alerts (Login required)
-- 📊 My Trips (Login required)
-
-### AI Chat Panel
-
+- Floating assistant in bottom-right
 - Natural language trip planning
-- Message history
-- Real-time AI responses
+- Quick prompts for common queries
 
-### Interactive Maps
+### Smart Search
 
-- India map with weather & flight prices
-- Trip tracking with GPS path visualization
+- Real-time suggestions
+- Categorized results
+- Direct chat integration
 
-### Modals & Dashboards
+---
 
-| Modal                   | Features                                       |
-| ----------------------- | ---------------------------------------------- |
-| **Flight Tracker**      | Status lookup, delay predictions, route search |
-| **Budget Tracker**      | 7 expense categories, transaction tracking     |
-| **Notification Center** | Alerts, price drops, mark as read              |
-| **Travel Dashboard**    | Current/past/saved trips, PDF export           |
-| **User Profile**        | Preferences, loyalty tier, statistics          |
-| **Location Tracker**    | GPS coordinates, speed, distance               |
+## 🧪 Tech Stack
+
+### Frontend
+
+- **React 18** - UI framework with hooks
+- **TypeScript** - Type safety
+- **Vite** - Build tool & dev server
+- **Leaflet** - Interactive maps
+- **Google Identity Services** - OAuth authentication
+
+### Backend
+
+- **FastAPI** - High-performance API
+- **SQLite** - Database
+- **LangChain** - AI agent framework
+- **Groq** - LLM inference (Llama 3.3 70B)
+- **ReportLab** - PDF generation
+
+### External APIs
+
+- **Amadeus** - Flight data
+- **Hotels.com** - Hotel data
+- **Foursquare** - Places & activities
+- **OpenStreetMap** - Map tiles
 
 ---
 
@@ -440,49 +395,12 @@ npm run dev
 
 ### Travel Services
 
-| Method | Endpoint                        | Description       |
-| ------ | ------------------------------- | ----------------- |
-| POST   | `/api/flights/search`           | Search flights    |
-| POST   | `/api/flights/status`           | Flight status     |
-| POST   | `/api/flights/delay-prediction` | Delay prediction  |
-| POST   | `/api/hotels`                   | Search hotels     |
-| POST   | `/api/activities`               | Search activities |
-
-### Budget & Notifications
-
-| Method   | Endpoint                         | Description        |
-| -------- | -------------------------------- | ------------------ |
-| GET/POST | `/api/budgets`                   | Budget management  |
-| POST     | `/api/budgets/{id}/transactions` | Add transaction    |
-| GET      | `/api/notifications`             | Get notifications  |
-| POST     | `/api/price-alerts`              | Create price alert |
-
----
-
-## 🧪 Tech Stack
-
-### Frontend
-
-- **React 18** - UI framework with hooks
-- **TypeScript** - Type safety
-- **Vite** - Build tool & dev server
-- **Leaflet** - Interactive maps
-- **WebSocket** - Real-time updates
-
-### Backend
-
-- **FastAPI** - High-performance API
-- **SQLite** - Database
-- **LangChain** - AI agent framework
-- **Groq** - LLM inference
-- **ReportLab** - PDF generation
-
-### External APIs
-
-- **Amadeus** - Flight data
-- **Hotels.com** - Hotel data
-- **Foursquare** - Places & activities
-- **OpenStreetMap** - Map tiles
+| Method | Endpoint              | Description       |
+| ------ | --------------------- | ----------------- |
+| POST   | `/api/flights/search` | Search flights    |
+| POST   | `/api/flights/status` | Flight status     |
+| POST   | `/api/hotels`         | Search hotels     |
+| POST   | `/api/activities`     | Search activities |
 
 ---
 
@@ -496,15 +414,9 @@ npm run dev
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 👨‍💻 Author
 
-**Pratham Khija**
+**Pratham Makhija**
 
 - GitHub: [@prthmmkhija1](https://github.com/prthmmkhija1)
 

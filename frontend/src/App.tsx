@@ -2,7 +2,6 @@ import { useMemo, useState, useEffect } from "react";
 
 import { planTrip, generatePDF, isAuthenticated, getStoredUser, logout, saveTrip } from "./api";
 import type { PlanTripResult } from "./types";
-import ChatPanel from "./components/ChatPanel";
 import FeatureCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
@@ -19,6 +18,9 @@ import FlightTracker from "./components/FlightTracker";
 import TripTracking from "./components/TripTracking";
 import LocationTracker from "./components/LocationTracker";
 import QuickAccessPanel from "./components/QuickAccessPanel";
+import ChatBotPopup from "./components/ChatBotPopup";
+import AdventureModal from "./components/AdventureModal";
+import TripPlannerForm, { TripFormData } from "./components/TripPlannerForm";
 
 type HistoryEntry = {
   request: string;
@@ -58,6 +60,9 @@ export default function App() {
   const [user, setUser] = useState<any>(null);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [savingTrip, setSavingTrip] = useState(false);
+  const [showChatBot, setShowChatBot] = useState(false);
+  const [showAdventure, setShowAdventure] = useState(false);
+  const [plannerMode, setPlannerMode] = useState<'text' | 'form'>('form');
 
   // Check auth on mount
   useEffect(() => {
@@ -77,6 +82,69 @@ export default function App() {
     await logout();
     setUser(null);
     setIsLoggedIn(false);
+  };
+
+  // Handle Plan New Trip - opens chatbot if logged in, else shows auth
+  const handlePlanNewTrip = () => {
+    if (isLoggedIn) {
+      setShowChatBot(true);
+    } else {
+      setShowAuth(true);
+    }
+  };
+
+  // Handle adventure selection - sets up a trip planning prompt
+  const handleAdventureSelect = (adventurePrompt: string) => {
+    setRequest(adventurePrompt);
+    setShowChatBot(true);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  };
+
+  // Handle form-based trip planning
+  const handleFormSubmit = async (formData: TripFormData) => {
+    const tripTypeLabels: Record<string, string> = {
+      leisure: 'leisure and relaxation',
+      adventure: 'adventure and outdoors',
+      cultural: 'cultural and heritage',
+      romantic: 'romantic getaway',
+      family: 'family-friendly',
+      business: 'business with leisure',
+      spiritual: 'spiritual and wellness'
+    };
+
+    const budgetLabels: Record<string, string> = {
+      budget: 'budget-friendly (under ₹15,000)',
+      moderate: 'moderate budget (₹15,000-₹40,000)',
+      premium: 'premium (₹40,000-₹80,000)',
+      luxury: 'luxury (above ₹80,000)'
+    };
+
+    // Calculate duration
+    const start = new Date(formData.startDate);
+    const end = new Date(formData.endDate);
+    const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+
+    // Build natural language prompt from form data
+    const prompt = `Plan a ${days}-day ${tripTypeLabels[formData.tripType]} trip to ${formData.destination} from ${formData.source}. 
+Starting date: ${formData.startDate}. 
+Number of travelers: ${formData.travelers}. 
+Budget: ${budgetLabels[formData.budget]} per person.
+${formData.preferences ? `Additional preferences: ${formData.preferences}` : ''}`;
+
+    setRequest(prompt);
+    setPlanning(true);
+    setResult(null);
+
+    const r = await planTrip(prompt);
+    setResult(r);
+    setPlanning(false);
+
+    if (r.status === "success") {
+      setHistory((prev) => [
+        { request: prompt, trip_plan: r.trip_plan, created_at: new Date().toISOString() },
+        ...prev
+      ]);
+    }
   };
 
   const handleSaveTrip = async () => {
@@ -179,6 +247,16 @@ Powered by AI Travel Planner with Live APIs
     }
   };
 
+  // Search query state for chatbot
+  const [searchMessage, setSearchMessage] = useState('');
+
+  // Handle search from navbar
+  const handleNavSearch = (query: string) => {
+    // Open chatbot with the search query
+    setSearchMessage(query);
+    setShowChatBot(true);
+  };
+
   return (
     <div className="page">
       <Navbar 
@@ -191,6 +269,8 @@ Powered by AI Travel Planner with Live APIs
         onLocationTrackerClick={() => setShowLocationTracker(true)}
         onAuthClick={() => setShowAuth(true)}
         onLogout={handleLogout}
+        onAdventureClick={() => setShowAdventure(true)}
+        onSearch={handleNavSearch}
         isLoggedIn={isLoggedIn}
         userName={user?.username}
       />
@@ -213,52 +293,87 @@ Powered by AI Travel Planner with Live APIs
       <HotDestinations />
       
       <DynamicMap />
-      
-      <ChatPanel />
 
-      <div className="action-divider">
-        <h2>Start Planning Your Trip</h2>
-        <p>Describe your ideal trip below—we&apos;ll create a personalized itinerary.</p>
-      </div>
-
-      <div className="planner">
-        <div className="section-header">📝 Tell us about your trip</div>
-
-        <div className="row">
-          <textarea
-            value={request}
-            onChange={(e) => setRequest(e.target.value)}
-            placeholder="Example: Plan a 3-day trip to Goa from Delhi starting Feb 12. I want beach activities and heritage sites."
-          />
-
-          <button className="btn" disabled={!canPlan} onClick={() => void handlePlan()}>
-            {planning ? "Planning..." : "Plan My Trip"}
-          </button>
+      {/* Trip Planner Section */}
+      <div className="page-section" id="plan-trip">
+        <div className="section-title">
+          <h2>✨ Start Planning Your Trip</h2>
+          <p>Choose how you'd like to plan - fill out a form or describe your trip in your own words</p>
         </div>
 
-        <div className="examples" aria-label="Quick examples">
-          <button
-            className="btn secondary"
-            type="button"
-            onClick={() => handleExample("Plan a 3-day beach vacation to Goa from Delhi")}
-          >
-            🏖️ Goa Beach Vacation
-          </button>
-          <button
-            className="btn secondary"
-            type="button"
-            onClick={() => handleExample("Plan a 4-day heritage tour to Jaipur from Mumbai")}
-          >
-            🏰 Jaipur Heritage Tour
-          </button>
-          <button
-            className="btn secondary"
-            type="button"
-            onClick={() => handleExample("Plan a 5-day backwaters and nature trip to Kerala from Bangalore")}
-          >
-            🌴 Kerala Backwaters
-          </button>
-        </div>
+        <div className="planner">
+          {/* Mode Toggle */}
+          <div className="planner-mode-toggle">
+            <button 
+              className={`mode-btn ${plannerMode === 'form' ? 'active' : ''}`}
+              onClick={() => setPlannerMode('form')}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                <path d="M9 11H3v10h6V11zM21 3h-6v18h6V3zM15 7H9v14h6V7z"/>
+              </svg>
+              Easy Form
+            </button>
+            <button 
+              className={`mode-btn ${plannerMode === 'text' ? 'active' : ''}`}
+              onClick={() => setPlannerMode('text')}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+              Free Text
+            </button>
+          </div>
+
+          {/* Form Mode */}
+          {plannerMode === 'form' && (
+            <TripPlannerForm 
+              onSubmit={handleFormSubmit}
+              isPlanning={planning}
+            />
+          )}
+
+          {/* Text Mode */}
+          {plannerMode === 'text' && (
+            <>
+              <div className="section-header">📝 Tell us about your trip</div>
+
+              <div className="row">
+                <textarea
+                  value={request}
+                  onChange={(e) => setRequest(e.target.value)}
+                  placeholder="Example: Plan a 3-day trip to Goa from Delhi starting Feb 12. I want beach activities and heritage sites."
+                />
+
+                <button className="btn" disabled={!canPlan} onClick={() => void handlePlan()}>
+                  {planning ? "Planning..." : "Plan My Trip"}
+                </button>
+              </div>
+
+              <div className="examples" aria-label="Quick examples">
+                <button
+                  className="btn secondary"
+                  type="button"
+                  onClick={() => handleExample("Plan a 3-day beach vacation to Goa from Delhi")}
+                >
+                  🏖️ Goa Beach Vacation
+                </button>
+                <button
+                  className="btn secondary"
+                  type="button"
+                  onClick={() => handleExample("Plan a 4-day heritage tour to Jaipur from Mumbai")}
+                >
+                  🏰 Jaipur Heritage Tour
+                </button>
+                <button
+                  className="btn secondary"
+                  type="button"
+                  onClick={() => handleExample("Plan a 5-day backwaters and nature trip to Kerala from Bangalore")}
+                >
+                  🌴 Kerala Backwaters
+                </button>
+              </div>
+            </>
+          )}
 
         {planning ? <p>🤖 AI is planning your trip...</p> : null}
 
@@ -342,13 +457,18 @@ Powered by AI Travel Planner with Live APIs
             </ul>
           </>
         ) : null}
+        </div>
       </div>
 
       <Footer />
       
       {/* Modals */}
-      <UserProfile isVisible={showProfile} onClose={() => setShowProfile(false)} />
-      <TravelDashboard isVisible={showDashboard} onClose={() => setShowDashboard(false)} />
+      <UserProfile isVisible={showProfile} onClose={() => setShowProfile(false)} user={user} />
+      <TravelDashboard 
+        isVisible={showDashboard} 
+        onClose={() => setShowDashboard(false)} 
+        onPlanNewTrip={handlePlanNewTrip}
+      />
       <LiveTracking isVisible={showLiveTracking} onClose={() => setShowLiveTracking(false)} />
       <AuthModal 
         isVisible={showAuth} 
@@ -374,6 +494,19 @@ Powered by AI Travel Planner with Live APIs
       <LocationTracker 
         isVisible={showLocationTracker} 
         onClose={() => setShowLocationTracker(false)} 
+      />
+      <AdventureModal
+        isVisible={showAdventure}
+        onClose={() => setShowAdventure(false)}
+        onSelectAdventure={handleAdventureSelect}
+      />
+
+      {/* Floating Chatbot */}
+      <ChatBotPopup 
+        isOpen={showChatBot}
+        onToggle={() => setShowChatBot(!showChatBot)}
+        initialMessage={searchMessage}
+        onInitialMessageHandled={() => setSearchMessage('')}
       />
     </div>
   );

@@ -10,7 +10,7 @@ from typing import Dict, List, Optional
 import threading
 import time
 
-from database import (
+from models.database import (
     create_notification, get_user_notifications, mark_notification_read,
     mark_all_notifications_read, create_price_alert, get_active_price_alerts,
     update_price_alert, deactivate_price_alert, get_saved_searches,

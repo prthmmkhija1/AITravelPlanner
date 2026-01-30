@@ -9,7 +9,7 @@ import re
 from typing import Optional, Dict
 from fastapi import HTTPException, Header, Depends
 
-from database import (
+from models.database import (
     create_user, get_user_by_email, get_user_by_id,
     create_session, get_session, delete_session, update_user
 )
@@ -186,7 +186,7 @@ def change_password(user_id: int, old_password: str, new_password: str) -> Dict:
         raise HTTPException(status_code=400, detail=msg)
     
     # Update password in database
-    from database import get_db
+    from models.database import get_db
     with get_db() as conn:
         cursor = conn.cursor()
         new_hash = hash_password(new_password)
