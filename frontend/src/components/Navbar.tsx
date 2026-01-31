@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import LanguageSelector from './LanguageSelector';
+import CurrencySelector from './CurrencySelector';
+import { useTranslation } from '../i18n';
 
 interface NavbarProps {
   onProfileClick: () => void;
@@ -11,6 +14,7 @@ interface NavbarProps {
   onAuthClick?: () => void;
   onLogout?: () => void;
   onAdventureClick?: () => void;
+  onSavedTripsClick?: () => void;
   onSearch?: (query: string) => void;
   isLoggedIn: boolean;
   userName?: string;
@@ -27,10 +31,12 @@ export default function Navbar({
   onAuthClick,
   onLogout,
   onAdventureClick,
+  onSavedTripsClick,
   onSearch,
   isLoggedIn,
   userName 
 }: NavbarProps) {
+  const { t } = useTranslation();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showTrackingMenu, setShowTrackingMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -164,6 +170,12 @@ export default function Navbar({
         </div>
 
         <div className="navbar-actions">
+          {/* Language & Currency Selectors */}
+          <div className="navbar-selectors">
+            <LanguageSelector />
+            <CurrencySelector variant="compact" />
+          </div>
+
           <button className="navbar-btn" onClick={onAdventureClick}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -224,11 +236,17 @@ export default function Navbar({
 
           {isLoggedIn && (
             <>
+              <button className="navbar-btn" onClick={onSavedTripsClick}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                </svg>
+                <span>{t('nav.myTrips')}</span>
+              </button>
               <button className="navbar-btn" onClick={onBudgetClick}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>Budget</span>
+                <span>{t('nav.budget')}</span>
               </button>
               <button className="navbar-btn notification-btn" onClick={onNotificationClick}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>

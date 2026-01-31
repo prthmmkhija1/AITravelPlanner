@@ -582,6 +582,21 @@ textarea {
   gap: 12px;
 }
 
+.navbar-selectors {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 8px;
+  padding-right: 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 900px) {
+  .navbar-selectors {
+    display: none;
+  }
+}
+
 .navbar-btn {
   display: flex;
   align-items: center;

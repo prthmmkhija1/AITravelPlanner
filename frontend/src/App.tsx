@@ -19,6 +19,7 @@ import LocationTracker from "./components/LocationTracker";
 import QuickAccessPanel from "./components/QuickAccessPanel";
 import ChatBotPopup from "./components/ChatBotPopup";
 import AdventureModal from "./components/AdventureModal";
+import SavedTrips from "./components/SavedTrips";
 import TripPlannerForm, { TripFormData } from "./components/TripPlannerForm";
 
 type HistoryEntry = {
@@ -61,6 +62,7 @@ export default function App() {
   const [savingTrip, setSavingTrip] = useState(false);
   const [showChatBot, setShowChatBot] = useState(false);
   const [showAdventure, setShowAdventure] = useState(false);
+  const [showSavedTrips, setShowSavedTrips] = useState(false);
   const [plannerMode, setPlannerMode] = useState<'text' | 'form'>('form');
 
   // Check auth on mount
@@ -269,6 +271,7 @@ Powered by AI Travel Planner with Live APIs
         onAuthClick={() => setShowAuth(true)}
         onLogout={handleLogout}
         onAdventureClick={() => setShowAdventure(true)}
+        onSavedTripsClick={() => setShowSavedTrips(true)}
         onSearch={handleNavSearch}
         isLoggedIn={isLoggedIn}
         userName={user?.username}
@@ -496,6 +499,15 @@ Powered by AI Travel Planner with Live APIs
         isVisible={showAdventure}
         onClose={() => setShowAdventure(false)}
         onSelectAdventure={handleAdventureSelect}
+      />
+      <SavedTrips
+        isVisible={showSavedTrips}
+        onClose={() => setShowSavedTrips(false)}
+        onLoadTrip={(tripPlan, userRequest) => {
+          setRequest(userRequest);
+          setResult({ status: 'success', trip_plan: tripPlan });
+          setShowSavedTrips(false);
+        }}
       />
 
       {/* Floating Chatbot */}
