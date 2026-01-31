@@ -2,7 +2,7 @@ export default function FeatureCards() {
   return (
     <div className="feature-cards-wrap">
       <div className="feature-cards" aria-label="Feature cards">
-        <div className="feature-card">
+        {/* <div className="feature-card">
           <h4>🗺️ Destination-based planning</h4>
           <p>Pick your destination—we search flights, hotels, and attractions for you.</p>
         </div>
@@ -17,7 +17,7 @@ export default function FeatureCards() {
         <div className="feature-card">
           <h4>🤖 AI travel assistant</h4>
           <p>LangChain-powered agent that plans trips from natural language requests.</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

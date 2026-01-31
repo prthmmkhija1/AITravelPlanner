@@ -2,7 +2,6 @@ import { useMemo, useState, useEffect } from "react";
 
 import { planTrip, generatePDF, isAuthenticated, getStoredUser, logout, saveTrip } from "./api";
 import type { PlanTripResult } from "./types";
-import FeatureCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
@@ -276,8 +275,6 @@ Powered by AI Travel Planner with Live APIs
       />
       
       <Hero />
-      
-      <FeatureCards />
 
       {/* Quick Access Panel for all tracking features */}
       <QuickAccessPanel

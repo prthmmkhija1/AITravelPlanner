@@ -8,24 +8,29 @@ type HeroSlide = {
 
 const HERO_SLIDES: HeroSlide[] = [
   {
-    videoSrc: "/hero%201.mp4",
+    videoSrc: "/hero%204.mp4",
     heading: "Discover Your Next Adventure",
     subtext: "AI-powered trip planning for flights, hotels, and attractions"
   },
   {
-    videoSrc: "/hero%202.mp4",
+    videoSrc: "/hero_5.mp4",
     heading: "Smart Destination Planning",
     subtext: "Tell us where you want to go—we'll handle the rest"
   },
   {
-    videoSrc: "/hero%203.mp4",
+    videoSrc: "/hero_6.mp4",
     heading: "Budget-Aware Suggestions",
     subtext: "Get personalized itineraries that fit your budget"
   },
   {
-    videoSrc: "/hero%204.mp4",
-    heading: "Budget-Aware Suggestions",
-    subtext: "Get personalized itineraries that fit your budget"
+    videoSrc: "/hero_7.mp4",
+    heading: "Live Travel Insights",
+    subtext: "Real-time updates for flights, hotels, and activities"
+  },
+  {
+    videoSrc: "/hero_8.mp4",
+    heading: "Plan Faster, Travel Smarter",
+    subtext: "All your travel tools in one intelligent dashboard"
   }
 ];
 

@@ -1,110 +1,187 @@
+import { useState } from "react";
+
 export default function HotDestinations() {
   const destinations = [
     {
       id: 1,
-      name: 'Desert Safari',
-      location: 'Rajasthan',
-      image: '/Assets/download%20(4).jpg',
-      description: 'Experience the golden sands and rich culture',
-      price: 'From ₹25,000',
+      name: "Desert Safari",
+      location: "Rajasthan",
+      image: "/Assets/download%20(4).jpg",
+      description: "Experience the golden sands and rich culture",
+      price: "From ₹25,000",
       rating: 4.8,
-      type: 'desert'
+      type: "desert"
     },
     {
       id: 2,
-      name: 'Mountain Retreat',
-      location: 'Himalayas',
-      image: '/Assets/Majestic%20Rocky%20Arch%20by%20the%20Sea,%20a%20Nature%20Photo%20by%20Virgo%20Studio.jpg',
-      description: 'Majestic peaks and serene valleys await',
-      price: 'From ₹35,000',
+      name: "Mountain Retreat",
+      location: "Himalayas",
+      image: "/Assets/Majestic%20Rocky%20Arch%20by%20the%20Sea,%20a%20Nature%20Photo%20by%20Virgo%20Studio.jpg",
+      description: "Majestic peaks and serene valleys await",
+      price: "From ₹35,000",
       rating: 4.9,
-      type: 'mountain'
+      type: "mountain"
     },
     {
       id: 3,
-      name: 'Beach Paradise',
-      location: 'Bali',
-      image: '/Assets/15%20Top%20Tours%20in%20Bali_%20A%20Guide%20To%20The%20Best%20Activities%20-%20Goats%20On%20The%20Road.jpg',
-      description: 'Crystal clear waters and tropical vibes',
-      price: 'From ₹45,000',
+      name: "Beach Paradise",
+      location: "Bali",
+      image: "/Assets/15%20Top%20Tours%20in%20Bali_%20A%20Guide%20To%20The%20Best%20Activities%20-%20Goats%20On%20The%20Road.jpg",
+      description: "Crystal clear waters and tropical vibes",
+      price: "From ₹45,000",
       rating: 4.7,
-      type: 'beach'
+      type: "beach"
     },
     {
       id: 4,
-      name: 'Coastal Adventure',
-      location: 'Kerala Backwaters',
-      image: '/Assets/download%20(5).jpg',
-      description: 'Houseboats and lush greenery',
-      price: 'From ₹28,000',
+      name: "Coastal Adventure",
+      location: "Kerala Backwaters",
+      image: "/Assets/download%20(5).jpg",
+      description: "Houseboats and lush greenery",
+      price: "From ₹28,000",
       rating: 4.6,
-      type: 'coastal'
+      type: "coastal"
     }
   ];
 
+  const [active, setActive] = useState(1);
+
   return (
-    <section className="hot-destinations-section">
+    <section className="hot-destinations-3d">
       <div className="section-header-centered">
         <h2>🔥 Hot Destinations</h2>
         <p>Trending travel experiences curated just for you</p>
       </div>
 
-      <div className="destinations-grid">
-        {destinations.map((dest) => (
-          <div key={dest.id} className="destination-card">
-            <div className="destination-image-wrapper">
-              <img
-                src={dest.image}
-                alt={dest.name}
-                className="destination-image"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = 'https://via.placeholder.com/400x300?text=Destination';
-                }}
-              />
-              <div className="destination-badge">{dest.type}</div>
-              <div className="destination-overlay">
-                <button className="explore-btn">
-                  Explore Now
-                  <svg viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+      <div className="carousel-wrapper">
+        <button onClick={() => setActive((active - 1 + destinations.length) % destinations.length)}>
+          ‹
+        </button>
 
-            <div className="destination-content">
-              <div className="destination-header">
-                <h3>{dest.name}</h3>
-                <div className="destination-rating">
-                  <svg viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  {dest.rating}
+        <div className="carousel">
+          {destinations.map((dest, index) => {
+            const offset = index - active;
+
+            return (
+              <div
+                key={dest.id}
+                className="carousel-card"
+                style={{
+                  transform: `
+                    translateX(${offset * 260}px)
+                    translateZ(${offset === 0 ? 120 : -80}px)
+                    rotateY(${offset * -30}deg)
+                    scale(${offset === 0 ? 1 : 0.85})
+                  `,
+                  opacity: Math.abs(offset) > 2 ? 0 : 1,
+                  zIndex: 10 - Math.abs(offset)
+                }}
+              >
+                <img src={dest.image} alt={dest.name} />
+                <div className="card-overlay">
+                  <h3>{dest.name}</h3>
+                  <p>{dest.location}</p>
+                  <span>{dest.price}</span>
                 </div>
               </div>
+            );
+          })}
+        </div>
 
-              <div className="destination-location">
-                <svg viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                </svg>
-                {dest.location}
-              </div>
-
-              <p className="destination-description">{dest.description}</p>
-
-              <div className="destination-footer">
-                <span className="destination-price">{dest.price}</span>
-                <button className="btn-icon-heart">
-                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+        <button onClick={() => setActive((active + 1) % destinations.length)}>
+          ›
+        </button>
       </div>
+
+      <style>{`
+        .hot-destinations-3d {
+          padding: 80px 20px;
+          background: radial-gradient(circle at top, #111827, #000);
+          color: white;
+          overflow: hidden;
+        }
+
+        .carousel-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+        }
+
+        .carousel {
+          position: relative;
+          width: 900px;
+          height: 420px;
+          perspective: 1200px;
+          transform-style: preserve-3d;
+        }
+
+        .carousel-card {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          width: 260px;
+          height: 380px;
+          transform-style: preserve-3d;
+          transition: transform 0.6s ease, opacity 0.6s ease;
+          border-radius: 20px;
+          overflow: hidden;
+          background: #000;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        .carousel-card img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .card-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          padding: 20px;
+        }
+
+        .card-overlay h3 {
+          margin: 0;
+          font-size: 1.2rem;
+        }
+
+        .card-overlay p {
+          margin: 4px 0;
+          font-size: 0.9rem;
+          opacity: 0.85;
+        }
+
+        .card-overlay span {
+          font-weight: 600;
+          margin-top: 6px;
+        }
+
+        .carousel-wrapper button {
+          background: none;
+          border: none;
+          color: white;
+          font-size: 3rem;
+          cursor: pointer;
+          opacity: 0.6;
+          transition: opacity 0.3s;
+        }
+
+        .carousel-wrapper button:hover {
+          opacity: 1;
+        }
+
+        @media (max-width: 900px) {
+          .carousel {
+            width: 100%;
+          }
+        }
+      `}</style>
     </section>
   );
 }

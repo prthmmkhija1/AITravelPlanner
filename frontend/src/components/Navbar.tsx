@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface NavbarProps {
   onProfileClick: () => void;
@@ -36,6 +36,14 @@ export default function Navbar({
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchResults, setSearchResults] = useState<{ type: string; name: string; description: string }[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const getInitials = (name?: string) => {
     if (!name) return 'U';
@@ -109,7 +117,7 @@ export default function Navbar({
   };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar${isScrolled ? ' navbar--scrolled' : ''}`}>
       <div className="navbar-content">
         <div className="navbar-brand">
           <svg className="navbar-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor">
