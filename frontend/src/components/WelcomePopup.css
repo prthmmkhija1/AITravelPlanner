@@ -183,16 +183,19 @@
 .welcome-search input {
   flex: 1;
   padding: 14px 16px;
-  border: 2px solid #e0e7ff;
+  border: 2px solid #667eea;
   border-radius: 30px;
   font-size: 0.9rem;
-  background: white;
+  background: rgba(102, 126, 234, 0.08);
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15), 0 2px 12px rgba(102, 126, 234, 0.15);
 }
 
 .welcome-search input:focus {
   border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2), 0 4px 16px rgba(102, 126, 234, 0.25);
 }
 
 .welcome-search input::placeholder {

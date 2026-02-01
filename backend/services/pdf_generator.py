@@ -164,6 +164,7 @@ def highlight_table(data, widths):
 def extract_trip_info(trip_plan: str, user_request: str) -> Dict[str, Any]:
     """
     Parse the AI-generated trip plan text and extract structured information.
+    Analyzes both user request and AI response to extract source/destination.
     """
     info = {
         "request": user_request,
@@ -180,30 +181,80 @@ def extract_trip_info(trip_plan: str, user_request: str) -> Dict[str, Any]:
         "raw_plan": trip_plan
     }
     
-    # Extract source and destination from request
+    # Combined text for searching
+    combined_text = f"{user_request} {trip_plan}"
+    
+    # Extract source and destination from request first
     route_patterns = [
-        r'from\s+(\w+(?:\s+\w+)?)\s+to\s+(\w+(?:\s+\w+)?)',
-        r'(\w+(?:\s+\w+)?)\s+to\s+(\w+(?:\s+\w+)?)',
-        r'(\w+)\s*→\s*(\w+)',
-        r'(\w+)\s*->\s*(\w+)',
+        r'from\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)\s+to\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)',
+        r'([A-Za-z]+)\s*(?:to|→|->|–)\s*([A-Za-z]+)',
+        r'trip\s+to\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)',
+        r'visit\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)',
+        r'going\s+to\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)',
+        r'travel\s+to\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)',
+        r'flight[s]?\s+to\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)',
+        r'hotel[s]?\s+in\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)',
     ]
     
     for pattern in route_patterns:
         match = re.search(pattern, user_request, re.IGNORECASE)
         if match:
-            info["source"] = match.group(1).strip().title()
-            info["destination"] = match.group(2).strip().title()
+            groups = match.groups()
+            if len(groups) == 2:
+                info["source"] = groups[0].strip().title()
+                info["destination"] = groups[1].strip().title()
+            elif len(groups) == 1:
+                info["destination"] = groups[0].strip().title()
             break
     
+    # If destination not found in request, try to extract from trip plan
+    if not info["destination"]:
+        plan_dest_patterns = [
+            r'(?:flight|flights)\s+to\s+([A-Za-z]+)',
+            r'(?:DEL|BOM|CCU|MAA|BLR|HYD|AMD|GOI|JAI|COK)\s*(?:→|->|to)\s*([A-Za-z]+)',
+            r'arriving\s+(?:in|at)\s+([A-Za-z]+)',
+            r'destination[:\s]+([A-Za-z]+)',
+            r'hotel[s]?\s+in\s+([A-Za-z]+)',
+            r'weather\s+(?:in|for)\s+([A-Za-z]+)',
+        ]
+        for pattern in plan_dest_patterns:
+            match = re.search(pattern, trip_plan, re.IGNORECASE)
+            if match:
+                info["destination"] = match.group(1).strip().title()
+                break
+    
+    # Extract source from trip plan if not found
+    if not info["source"]:
+        source_patterns = [
+            r'from\s+([A-Za-z]+)',
+            r'departing\s+(?:from\s+)?([A-Za-z]+)',
+            r'([A-Za-z]+)\s*(?:→|->)\s*',
+            r'(Delhi|Mumbai|Bangalore|Chennai|Kolkata|Hyderabad|Pune|Ahmedabad)',
+        ]
+        for pattern in source_patterns:
+            match = re.search(pattern, combined_text, re.IGNORECASE)
+            if match:
+                candidate = match.group(1).strip().title()
+                if candidate != info["destination"]:
+                    info["source"] = candidate
+                    break
+    
     # Extract travelers count
-    travelers_match = re.search(r'(\d+)\s*(?:travelers?|people|persons?|adults?)', user_request, re.IGNORECASE)
+    travelers_match = re.search(r'(\d+)\s*(?:travelers?|people|persons?|adults?|pax)', user_request, re.IGNORECASE)
     if travelers_match:
         info["travelers"] = travelers_match.group(1)
     
-    # Extract dates
-    date_match = re.search(r'(?:on|from|starting|departing)\s+(\w+\s+\d{1,2}(?:st|nd|rd|th)?(?:\s*,?\s*\d{4})?)', user_request, re.IGNORECASE)
-    if date_match:
-        info["dates"] = date_match.group(1)
+    # Extract dates from request or plan
+    date_patterns = [
+        r'(?:on|from|starting|departing|date[:\s]*)\s*(\d{1,2}(?:st|nd|rd|th)?\s+\w+(?:\s+\d{4})?)',
+        r'(\w+\s+\d{1,2}(?:st|nd|rd|th)?(?:\s*,?\s*\d{4})?)',
+        r'(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})',
+    ]
+    for pattern in date_patterns:
+        match = re.search(pattern, combined_text, re.IGNORECASE)
+        if match:
+            info["dates"] = match.group(1)
+            break
     
     # Parse sections from trip plan
     lines = trip_plan.split('\n')

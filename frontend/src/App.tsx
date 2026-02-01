@@ -15,13 +15,13 @@ import NotificationCenter from "./components/NotificationCenter";
 import FlightTracker from "./components/FlightTracker";
 import TripTracking from "./components/TripTracking";
 import LocationTracker from "./components/LocationTracker";
-import QuickAccessPanel from "./components/QuickAccessPanel";
 import ChatBotPopup from "./components/ChatBotPopup";
 import AdventureModal from "./components/AdventureModal";
 import SavedTrips from "./components/SavedTrips";
 import TripPlannerForm, { TripFormData } from "./components/TripPlannerForm";
 import WelcomePopup from "./components/WelcomePopup";
 import SettingsPopup from "./components/SettingsPopup";
+import VoiceInputButton from "./components/VoiceInputButton";
 
 type HistoryEntry = {
   request: string;
@@ -64,7 +64,7 @@ export default function App() {
   const [showChatBot, setShowChatBot] = useState(false);
   const [showAdventure, setShowAdventure] = useState(false);
   const [showSavedTrips, setShowSavedTrips] = useState(false);
-  const [plannerMode, setPlannerMode] = useState<'text' | 'form'>('form');
+  const [plannerMode, setPlannerMode] = useState<'text' | 'form'>('text');
   const [showWelcomePopup, setShowWelcomePopup] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
 
@@ -276,6 +276,10 @@ Powered by AI Travel Planner with Live APIs
         onAdventureClick={() => setShowAdventure(true)}
         onSavedTripsClick={() => setShowSavedTrips(true)}
         onPlanTrip={() => setShowChatBot(true)}
+        onChatbotOpen={(prompt) => {
+          setSearchMessage(prompt);
+          setShowChatBot(true);
+        }}
         isLoggedIn={isLoggedIn}
         userName={user?.username}
       />
@@ -288,17 +292,6 @@ Powered by AI Travel Planner with Live APIs
           setRequest(`Plan a trip to ${destination}`);
           setShowChatBot(true);
         }}
-      />
-
-      {/* Quick Access Panel for all tracking features */}
-      <QuickAccessPanel
-        onFlightTracker={() => setShowFlightTracker(true)}
-        onTripTracking={() => setShowTripTracking(true)}
-        onLocationTracker={() => setShowLocationTracker(true)}
-        onBudgetTracker={() => setShowBudget(true)}
-        onNotifications={() => setShowNotifications(true)}
-        onDashboard={() => setShowDashboard(true)}
-        isLoggedIn={isLoggedIn}
       />
       
       <HotDestinations />
@@ -314,15 +307,6 @@ Powered by AI Travel Planner with Live APIs
           {/* Mode Toggle */}
           <div className="planner-mode-toggle">
             <button 
-              className={`mode-btn ${plannerMode === 'form' ? 'active' : ''}`}
-              onClick={() => setPlannerMode('form')}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path d="M9 11H3v10h6V11zM21 3h-6v18h6V3zM15 7H9v14h6V7z"/>
-              </svg>
-              Quick Planner
-            </button>
-            <button 
               className={`mode-btn ${plannerMode === 'text' ? 'active' : ''}`}
               onClick={() => setPlannerMode('text')}
             >
@@ -330,6 +314,15 @@ Powered by AI Travel Planner with Live APIs
                 <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
               </svg>
               Describe Trip
+            </button>
+            <button 
+              className={`mode-btn ${plannerMode === 'form' ? 'active' : ''}`}
+              onClick={() => setPlannerMode('form')}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                <path d="M9 11H3v10h6V11zM21 3h-6v18h6V3zM15 7H9v14h6V7z"/>
+              </svg>
+              Quick Planner
             </button>
           </div>
 
@@ -347,11 +340,19 @@ Powered by AI Travel Planner with Live APIs
               <div className="section-header">📝 Tell us about your trip</div>
 
               <div className="row">
-                <textarea
-                  value={request}
-                  onChange={(e) => setRequest(e.target.value)}
-                  placeholder="Example: Plan a 3-day trip to Goa from Delhi starting Feb 12. I want beach activities and heritage sites."
-                />
+                <div className="textarea-voice-wrapper">
+                  <textarea
+                    value={request}
+                    onChange={(e) => setRequest(e.target.value)}
+                    placeholder="Example: Plan a 3-day trip to Goa from Delhi starting Feb 12. I want beach activities and heritage sites."
+                  />
+                  <VoiceInputButton 
+                    onTranscript={(text) => setRequest(prev => prev ? `${prev} ${text}` : text)}
+                    disabled={planning}
+                    size="medium"
+                    className="textarea-voice-btn"
+                  />
+                </div>
 
                 <button className="btn" disabled={!canPlan} onClick={() => void handlePlan()}>
                   {planning ? "Planning..." : "Plan My Trip"}
@@ -360,21 +361,21 @@ Powered by AI Travel Planner with Live APIs
 
               <div className="examples" aria-label="Quick examples">
                 <button
-                  className="btn secondary"
+                  className="btn example-btn"
                   type="button"
                   onClick={() => handleExample("Plan a 3-day beach vacation to Goa from Delhi")}
                 >
                   🏖️ Goa Beach Vacation
                 </button>
                 <button
-                  className="btn secondary"
+                  className="btn example-btn"
                   type="button"
                   onClick={() => handleExample("Plan a 4-day heritage tour to Jaipur from Mumbai")}
                 >
                   🏰 Jaipur Heritage Tour
                 </button>
                 <button
-                  className="btn secondary"
+                  className="btn example-btn"
                   type="button"
                   onClick={() => handleExample("Plan a 5-day backwaters and nature trip to Kerala from Bangalore")}
                 >

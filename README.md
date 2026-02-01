@@ -37,8 +37,10 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 | **Natural Language Planning** | Describe your trip in plain English - AI creates complete itineraries |
 | **LangChain ReAct Agent**     | Intelligent agent that reasons and acts to find the best options      |
 | **Groq LLM (Llama 3.3 70B)**  | Ultra-fast AI responses with state-of-the-art language model          |
-| **Floating Chatbot**          | Always-accessible AI assistant popup in bottom-right corner           |
+| **Voyager Chatbot**           | Friendly AI assistant with robot avatar and quick prompts             |
+| **Voice Input (STT)**         | Speak your travel requests using Web Speech API                       |
 | **Form-Based Planning**       | Easy trip planning with dropdown menus and date pickers               |
+| **Smart Search**              | Search destinations from navbar - redirects to AI chatbot             |
 
 ### 🔐 Authentication & User Management
 
@@ -79,13 +81,15 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 
 ### 🎨 Modern UI/UX
 
-| Feature                    | Description                                                    |
-| -------------------------- | -------------------------------------------------------------- |
-| **3D Card Carousel**       | Beautiful destination cards with tilt effects                  |
-| **Adventure Modal**        | Explore adventure categories (Beach, Mountain, City, Wildlife) |
-| **Responsive Design**      | Works beautifully on desktop, tablet, and mobile               |
-| **Dark Theme**             | Professional dark UI with gradient accents                     |
-| **Multi-language Support** | Internationalization ready                                     |
+| Feature                    | Description                                         |
+| -------------------------- | --------------------------------------------------- |
+| **3D Card Carousel**       | Beautiful destination cards with tilt effects       |
+| **Discover Dropdown**      | Search destinations with 8 popular quick picks      |
+| **Explore Menu**           | Quick access to Trip Progress, GPS, Budget & Alerts |
+| **Responsive Design**      | Works beautifully on desktop, tablet, and mobile    |
+| **Dark Theme**             | Professional dark UI with gradient accents          |
+| **Voice Input Button**     | Microphone icon for speech-to-text input            |
+| **Multi-language Support** | Internationalization ready                          |
 
 ---
 
@@ -170,14 +174,15 @@ ai-travel-planner/
 │   │   │
 │   │   ├── 📁 components/               # React components
 │   │   │   ├── AuthModal.tsx            # Login/Register with Google OAuth
-│   │   │   ├── ChatBotPopup.tsx         # Floating AI chatbot
+│   │   │   ├── ChatBotPopup.tsx         # Voyager AI chatbot with voice input
+│   │   │   ├── VoiceInputButton.tsx     # Speech-to-text microphone button
 │   │   │   ├── HeroSection.tsx          # Hero section with video & cards
 │   │   │   ├── HotDestinations.tsx      # 3D carousel destinations
-│   │   │   ├── QuickAccessPanel.tsx     # Travel command center
 │   │   │   ├── TripPlannerForm.tsx      # Form-based trip planning
 │   │   │   ├── FlightTracker.tsx        # Flight status & delays
 │   │   │   ├── BudgetTracker.tsx        # Budget management
 │   │   │   ├── UserProfile.tsx          # User profile modal
+│   │   │   ├── NavbarDark.tsx           # Navbar with Discover & Explore
 │   │   │   ├── NotificationCenter.tsx   # Alerts & notifications
 │   │   │   └── ...more components
 │   │   │
@@ -393,12 +398,13 @@ npm run dev
 - 3D tilted destination cards carousel
 - Quick access travel command center
 
-### 🤖 AI Chatbot
+### 🤖 AI Chatbot (Voyager)
 
-- Floating assistant in bottom-right
-- Natural language trip planning
-- Quick prompts for common queries
-- Professional cyan/blue theme
+- Friendly robot avatar with floating animation
+- Voice input with microphone button
+- Quick prompts for common queries (Flights, Hotels, Trip plans)
+- Professional purple/blue gradient theme
+- Seamless integration with Discover & Explore search
 
 ### 🔐 Google Sign-In
 

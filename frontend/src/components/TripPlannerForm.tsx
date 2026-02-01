@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import VoiceInputButton from './VoiceInputButton';
 
 interface TripPlannerFormProps {
   onSubmit: (formData: TripFormData) => void;
@@ -16,26 +17,32 @@ export interface TripFormData {
   preferences: string;
 }
 
-const TRIP_TYPES = [
-  { value: 'leisure', label: '🏖️ Leisure & Relaxation' },
-  { value: 'adventure', label: '🏔️ Adventure & Outdoors' },
-  { value: 'cultural', label: '🏛️ Cultural & Heritage' },
-  { value: 'romantic', label: '💑 Romantic Getaway' },
-  { value: 'family', label: '👨‍👩‍👧‍👦 Family Trip' },
-  { value: 'business', label: '💼 Business + Leisure' },
-  { value: 'spiritual', label: '🙏 Spiritual & Wellness' },
+const TRIP_STYLES = [
+  { value: 'leisure-budget', label: '🏖️ Relaxed & Budget-friendly' },
+  { value: 'leisure-comfort', label: '🌴 Relaxed & Comfortable' },
+  { value: 'adventure-budget', label: '🏔️ Adventure & Budget' },
+  { value: 'adventure-premium', label: '⛰️ Adventure & Premium' },
+  { value: 'cultural-budget', label: '🏛️ Cultural & Budget' },
+  { value: 'cultural-premium', label: '🎭 Cultural & Premium' },
+  { value: 'romantic-comfort', label: '💑 Romantic Getaway' },
+  { value: 'romantic-luxury', label: '💕 Romantic & Luxury' },
+  { value: 'family-moderate', label: '👨‍👩‍👧‍👦 Family-friendly' },
+  { value: 'business-premium', label: '💼 Business + Leisure' },
+  { value: 'spiritual-budget', label: '🙏 Spiritual & Simple' },
+  { value: 'luxury-all', label: '👑 All-out Luxury' },
 ];
 
-const BUDGET_OPTIONS = [
-  { value: 'budget', label: '💰 Budget (Under ₹15,000)' },
-  { value: 'moderate', label: '💵 Moderate (₹15,000 - ₹40,000)' },
-  { value: 'premium', label: '💎 Premium (₹40,000 - ₹80,000)' },
-  { value: 'luxury', label: '👑 Luxury (Above ₹80,000)' },
+const TRAVELER_OPTIONS = [
+  { value: '1-solo', label: '🧳 Solo traveler' },
+  { value: '2-couple', label: '💑 Couple (2)' },
+  { value: '3-small', label: '👨‍👩‍👧 Small group (3-4)' },
+  { value: '5-medium', label: '👥 Medium group (5-6)' },
+  { value: '7-large', label: '👪 Large group (7+)' },
 ];
 
-const POPULAR_DESTINATIONS = [
-  'Goa', 'Jaipur', 'Kerala', 'Manali', 'Udaipur', 'Rishikesh', 
-  'Andaman', 'Ladakh', 'Darjeeling', 'Munnar', 'Varanasi', 'Agra'
+const POPULAR_CITIES = [
+  'Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad',
+  'Goa', 'Jaipur', 'Kerala', 'Manali', 'Udaipur', 'Rishikesh', 'Andaman', 'Ladakh'
 ];
 
 export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFormProps) {
@@ -49,12 +56,33 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
     tripType: 'leisure',
     preferences: ''
   });
+  const [travelerStyle, setTravelerStyle] = useState('2-couple');
+  const [tripStyle, setTripStyle] = useState('leisure-comfort');
+  const [showPreferences, setShowPreferences] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'travelers' ? parseInt(value) || 1 : value
+      [name]: value
+    }));
+  };
+
+  const handleTravelerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setTravelerStyle(value);
+    const travelers = parseInt(value.split('-')[0]) || 2;
+    setFormData(prev => ({ ...prev, travelers }));
+  };
+
+  const handleTripStyleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setTripStyle(value);
+    const [tripType, budget] = value.split('-');
+    setFormData(prev => ({ 
+      ...prev, 
+      tripType: tripType || 'leisure',
+      budget: budget || 'moderate'
     }));
   };
 
@@ -69,180 +97,124 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
   const minDate = tomorrow.toISOString().split('T')[0];
 
   return (
-    <form onSubmit={handleSubmit} className="trip-form-container">
-      <div className="trip-form-grid">
-        {/* Source City */}
-        <div className="trip-form-group">
-          <label>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
-            </svg>
-            From (City)
-          </label>
+    <form onSubmit={handleSubmit} className="trip-form-compact">
+      {/* Route Row: From → To */}
+      <div className="form-row route-row">
+        <div className="form-field">
           <input
             type="text"
             name="source"
             value={formData.source}
             onChange={handleChange}
-            placeholder="e.g., Delhi, Mumbai"
+            placeholder="From city..."
             required
-            list="source-cities"
+            list="all-cities"
           />
-          <datalist id="source-cities">
-            {['Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad'].map(city => (
-              <option key={city} value={city} />
-            ))}
-          </datalist>
         </div>
-
-        {/* Destination */}
-        <div className="trip-form-group">
-          <label>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            To (Destination)
-          </label>
+        <div className="route-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <div className="form-field">
           <input
             type="text"
             name="destination"
             value={formData.destination}
             onChange={handleChange}
-            placeholder="e.g., Goa, Jaipur"
+            placeholder="To destination..."
             required
-            list="destination-cities"
-          />
-          <datalist id="destination-cities">
-            {POPULAR_DESTINATIONS.map(city => (
-              <option key={city} value={city} />
-            ))}
-          </datalist>
-        </div>
-
-        {/* Start Date */}
-        <div className="trip-form-group">
-          <label>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/>
-              <line x1="8" y1="2" x2="8" y2="6"/>
-              <line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
-            Start Date
-          </label>
-          <input
-            type="date"
-            name="startDate"
-            value={formData.startDate}
-            onChange={handleChange}
-            min={minDate}
-            required
+            list="all-cities"
           />
         </div>
+        <datalist id="all-cities">
+          {POPULAR_CITIES.map(city => (
+            <option key={city} value={city} />
+          ))}
+        </datalist>
+      </div>
 
-        {/* End Date */}
-        <div className="trip-form-group">
-          <label>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/>
-              <line x1="8" y1="2" x2="8" y2="6"/>
-              <line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
-            End Date
-          </label>
-          <input
-            type="date"
-            name="endDate"
-            value={formData.endDate}
-            onChange={handleChange}
-            min={formData.startDate || minDate}
-            required
-          />
+      {/* Dates Row */}
+      <div className="form-row dates-row">
+        <div className="form-field date-field">
+          <label>📅 Dates</label>
+          <div className="date-range">
+            <input
+              type="date"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
+              min={minDate}
+              required
+            />
+            <span className="date-separator">→</span>
+            <input
+              type="date"
+              name="endDate"
+              value={formData.endDate}
+              onChange={handleChange}
+              min={formData.startDate || minDate}
+              required
+            />
+          </div>
         </div>
+      </div>
 
-        {/* Number of Travelers */}
-        <div className="trip-form-group">
-          <label>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 00-3-3.87"/>
-              <path d="M16 3.13a4 4 0 010 7.75"/>
-            </svg>
-            Travelers
-          </label>
-          <select name="travelers" value={formData.travelers} onChange={handleChange}>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
-              <option key={n} value={n}>{n} {n === 1 ? 'Person' : 'People'}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Budget */}
-        <div className="trip-form-group">
-          <label>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <line x1="12" y1="1" x2="12" y2="23"/>
-              <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
-            </svg>
-            Budget (per person)
-          </label>
-          <select name="budget" value={formData.budget} onChange={handleChange}>
-            {BUDGET_OPTIONS.map(opt => (
+      {/* Options Row: Travelers & Trip Style */}
+      <div className="form-row options-row">
+        <div className="form-field">
+          <label>👥 Who's going</label>
+          <select value={travelerStyle} onChange={handleTravelerChange}>
+            {TRAVELER_OPTIONS.map(opt => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
         </div>
-
-        {/* Trip Type */}
-        <div className="trip-form-group full-width">
-          <label>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-              <polyline points="14,2 14,8 20,8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-            </svg>
-            Trip Type
-          </label>
-          <select name="tripType" value={formData.tripType} onChange={handleChange}>
-            {TRIP_TYPES.map(type => (
-              <option key={type.value} value={type.value}>{type.label}</option>
+        <div className="form-field">
+          <label>✨ Trip style</label>
+          <select value={tripStyle} onChange={handleTripStyleChange}>
+            {TRIP_STYLES.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
         </div>
-
-        {/* Additional Preferences */}
-        <div className="trip-form-group full-width">
-          <label>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-              <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-            </svg>
-            Additional Preferences (Optional)
-          </label>
-          <textarea
-            name="preferences"
-            value={formData.preferences}
-            onChange={handleChange}
-            placeholder="Any specific requirements? e.g., vegetarian food, wheelchair accessible, pet-friendly hotels..."
-            rows={3}
-          />
-        </div>
       </div>
 
-      <div className="trip-form-submit">
-        <button type="submit" className="btn" disabled={isPlanning}>
-          {isPlanning ? (
-            <>⏳ Planning your trip...</>
-          ) : (
-            <>✨ Generate My Itinerary</>
-          )}
+      {/* Optional Preferences Toggle */}
+      <div className="preferences-toggle">
+        <button 
+          type="button" 
+          className="toggle-btn"
+          onClick={() => setShowPreferences(!showPreferences)}
+        >
+          {showPreferences ? '➖' : '➕'} Special requests
         </button>
+        {showPreferences && (
+          <div className="preferences-input">
+            <VoiceInputButton 
+              onTranscript={(text) => setFormData(prev => ({ 
+                ...prev, 
+                preferences: prev.preferences ? `${prev.preferences} ${text}` : text 
+              }))}
+              disabled={isPlanning}
+              size="small"
+              className="preferences-voice-btn"
+            />
+            <textarea
+              name="preferences"
+              value={formData.preferences}
+              onChange={handleChange}
+              placeholder="Vegetarian food, wheelchair access, pet-friendly..."
+              rows={2}
+            />
+          </div>
+        )}
       </div>
+
+      {/* Submit */}
+      <button type="submit" className="btn submit-btn" disabled={isPlanning}>
+        {isPlanning ? '⏳ Planning...' : '✨ Plan My Trip'}
+      </button>
     </form>
   );
 }

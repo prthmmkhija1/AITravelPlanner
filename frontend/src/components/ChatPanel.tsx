@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 
 import { planTrip } from "../api";
 import type { ChatMessage } from "../types";
+import VoiceInputButton from "./VoiceInputButton";
 
 export default function ChatPanel() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -48,6 +49,11 @@ export default function ChatPanel() {
         </div>
 
         <div className="chat-input-row">
+          <VoiceInputButton 
+            onTranscript={(text) => setInput(prev => prev ? `${prev} ${text}` : text)}
+            disabled={loading}
+            size="medium"
+          />
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}

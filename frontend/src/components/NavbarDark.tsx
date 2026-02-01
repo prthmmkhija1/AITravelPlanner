@@ -18,9 +18,47 @@ interface NavbarDarkProps {
   onSearch?: (query: string) => void;
   onPlanTrip?: () => void;
   onDestinationSelect?: (destination: string) => void;
+  onChatbotOpen?: (prompt: string) => void;
   isLoggedIn: boolean;
   userName?: string;
 }
+
+const EXPLORE_FEATURES = [
+  {
+    id: 'trips',
+    title: 'Trip Progress',
+    description: 'Track your journey',
+    icon: '🗺️',
+    color: '#10b981',
+    stats: 'Live Updates'
+  },
+  {
+    id: 'location',
+    title: 'GPS Location',
+    description: 'Real-time coordinates',
+    icon: '📍',
+    color: '#ef4444',
+    stats: 'Precise'
+  },
+  {
+    id: 'budget',
+    title: 'Budget Tracker',
+    description: 'Monitor expenses',
+    icon: '💰',
+    color: '#f59e0b',
+    stats: 'Smart Analysis',
+    requiresAuth: true
+  },
+  {
+    id: 'alerts',
+    title: 'Price Alerts',
+    description: 'Get notified',
+    icon: '🔔',
+    color: '#8b5cf6',
+    stats: '24/7 Monitoring',
+    requiresAuth: true
+  }
+];
 
 const DISCOVER_DESTINATIONS = [
   { name: 'Indonesia', emoji: '🏝️', tagline: 'Tropical Paradise' },
@@ -39,21 +77,28 @@ export default function NavbarDark({
   onBudgetClick,
   onNotificationClick,
   onFlightTrackerClick,
+  onTripTrackingClick,
+  onLocationTrackerClick,
   onAuthClick,
   onLogout,
   onSavedTripsClick,
   onDestinationSelect,
+  onChatbotOpen,
   isLoggedIn,
   userName 
 }: NavbarDarkProps) {
   const { t } = useTranslation();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showDiscoverMenu, setShowDiscoverMenu] = useState(false);
+  const [showExploreMenu, setShowExploreMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [discoverSearch, setDiscoverSearch] = useState('');
+  const [exploreSearch, setExploreSearch] = useState('');
   
   const profileRef = useRef<HTMLDivElement>(null);
   const discoverRef = useRef<HTMLDivElement>(null);
+  const exploreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -70,6 +115,9 @@ export default function NavbarDark({
       if (discoverRef.current && !discoverRef.current.contains(event.target as Node)) {
         setShowDiscoverMenu(false);
       }
+      if (exploreRef.current && !exploreRef.current.contains(event.target as Node)) {
+        setShowExploreMenu(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -82,7 +130,44 @@ export default function NavbarDark({
 
   const handleDestinationClick = (destination: string) => {
     setShowDiscoverMenu(false);
-    onDestinationSelect?.(destination);
+    const prompt = `Plan a trip to ${destination}`;
+    onChatbotOpen?.(prompt);
+  };
+
+  const handleDiscoverSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (discoverSearch.trim()) {
+      setShowDiscoverMenu(false);
+      onChatbotOpen?.(discoverSearch.trim());
+      setDiscoverSearch('');
+    }
+  };
+
+  const handleExploreSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (exploreSearch.trim()) {
+      setShowExploreMenu(false);
+      onChatbotOpen?.(exploreSearch.trim());
+      setExploreSearch('');
+    }
+  };
+
+  const handleExploreClick = (id: string) => {
+    setShowExploreMenu(false);
+    switch (id) {
+      case 'trips':
+        onTripTrackingClick?.();
+        break;
+      case 'location':
+        onLocationTrackerClick?.();
+        break;
+      case 'budget':
+        if (isLoggedIn) onBudgetClick?.();
+        break;
+      case 'alerts':
+        if (isLoggedIn) onNotificationClick?.();
+        break;
+    }
   };
 
   return (
@@ -114,6 +199,21 @@ export default function NavbarDark({
             
             {showDiscoverMenu && (
               <div className="discover-dropdown">
+                <form className="discover-search-form" onSubmit={handleDiscoverSearch}>
+                  <input
+                    type="text"
+                    placeholder="Search destinations..."
+                    value={discoverSearch}
+                    onChange={(e) => setDiscoverSearch(e.target.value)}
+                    className="discover-search-input"
+                  />
+                  <button type="submit" className="discover-search-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="11" cy="11" r="8"/>
+                      <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                  </button>
+                </form>
                 <div className="discover-dropdown-header">
                   <span>🌍 Popular Destinations</span>
                 </div>
@@ -134,7 +234,64 @@ export default function NavbarDark({
 
           <button className="nav-link" onClick={onDashboardClick}>{t('nav.myTrips')}</button>
           <button className="nav-link" onClick={onFlightTrackerClick}>{t('nav.flights')}</button>
-          <button className="nav-link" onClick={onBudgetClick}>{t('nav.budget')}</button>
+          
+          {/* Explore Dropdown */}
+          <div className="nav-dropdown-wrapper" ref={exploreRef}>
+            <button 
+              className={`nav-link ${showExploreMenu ? 'active' : ''}`}
+              onMouseEnter={() => setShowExploreMenu(true)}
+              onClick={() => setShowExploreMenu(!showExploreMenu)}
+            >
+              Explore
+              <svg className={`nav-chevron ${showExploreMenu ? 'open' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            
+            {showExploreMenu && (
+              <div className="explore-dropdown" onMouseLeave={() => setShowExploreMenu(false)}>
+                <form className="explore-search-form" onSubmit={handleExploreSearch}>
+                  <input
+                    type="text"
+                    placeholder="Ask anything about travel..."
+                    value={exploreSearch}
+                    onChange={(e) => setExploreSearch(e.target.value)}
+                    className="explore-search-input"
+                  />
+                  <button type="submit" className="explore-search-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="11" cy="11" r="8"/>
+                      <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                  </button>
+                </form>
+                <div className="explore-dropdown-header">
+                  <span>🚀 Travel Command Center</span>
+                </div>
+                <div className="explore-grid">
+                  {EXPLORE_FEATURES.map((feature) => {
+                    const isDisabled = feature.requiresAuth && !isLoggedIn;
+                    return (
+                      <button 
+                        key={feature.id} 
+                        className={`explore-item ${isDisabled ? 'disabled' : ''}`}
+                        onClick={() => !isDisabled && handleExploreClick(feature.id)}
+                        style={{ '--feature-color': feature.color } as React.CSSProperties}
+                      >
+                        <span className="explore-icon">{feature.icon}</span>
+                        <div className="explore-info">
+                          <span className="explore-title">{feature.title}</span>
+                          <span className="explore-desc">{feature.description}</span>
+                        </div>
+                        <span className="explore-stats">{feature.stats}</span>
+                        {isDisabled && <span className="explore-lock">🔒</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="navbar-dark-right">
@@ -229,9 +386,28 @@ export default function NavbarDark({
               ))}
             </div>
           </div>
+          <div className="mobile-menu-explore">
+            <span className="mobile-menu-label">🚀 Explore</span>
+            <div className="mobile-explore-grid">
+              {EXPLORE_FEATURES.map((feature) => {
+                const isDisabled = feature.requiresAuth && !isLoggedIn;
+                return (
+                  <button 
+                    key={feature.id}
+                    className={isDisabled ? 'disabled' : ''}
+                    onClick={() => { 
+                      if (!isDisabled) handleExploreClick(feature.id); 
+                      setShowMobileMenu(false); 
+                    }}
+                  >
+                    {feature.icon} {feature.title}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
           <button onClick={() => { onDashboardClick?.(); setShowMobileMenu(false); }}>My Trips</button>
           <button onClick={() => { onFlightTrackerClick?.(); setShowMobileMenu(false); }}>Flights</button>
-          <button onClick={() => { onBudgetClick?.(); setShowMobileMenu(false); }}>Budget</button>
           {!isLoggedIn && (
             <button onClick={() => { onAuthClick?.(); setShowMobileMenu(false); }} className="mobile-login">Sign In</button>
           )}
