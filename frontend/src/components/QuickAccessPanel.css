@@ -1,0 +1,482 @@
+/* Travel Command Center - Quick Access */
+.travel-command-center {
+  position: relative;
+  padding: 100px 20px;
+  overflow: hidden;
+}
+
+/* Background with Tourist Photo - Like Hero Section */
+.command-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(
+      180deg,
+      rgba(10, 22, 40, 0.5) 0%,
+      rgba(15, 23, 42, 0.4) 50%,
+      rgba(10, 22, 40, 0.5) 100%
+    ),
+    url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop');
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-grid {
+  display: none;
+}
+
+.bg-glow {
+  display: none;
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+}
+
+.bg-glow.glow-1 {
+  width: 500px;
+  height: 500px;
+  background: #f97316;
+  top: -100px;
+  left: -100px;
+}
+
+.bg-glow.glow-2 {
+  width: 400px;
+  height: 400px;
+  background: #3b82f6;
+  bottom: -100px;
+  right: -100px;
+}
+
+/* Content */
+.command-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.command-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.command-header .header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+  border: 2px solid rgba(249, 115, 22, 0.5);
+  border-radius: 50px;
+  color: #f97316;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(249, 115, 22, 0.15);
+  backdrop-filter: blur(10px);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.command-header h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #fff 0%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.command-header p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Layout */
+.command-layout {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* Globe Section */
+.globe-section {
+  display: flex;
+  justify-content: center;
+}
+
+.globe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.globe-wrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  background: rgba(10, 22, 40, 0.8);
+  border-radius: 50%;
+  border: 2px solid rgba(249, 115, 22, 0.3);
+  box-shadow: 
+    0 0 60px rgba(249, 115, 22, 0.2),
+    0 0 100px rgba(249, 115, 22, 0.1),
+    inset 0 0 40px rgba(249, 115, 22, 0.1);
+  padding: 10px;
+}
+
+.globe-svg {
+  width: 100%;
+  height: 100%;
+  animation: globeRotate 30s linear infinite;
+  filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.3));
+}
+
+@keyframes globeRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.orbit-group {
+  transform-origin: center;
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+}
+
+.orbit-group.active {
+  opacity: 1;
+}
+
+.orbit-ring {
+  animation: orbitDash 10s linear infinite;
+}
+
+@keyframes orbitDash {
+  to { stroke-dashoffset: -100; }
+}
+
+.orbit-dot {
+  animation: orbitPulse 2s ease-in-out infinite;
+}
+
+@keyframes orbitPulse {
+  0%, 100% { r: 6; opacity: 1; }
+  50% { r: 8; opacity: 0.7; }
+}
+
+.globe-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  color: white;
+}
+
+.globe-center svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Globe Stats */
+.globe-stats {
+  display: flex;
+  gap: 30px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f97316;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Quick Cards Section */
+.quick-cards-section {
+  flex: 1;
+}
+
+.quick-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.quick-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.quick-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--card-color);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.quick-card:hover:not(.disabled) {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: var(--card-color);
+  transform: translateX(8px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.quick-card:hover:not(.disabled)::before {
+  opacity: 1;
+  width: 6px;
+}
+
+.quick-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quick-card-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.quick-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.quick-card-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.quick-card-content p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 6px;
+}
+
+.quick-card-stats {
+  font-size: 0.7rem;
+  color: var(--card-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quick-card-arrow {
+  width: 24px;
+  height: 24px;
+  color: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.quick-card:hover:not(.disabled) .quick-card-arrow {
+  color: var(--card-color);
+  transform: translateX(4px);
+}
+
+.login-required {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 8px;
+  background: rgba(239, 68, 68, 0.2);
+  border-radius: 4px;
+  font-size: 0.65rem;
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* Weather Strip */
+.weather-strip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(30, 58, 95, 0.6) 0%, rgba(45, 85, 130, 0.4) 100%);
+  border-radius: 16px;
+  margin-top: 40px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
+}
+
+.weather-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.weather-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.weather-icon {
+  font-size: 1.8rem;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.weather-city {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.weather-temp {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-orange);
+}
+
+.weather-desc {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: capitalize;
+}
+
+.weather-loading {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  padding: 16px;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .command-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .globe-section {
+    order: 2;
+  }
+  
+  .quick-cards-section {
+    order: 1;
+  }
+  
+  .weather-strip {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .travel-command-center {
+    padding: 60px 16px;
+  }
+  
+  .command-header h2 {
+    font-size: 2rem;
+  }
+  
+  .quick-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .globe-wrapper {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .globe-stats {
+    gap: 20px;
+  }
+  
+  .stat-value {
+    font-size: 1.2rem;
+  }
+  
+  .weather-strip {
+    gap: 12px;
+    padding: 16px;
+  }
+  
+  .weather-item {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+  
+  .weather-icon {
+    font-size: 1.4rem;
+  }
+  
+  .weather-city {
+    font-size: 0.75rem;
+  }
+  
+  .weather-temp {
+    font-size: 0.9rem;
+  }
+}

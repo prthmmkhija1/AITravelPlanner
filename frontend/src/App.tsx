@@ -3,13 +3,12 @@ import { useMemo, useState, useEffect } from "react";
 import { planTrip, generatePDF, isAuthenticated, getStoredUser, logout, saveTrip } from "./api";
 import type { PlanTripResult } from "./types";
 import Footer from "./components/Footer";
-import Hero from "./components/Hero";
-import Navbar from "./components/Navbar";
+import HeroSection from "./components/HeroSection";
+import NavbarDark from "./components/NavbarDark";
 import UserProfile from "./components/UserProfile";
 import TravelDashboard from "./components/TravelDashboard";
 import LiveTracking from "./components/LiveTracking";
 import HotDestinations from "./components/HotDestinations";
-import DynamicMap from "./components/DynamicMap";
 import AuthModal from "./components/AuthModal";
 import BudgetTracker from "./components/BudgetTracker";
 import NotificationCenter from "./components/NotificationCenter";
@@ -21,6 +20,8 @@ import ChatBotPopup from "./components/ChatBotPopup";
 import AdventureModal from "./components/AdventureModal";
 import SavedTrips from "./components/SavedTrips";
 import TripPlannerForm, { TripFormData } from "./components/TripPlannerForm";
+import WelcomePopup from "./components/WelcomePopup";
+import SettingsPopup from "./components/SettingsPopup";
 
 type HistoryEntry = {
   request: string;
@@ -64,6 +65,8 @@ export default function App() {
   const [showAdventure, setShowAdventure] = useState(false);
   const [showSavedTrips, setShowSavedTrips] = useState(false);
   const [plannerMode, setPlannerMode] = useState<'text' | 'form'>('form');
+  const [showWelcomePopup, setShowWelcomePopup] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
 
   // Check auth on mount
   useEffect(() => {
@@ -259,8 +262,8 @@ Powered by AI Travel Planner with Live APIs
   };
 
   return (
-    <div className="page">
-      <Navbar 
+    <div className="page dark-theme">
+      <NavbarDark 
         onProfileClick={() => setShowProfile(true)}
         onDashboardClick={() => setShowDashboard(true)}
         onBudgetClick={() => setShowBudget(true)}
@@ -272,12 +275,20 @@ Powered by AI Travel Planner with Live APIs
         onLogout={handleLogout}
         onAdventureClick={() => setShowAdventure(true)}
         onSavedTripsClick={() => setShowSavedTrips(true)}
-        onSearch={handleNavSearch}
+        onPlanTrip={() => setShowChatBot(true)}
         isLoggedIn={isLoggedIn}
         userName={user?.username}
       />
       
-      <Hero />
+      <HeroSection 
+        onExplore={() => {
+          document.getElementById('plan-trip')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onDestinationClick={(destination: string) => {
+          setRequest(`Plan a trip to ${destination}`);
+          setShowChatBot(true);
+        }}
+      />
 
       {/* Quick Access Panel for all tracking features */}
       <QuickAccessPanel
@@ -291,8 +302,6 @@ Powered by AI Travel Planner with Live APIs
       />
       
       <HotDestinations />
-      
-      <DynamicMap />
 
       {/* Trip Planner Section */}
       <div className="page-section" id="plan-trip">
@@ -311,7 +320,7 @@ Powered by AI Travel Planner with Live APIs
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                 <path d="M9 11H3v10h6V11zM21 3h-6v18h6V3zM15 7H9v14h6V7z"/>
               </svg>
-              Easy Form
+              Quick Planner
             </button>
             <button 
               className={`mode-btn ${plannerMode === 'text' ? 'active' : ''}`}
@@ -320,7 +329,7 @@ Powered by AI Travel Planner with Live APIs
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                 <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
               </svg>
-              Free Text
+              Describe Trip
             </button>
           </div>
 
@@ -508,6 +517,27 @@ Powered by AI Travel Planner with Live APIs
           setResult({ status: 'success', trip_plan: tripPlan });
           setShowSavedTrips(false);
         }}
+      />
+
+      {/* Welcome Popup - Shows on first visit */}
+      {showWelcomePopup && (
+        <WelcomePopup
+          onClose={() => setShowWelcomePopup(false)}
+          onOpenChat={() => {
+            setShowWelcomePopup(false);
+            setShowChatBot(true);
+          }}
+          onOpenSettings={() => {
+            setShowWelcomePopup(false);
+            setShowSettings(true);
+          }}
+        />
+      )}
+
+      {/* Settings Popup */}
+      <SettingsPopup
+        isVisible={showSettings}
+        onClose={() => setShowSettings(false)}
       />
 
       {/* Floating Chatbot */}

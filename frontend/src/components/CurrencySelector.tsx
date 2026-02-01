@@ -4,8 +4,22 @@ import { CurrencyCode } from '../services/currencyService';
 import './CurrencySelector.css';
 
 interface CurrencySelectorProps {
-  variant?: 'dropdown' | 'compact';
+  variant?: 'dropdown' | 'compact' | 'navbar';
 }
+
+// Currency emoji symbols for navbar
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  INR: '₹',
+  JPY: '¥',
+  AUD: 'A$',
+  CAD: 'C$',
+  SGD: 'S$',
+  AED: 'د.إ',
+  THB: '฿'
+};
 
 export default function CurrencySelector({ variant = 'dropdown' }: CurrencySelectorProps) {
   const { currency, currencies, setCurrency, isLoading } = useCurrency();
@@ -13,6 +27,7 @@ export default function CurrencySelector({ variant = 'dropdown' }: CurrencySelec
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const currentCurrency = currencies.find(c => c.code === currency);
+  const currencySymbol = CURRENCY_SYMBOLS[currency] || currentCurrency?.symbol || currency;
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -29,6 +44,53 @@ export default function CurrencySelector({ variant = 'dropdown' }: CurrencySelec
     setCurrency(code);
     setIsOpen(false);
   };
+
+  // Navbar variant - emoji only, matches language selector size
+  if (variant === 'navbar') {
+    return (
+      <div className="currency-selector-navbar" ref={dropdownRef}>
+        <button 
+          className="navbar-selector-btn"
+          onClick={() => setIsOpen(!isOpen)}
+          disabled={isLoading}
+          title={`${currency} - ${currentCurrency?.name}`}
+        >
+          <span className="selector-symbol">{currencySymbol}</span>
+          <svg className={`selector-chevron ${isOpen ? 'open' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        {isOpen && (
+          <div className="navbar-dropdown currency-dropdown-navbar">
+            <div className="navbar-dropdown-header">
+              <span>💱</span> Select Currency
+            </div>
+            <div className="navbar-dropdown-list">
+              {currencies.map((curr) => (
+                <button
+                  key={curr.code}
+                  className={`navbar-dropdown-option ${currency === curr.code ? 'selected' : ''}`}
+                  onClick={() => handleSelect(curr.code)}
+                >
+                  <span className="option-symbol">{CURRENCY_SYMBOLS[curr.code] || curr.symbol}</span>
+                  <div className="option-info">
+                    <span className="option-code">{curr.code}</span>
+                    <span className="option-name">{curr.name}</span>
+                  </div>
+                  {currency === curr.code && (
+                    <svg className="option-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   if (variant === 'compact') {
     return (

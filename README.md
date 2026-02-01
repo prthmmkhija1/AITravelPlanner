@@ -2,19 +2,29 @@
 
 <div align="center">
 
+![AI Travel Planner Banner](https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&h=400&fit=crop)
+
 **An intelligent, full-stack travel planning assistant powered by AI**
 
 _Plan your entire trip using natural language - find flights, hotels, activities with real-time data and track everything live!_
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.128-009688?logo=fastapi)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python)](https://python.org)
-[![LangChain](https://img.shields.io/badge/LangChain-AI_Agent-green)](https://langchain.com)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)](https://typescriptlang.org)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.128-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python)](https://python.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)](https://typescriptlang.org)
+[![LangChain](https://img.shields.io/badge/LangChain-AI_Agent-green?style=for-the-badge)](https://langchain.com)
 
-[Features](#-features) • [Demo](#-screenshots) • [Installation](#-installation) • [API Setup](#-api-setup) • [Documentation](#-documentation)
+[Features](#-features) • [Demo](#-screenshots) • [Installation](#-installation) • [API Setup](#-api-setup) • [Tech Stack](#-tech-stack)
 
 </div>
+
+---
+
+## 👨‍💻 Author
+
+**Pratham Makhija**
+
+[![GitHub](https://img.shields.io/badge/GitHub-prthmmkhija1-181717?style=for-the-badge&logo=github)](https://github.com/prthmmkhija1)
 
 ---
 
@@ -58,15 +68,6 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 | **Interactive Maps**         | OpenStreetMap + Leaflet   | FREE      |
 | **Flight Status Monitoring** | Amadeus Flight Status API | FREE tier |
 
-### 🔍 Smart Search
-
-| Feature                       | Description                                                    |
-| ----------------------------- | -------------------------------------------------------------- |
-| **Global Search Bar**         | Search destinations, hotels, flights from navbar               |
-| **Auto-Complete Suggestions** | Real-time suggestions as you type                              |
-| **Categorized Results**       | Results organized by destinations, hotels, flights, activities |
-| **Direct Chat Integration**   | Search results open chatbot with your query                    |
-
 ### 💰 Budget & Alerts
 
 | Feature                  | Description                                                      |
@@ -74,15 +75,17 @@ _Plan your entire trip using natural language - find flights, hotels, activities
 | **Budget Tracker**       | Track expenses across 7 categories (flights, hotels, food, etc.) |
 | **Price Alerts**         | Get notified when flight/hotel prices drop                       |
 | **Notifications Center** | Centralized notification management                              |
+| **Currency Converter**   | Multi-currency support with real-time rates                      |
 
 ### 🎨 Modern UI/UX
 
-| Feature                | Description                                                    |
-| ---------------------- | -------------------------------------------------------------- |
-| **Adventure Modal**    | Explore adventure categories (Beach, Mountain, City, Wildlife) |
-| **Responsive Design**  | Works beautifully on desktop, tablet, and mobile               |
-| **Centered Modals**    | All modals appear as proper popups, not inline                 |
-| **Hero Video Section** | Auto-playing travel video backgrounds                          |
+| Feature                    | Description                                                    |
+| -------------------------- | -------------------------------------------------------------- |
+| **3D Card Carousel**       | Beautiful destination cards with tilt effects                  |
+| **Adventure Modal**        | Explore adventure categories (Beach, Mountain, City, Wildlife) |
+| **Responsive Design**      | Works beautifully on desktop, tablet, and mobile               |
+| **Dark Theme**             | Professional dark UI with gradient accents                     |
+| **Multi-language Support** | Internationalization ready                                     |
 
 ---
 
@@ -163,51 +166,42 @@ ai-travel-planner/
 │   │   ├── App.tsx                      # Main app component
 │   │   ├── api.ts                       # API client functions
 │   │   ├── types.ts                     # TypeScript definitions
-│   │   ├── styles.css                   # Global styles
+│   │   ├── styles.css                   # Global styles (4000+ lines)
 │   │   │
-│   │   ├── 📁 components/
+│   │   ├── 📁 components/               # React components
 │   │   │   ├── AuthModal.tsx            # Login/Register with Google OAuth
 │   │   │   ├── ChatBotPopup.tsx         # Floating AI chatbot
+│   │   │   ├── HeroSection.tsx          # Hero section with video & cards
+│   │   │   ├── HotDestinations.tsx      # 3D carousel destinations
+│   │   │   ├── QuickAccessPanel.tsx     # Travel command center
 │   │   │   ├── TripPlannerForm.tsx      # Form-based trip planning
-│   │   │   ├── AdventureModal.tsx       # Adventure categories modal
 │   │   │   ├── FlightTracker.tsx        # Flight status & delays
-│   │   │   ├── LocationTracker.tsx      # GPS location tracking
-│   │   │   ├── TripTracking.tsx         # Trip progress tracking
-│   │   │   ├── TrackingMap.tsx          # Leaflet map component
 │   │   │   ├── BudgetTracker.tsx        # Budget management
+│   │   │   ├── UserProfile.tsx          # User profile modal
 │   │   │   ├── NotificationCenter.tsx   # Alerts & notifications
-│   │   │   ├── UserProfile.tsx          # User profile with Google data
-│   │   │   ├── TravelDashboard.tsx      # Trip management
-│   │   │   ├── Navbar.tsx               # Navigation with search
-│   │   │   ├── Hero.tsx                 # Video hero section
-│   │   │   ├── FeatureCards.tsx         # Feature showcase
-│   │   │   └── QuickAccessPanel.tsx     # Quick access buttons
+│   │   │   └── ...more components
 │   │   │
-│   │   ├── 📁 hooks/
-│   │   │   └── useWebSocket.ts          # WebSocket hook for real-time
+│   │   ├── 📁 contexts/                 # React contexts
+│   │   │   └── CurrencyContext.tsx      # Currency management
 │   │   │
-│   │   └── 📁 services/
-│   │       └── locationService.ts       # Geolocation service
+│   │   ├── 📁 hooks/                    # Custom hooks
+│   │   │   └── useWebSocket.ts          # WebSocket for real-time
+│   │   │
+│   │   └── 📁 i18n/                     # Internationalization
+│   │       └── index.ts                 # Language translations
 │   │
-│   ├── .env                             # Frontend environment (Google OAuth)
 │   ├── index.html
 │   ├── package.json
 │   ├── vite.config.ts
 │   └── tsconfig.json
 │
 ├── 📁 docs/                             # Documentation
-│   ├── API_SETUP_GUIDE.md               # API keys setup guide
-│   ├── LIVE_TRACKING_GUIDE.md           # Live tracking documentation
-│   ├── QUICK_START_GUIDE.md             # Getting started
-│   └── UI_DESIGN_GUIDE.md               # UI/UX guidelines
+│   └── API_SETUP_GUIDE.md               # API keys setup guide
 │
-├── 📁 Assets/                           # Static assets (images)
-├── 📁 client/public/                    # Hero videos
-│
-├── .env                                 # Backend environment variables
-├── .gitignore
+├── .env                                 # Environment variables
+├── .gitignore                           # Git ignore rules
+├── package.json                         # Root package.json
 ├── requirements.txt                     # Python dependencies
-├── package.json                         # Root npm scripts
 └── README.md                            # This file
 ```
 
@@ -217,62 +211,63 @@ ai-travel-planner/
 
 ### Prerequisites
 
-| Requirement | Version | Check Command      |
-| ----------- | ------- | ------------------ |
-| Node.js     | v18+    | `node --version`   |
-| Python      | 3.10+   | `python --version` |
-| npm         | v8+     | `npm --version`    |
+- **Node.js** 18+ and npm
+- **Python** 3.10+
+- **Git**
 
-### Step 1: Clone Repository
+### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/prthmmkhija1/AITravelPlanner.git
-cd AITravelPlanner/ai-travel-planner
+git clone https://github.com/prthmmkhija1/ai-travel-planner.git
+cd ai-travel-planner
 ```
 
-### Step 2: Setup Python Backend
+### Step 2: Backend Setup
 
 ```bash
 # Create virtual environment
 python -m venv venv
 
-# Activate (Windows)
+# Activate virtual environment
+# Windows:
 venv\Scripts\activate
-
-# Activate (macOS/Linux)
+# macOS/Linux:
 source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
 ```
 
-### Step 3: Setup Frontend
+### Step 3: Frontend Setup
 
 ```bash
 cd frontend
 npm install
 ```
 
-### Step 4: Configure Environment
+### Step 4: Configure Environment Variables
 
-**Backend `.env`** (in project root):
+Create `.env` file in root directory:
 
 ```env
-# REQUIRED - AI Language Model
+# AI - Groq (Required)
 GROQ_API_KEY=your_groq_api_key
 
-# OPTIONAL - Real API Integrations
-AMADEUS_API_KEY=your_amadeus_api_key
-AMADEUS_API_SECRET=your_amadeus_api_secret
+# Flight Data - Amadeus (Optional)
+AMADEUS_CLIENT_ID=your_amadeus_client_id
+AMADEUS_CLIENT_SECRET=your_amadeus_client_secret
+
+# Hotel Data - RapidAPI (Optional)
 RAPIDAPI_KEY=your_rapidapi_key
+
+# Activities - Foursquare (Optional)
 FOURSQUARE_API_KEY=your_foursquare_api_key
 ```
 
-**Frontend `.env`** (in frontend folder):
+Create `frontend/.env`:
 
 ```env
-# Google OAuth (Optional - for Google Sign-In)
-VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
+VITE_GOOGLE_CLIENT_ID=your_google_client_id
 ```
 
 ### Step 5: Google OAuth Setup (Optional)
@@ -288,6 +283,8 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 
 ```bash
 cd backend
+python api_server.py
+# Or use uvicorn:
 uvicorn api_server:app --reload --port 8000
 ```
 
@@ -315,61 +312,6 @@ npm run dev
 | **Google OAuth** | [console.cloud.google.com](https://console.cloud.google.com)   | Unlimited          |
 
 > 📖 See [docs/API_SETUP_GUIDE.md](docs/API_SETUP_GUIDE.md) for detailed instructions.
-
----
-
-## 📸 Screenshots
-
-### Home Page with Hero Section
-
-- Auto-playing video backgrounds
-- Quick feature cards
-- AI-powered trip planning
-
-### Google Sign-In
-
-- One-click authentication
-- Profile picture integration
-- Secure OAuth 2.0
-
-### AI Chatbot Popup
-
-- Floating assistant in bottom-right
-- Natural language trip planning
-- Quick prompts for common queries
-
-### Smart Search
-
-- Real-time suggestions
-- Categorized results
-- Direct chat integration
-
----
-
-## 🧪 Tech Stack
-
-### Frontend
-
-- **React 18** - UI framework with hooks
-- **TypeScript** - Type safety
-- **Vite** - Build tool & dev server
-- **Leaflet** - Interactive maps
-- **Google Identity Services** - OAuth authentication
-
-### Backend
-
-- **FastAPI** - High-performance API
-- **SQLite** - Database
-- **LangChain** - AI agent framework
-- **Groq** - LLM inference (Llama 3.3 70B)
-- **ReportLab** - PDF generation
-
-### External APIs
-
-- **Amadeus** - Flight data
-- **Hotels.com** - Hotel data
-- **Foursquare** - Places & activities
-- **OpenStreetMap** - Map tiles
 
 ---
 
@@ -402,19 +344,89 @@ npm run dev
 | POST   | `/api/hotels`         | Search hotels     |
 | POST   | `/api/activities`     | Search activities |
 
+### Budget & Alerts
+
+| Method | Endpoint                       | Description      |
+| ------ | ------------------------------ | ---------------- |
+| POST   | `/api/budget`                  | Create budget    |
+| GET    | `/api/budget/{id}`             | Get budget       |
+| POST   | `/api/budget/{id}/transaction` | Add transaction  |
+| GET    | `/api/alerts`                  | Get price alerts |
+
+---
+
+## 🧪 Tech Stack
+
+### Frontend
+
+- **React 18** - UI framework with hooks
+- **TypeScript 5** - Type safety
+- **Vite** - Build tool & dev server
+- **Leaflet** - Interactive maps
+- **Google Identity Services** - OAuth authentication
+
+### Backend
+
+- **FastAPI** - High-performance async API
+- **Python 3.10+** - Backend language
+- **SQLite** - Lightweight database
+- **LangChain** - AI agent framework
+- **Groq** - LLM inference (Llama 3.3 70B)
+- **ReportLab** - PDF generation
+- **WebSocket** - Real-time communication
+
+### External APIs
+
+- **Amadeus** - Flight search & status
+- **Hotels.com (RapidAPI)** - Hotel search
+- **Foursquare** - Places & activities
+- **OpenStreetMap** - Map tiles
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Home Page
+
+- Professional dark theme with gradient accents
+- Hero section with video backgrounds
+- 3D tilted destination cards carousel
+- Quick access travel command center
+
+### 🤖 AI Chatbot
+
+- Floating assistant in bottom-right
+- Natural language trip planning
+- Quick prompts for common queries
+- Professional cyan/blue theme
+
+### 🔐 Google Sign-In
+
+- One-click authentication
+- Profile picture integration
+- Secure OAuth 2.0
+
+### 📍 Live Tracking
+
+- Real-time location tracking
+- Interactive Leaflet maps
+- Flight status monitoring
+
 ---
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Here's how you can help:
+
+1. **Fork** the repository
+2. **Create** your feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
 ---
 
-## 👨‍💻 Author
+## 📧 Contact
 
 **Pratham Makhija**
 
@@ -424,8 +436,8 @@ npm run dev
 
 <div align="center">
 
-**⭐ Star this repo if you find it helpful!**
+### ⭐ Star this repo if you find it helpful!
 
-Made with ❤️ for travelers everywhere
+**Made with ❤️ for travelers everywhere**
 
 </div>

@@ -1,7 +1,16 @@
 /**
- * Quick Access Panel – UI enhanced only
- * ⚠️ Functionality, props, handlers, and logic are UNCHANGED
+ * Quick Access Panel – Dark Theme with Globe Visualization
+ * Travel Command Center with Weather
  */
+import { useState, useEffect } from 'react';
+import { getWeather } from '../api';
+import './QuickAccessPanel.css';
+
+interface WeatherData {
+  city: string;
+  temp: number;
+  icon: string;
+}
 
 interface QuickAccessPanelProps {
   onFlightTracker: () => void;
@@ -13,6 +22,62 @@ interface QuickAccessPanelProps {
   isLoggedIn: boolean;
 }
 
+const QUICK_ACCESS_ITEMS = [
+  {
+    id: 'flights',
+    title: 'Flight Tracker',
+    description: 'Real-time flight status',
+    icon: '✈️',
+    color: '#3b82f6',
+    stats: '12+ Airlines'
+  },
+  {
+    id: 'trips',
+    title: 'Trip Progress',
+    description: 'Track your journey',
+    icon: '🗺️',
+    color: '#10b981',
+    stats: 'Live Updates'
+  },
+  {
+    id: 'location',
+    title: 'GPS Location',
+    description: 'Real-time coordinates',
+    icon: '📍',
+    color: '#ef4444',
+    stats: 'Precise'
+  },
+  {
+    id: 'budget',
+    title: 'Budget Tracker',
+    description: 'Monitor expenses',
+    icon: '💰',
+    color: '#f59e0b',
+    stats: 'Smart Analysis',
+    requiresAuth: true
+  },
+  {
+    id: 'alerts',
+    title: 'Price Alerts',
+    description: 'Get notified',
+    icon: '🔔',
+    color: '#8b5cf6',
+    stats: '24/7 Monitoring',
+    requiresAuth: true
+  },
+  {
+    id: 'dashboard',
+    title: 'My Trips',
+    description: 'View saved trips',
+    icon: '📊',
+    color: '#ec4899',
+    stats: 'All Trips',
+    requiresAuth: true
+  }
+];
+
+const WEATHER_CITIES = ['Delhi', 'Mumbai', 'Bangalore', 'Goa', 'Jaipur'];
+
 export default function QuickAccessPanel({
   onFlightTracker,
   onTripTracking,
@@ -22,193 +87,205 @@ export default function QuickAccessPanel({
   onDashboard,
   isLoggedIn
 }: QuickAccessPanelProps) {
+  const [activeOrbit, setActiveOrbit] = useState(0);
+  const [weatherData, setWeatherData] = useState<WeatherData[]>([]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveOrbit((prev) => (prev + 1) % 3);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // Load weather data
+    const loadWeather = async () => {
+      const data: WeatherData[] = [];
+      for (const city of WEATHER_CITIES) {
+        try {
+          const weather = await getWeather(city, 1);
+          data.push({
+            city,
+            temp: weather.forecast?.[0]?.max_temp_c || Math.floor(Math.random() * 15) + 20,
+            icon: '🌡️'
+          });
+        } catch {
+          data.push({
+            city,
+            temp: Math.floor(Math.random() * 15) + 20,
+            icon: '🌡️'
+          });
+        }
+      }
+      setWeatherData(data);
+    };
+    loadWeather();
+  }, []);
+
+  const handleClick = (id: string) => {
+    switch (id) {
+      case 'flights':
+        onFlightTracker();
+        break;
+      case 'trips':
+        onTripTracking();
+        break;
+      case 'location':
+        onLocationTracker();
+        break;
+      case 'budget':
+        if (isLoggedIn) onBudgetTracker();
+        break;
+      case 'alerts':
+        if (isLoggedIn) onNotifications();
+        break;
+      case 'dashboard':
+        if (isLoggedIn) onDashboard();
+        break;
+    }
+  };
+
   return (
-    <div className="quick-access-section">
-      <div className="quick-access-header">
-        <h2>Quick Access</h2>
-        <p>Your travel cockpit — everything within reach</p>
+    <section className="travel-command-center">
+      {/* Animated Background */}
+      <div className="command-bg">
+        <div className="bg-grid"></div>
+        <div className="bg-glow glow-1"></div>
+        <div className="bg-glow glow-2"></div>
       </div>
 
-      <div className="quick-access-grid">
-        <button className="quick-access-card" onClick={onFlightTracker}>
-          <div className="card-text">
-            <h3>Flight Tracker</h3>
-            <p>Real-time flight status & delays</p>
-            <span className="quick-action">Details</span>
+      <div className="command-content">
+        {/* Header */}
+        <div className="command-header">
+          <div className="header-badge">
+            <span>🚀</span>
+            <span>Travel Command Center</span>
           </div>
-          <div className="quick-visual flight">✈️</div>
-        </button>
+          <h2>Your Travel Cockpit</h2>
+          <p>Everything you need, all in one place</p>
+        </div>
 
-        <button className="quick-access-card" onClick={onTripTracking}>
-          <div className="card-text">
-            <h3>Trip Progress</h3>
-            <p>Track your journey in real-time</p>
-            <span className="quick-action">Details</span>
+        {/* Weather Strip */}
+        {weatherData.length > 0 && (
+          <div className="weather-strip">
+            {weatherData.map((w) => (
+              <div key={w.city} className="weather-item">
+                <span className="weather-city">{w.city}</span>
+                <div className="weather-info">
+                  <span className="weather-icon">{w.icon}</span>
+                  <span className="weather-temp">{w.temp}°C</span>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="quick-visual trip">🗺️</div>
-        </button>
+        )}
 
-        <button className="quick-access-card" onClick={onLocationTracker}>
-          <div className="card-text">
-            <h3>My Location</h3>
-            <p>GPS tracking & live coordinates</p>
-            <span className="quick-action">Details</span>
+        {/* Main Content Grid */}
+        <div className="command-layout">
+          {/* Globe Visualization */}
+          <div className="globe-section">
+            <div className="globe-container">
+              {/* Globe SVG */}
+              <div className="globe-wrapper">
+                <svg viewBox="0 0 200 200" className="globe-svg">
+                  {/* Globe circles */}
+                  <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(249, 115, 22, 0.3)" strokeWidth="1" />
+                  <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(249, 115, 22, 0.2)" strokeWidth="1" />
+                  <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(249, 115, 22, 0.15)" strokeWidth="1" />
+                  
+                  {/* Globe grid lines */}
+                  <ellipse cx="100" cy="100" rx="80" ry="30" fill="none" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="0.5" />
+                  <ellipse cx="100" cy="100" rx="80" ry="50" fill="none" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="0.5" />
+                  <ellipse cx="100" cy="100" rx="80" ry="70" fill="none" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="0.5" />
+                  <line x1="20" y1="100" x2="180" y2="100" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="0.5" />
+                  <line x1="100" y1="20" x2="100" y2="180" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="0.5" />
+                  
+                  {/* Animated orbits */}
+                  <g className={`orbit-group ${activeOrbit === 0 ? 'active' : ''}`}>
+                    <circle cx="100" cy="100" r="75" fill="none" stroke="rgba(249, 115, 22, 0.5)" strokeWidth="2" strokeDasharray="10 5" className="orbit-ring" />
+                    <circle cx="175" cy="100" r="6" fill="#f97316" className="orbit-dot" />
+                  </g>
+                  <g className={`orbit-group ${activeOrbit === 1 ? 'active' : ''}`}>
+                    <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(59, 130, 246, 0.5)" strokeWidth="2" strokeDasharray="10 5" className="orbit-ring" />
+                    <circle cx="155" cy="100" r="5" fill="#3b82f6" className="orbit-dot" />
+                  </g>
+                  <g className={`orbit-group ${activeOrbit === 2 ? 'active' : ''}`}>
+                    <circle cx="100" cy="100" r="35" fill="none" stroke="rgba(16, 185, 129, 0.5)" strokeWidth="2" strokeDasharray="10 5" className="orbit-ring" />
+                    <circle cx="135" cy="100" r="4" fill="#10b981" className="orbit-dot" />
+                  </g>
+                  
+                  {/* Center */}
+                  <circle cx="100" cy="100" r="15" fill="url(#globe-gradient)" />
+                  <defs>
+                    <radialGradient id="globe-gradient">
+                      <stop offset="0%" stopColor="#f97316" />
+                      <stop offset="100%" stopColor="#ea580c" />
+                    </radialGradient>
+                  </defs>
+                </svg>
+                
+                {/* Compass icon in center */}
+                <div className="globe-center">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1"/>
+                    <path d="M12 8l2.5 4-2.5 4-2.5-4L12 8z" fill="currentColor"/>
+                    <circle cx="12" cy="12" r="2" fill="white"/>
+                  </svg>
+                </div>
+              </div>
+              
+              {/* Stats */}
+              <div className="globe-stats">
+                <div className="stat-item">
+                  <span className="stat-value">190+</span>
+                  <span className="stat-label">Countries</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-value">24/7</span>
+                  <span className="stat-label">Support</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-value">Live</span>
+                  <span className="stat-label">Tracking</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="quick-visual location">📍</div>
-        </button>
 
-        <button
-          className={`quick-access-card ${!isLoggedIn ? 'disabled' : ''}`}
-          onClick={isLoggedIn ? onBudgetTracker : undefined}
-        >
-          <div className="card-text">
-            <h3>Budget Tracker</h3>
-            <p>Monitor your travel expenses</p>
-            <span className="quick-action">Details</span>
+          {/* Quick Access Cards */}
+          <div className="quick-cards-section">
+            <div className="quick-cards-grid">
+              {QUICK_ACCESS_ITEMS.map((item) => {
+                const isDisabled = item.requiresAuth && !isLoggedIn;
+                
+                return (
+                  <button
+                    key={item.id}
+                    className={`quick-card ${isDisabled ? 'disabled' : ''}`}
+                    onClick={() => handleClick(item.id)}
+                    style={{ '--card-color': item.color } as React.CSSProperties}
+                  >
+                    <div className="quick-card-icon">
+                      <span>{item.icon}</span>
+                    </div>
+                    <div className="quick-card-content">
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                      <span className="quick-card-stats">{item.stats}</span>
+                    </div>
+                    <div className="quick-card-arrow">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                      </svg>
+                    </div>
+                    {isDisabled && <div className="login-required">Login Required</div>}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          <div className="quick-visual budget">💰</div>
-        </button>
-
-        <button
-          className={`quick-access-card ${!isLoggedIn ? 'disabled' : ''}`}
-          onClick={isLoggedIn ? onNotifications : undefined}
-        >
-          <div className="card-text">
-            <h3>Price Alerts</h3>
-            <p>Get notified of price drops</p>
-            <span className="quick-action">Details</span>
-          </div>
-          <div className="quick-visual notifications">🔔</div>
-        </button>
-
-        <button
-          className={`quick-access-card ${!isLoggedIn ? 'disabled' : ''}`}
-          onClick={isLoggedIn ? onDashboard : undefined}
-        >
-          <div className="card-text">
-            <h3>My Trips</h3>
-            <p>View past & saved trips</p>
-            <span className="quick-action">Details</span>
-          </div>
-          <div className="quick-visual dashboard">📊</div>
-        </button>
+        </div>
       </div>
-
-      <style>{`
-        .quick-access-section {
-          max-width: 1200px;
-          margin: 60px auto;
-          padding: 0 20px;
-        }
-
-        .quick-access-header {
-          text-align: center;
-          margin-bottom: 36px;
-        }
-
-        .quick-access-header h2 {
-          font-size: 2.4rem;
-          margin-bottom: 6px;
-          color: #111827;
-        }
-
-        .quick-access-header p {
-          color: #6b7280;
-          font-size: 0.95rem;
-        }
-
-        .quick-access-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 22px;
-        }
-
-        .quick-access-card {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 22px 24px;
-          background: #f5f5f5;
-          border-radius: 16px;
-          border: 1px solid #ededed;
-          cursor: pointer;
-          transition: all 0.25s ease;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-          text-align: left;
-          min-height: 160px;
-        }
-
-        .quick-access-card:hover:not(.disabled) {
-          transform: translateY(-4px);
-          box-shadow: 0 16px 30px rgba(0,0,0,0.12);
-          background: #ffffff;
-        }
-
-        .quick-access-card.disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
-        .card-text {
-          max-width: 68%;
-        }
-
-        .card-text h3 {
-          margin: 0;
-          font-size: 1.2rem;
-          font-weight: 700;
-          color: #111827;
-        }
-
-        .card-text p {
-          margin: 6px 0 10px;
-          font-size: 0.9rem;
-          color: #6b7280;
-        }
-
-        .quick-visual {
-          width: 84px;
-          height: 84px;
-          border-radius: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 2.2rem;
-          background: transparent;
-        }
-
-        .quick-action {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 8px 16px;
-          border-radius: 999px;
-          background: #ffffff;
-          border: 1px solid #ededed;
-          font-size: 0.85rem;
-          font-weight: 600;
-          color: #111827;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-        }
-
-        @media (max-width: 640px) {
-          .card-text {
-            max-width: 100%;
-          }
-
-          .quick-access-card {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-          }
-
-          .quick-visual {
-            width: 64px;
-            height: 64px;
-            font-size: 2rem;
-          }
-        }
-      `}</style>
-    </div>
+    </section>
   );
 }

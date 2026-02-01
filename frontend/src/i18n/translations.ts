@@ -40,12 +40,14 @@ export const translations = {
     'nav.logout': 'Logout',
     'nav.signup': 'Sign Up',
     'nav.search': 'Search destinations...',
+    'nav.discover': 'Discover',
+    'nav.flights': 'Flights',
     
     // Hero Section
     'hero.title': 'Plan Your Dream Journey',
     'hero.subtitle': 'AI-powered travel planning with real-time prices, weather, and local insights',
     'hero.cta': 'Start Planning',
-    'hero.explore': 'Explore Destinations',
+    'hero.explore': 'Explore',
     
     // Trip Planning
     'planner.title': 'Start Planning Your Trip',
@@ -223,12 +225,14 @@ export const translations = {
     'nav.logout': 'लॉगआउट',
     'nav.signup': 'साइन अप',
     'nav.search': 'गंतव्य खोजें...',
+    'nav.discover': 'खोजें',
+    'nav.flights': 'उड़ानें',
     
     // Hero Section
     'hero.title': 'अपनी सपनों की यात्रा की योजना बनाएं',
     'hero.subtitle': 'रीयल-टाइम कीमतों, मौसम और स्थानीय जानकारी के साथ AI-संचालित यात्रा योजना',
     'hero.cta': 'योजना शुरू करें',
-    'hero.explore': 'गंतव्य एक्सप्लोर करें',
+    'hero.explore': 'एक्सप्लोर करें',
     
     // Trip Planning
     'planner.title': 'अपनी यात्रा की योजना शुरू करें',
@@ -406,6 +410,8 @@ export const translations = {
     'nav.logout': 'Cerrar Sesión',
     'nav.signup': 'Registrarse',
     'nav.search': 'Buscar destinos...',
+    'nav.discover': 'Descubrir',
+    'nav.flights': 'Vuelos',
     
     // Hero Section
     'hero.title': 'Planifica el Viaje de tus Sueños',
@@ -589,6 +595,8 @@ export const translations = {
     'nav.logout': 'Déconnexion',
     'nav.signup': 'Inscription',
     'nav.search': 'Rechercher des destinations...',
+    'nav.discover': 'Découvrir',
+    'nav.flights': 'Vols',
     
     // Hero Section
     'hero.title': 'Planifiez le Voyage de vos Rêves',
@@ -771,6 +779,8 @@ export const translations = {
     'nav.logout': 'Abmelden',
     'nav.signup': 'Registrieren',
     'nav.search': 'Reiseziele suchen...',
+    'nav.discover': 'Entdecken',
+    'nav.flights': 'Flüge',
     'hero.title': 'Planen Sie Ihre Traumreise',
     'hero.subtitle': 'KI-gestützte Reiseplanung mit Echtzeit-Preisen, Wetter und lokalen Einblicken',
     'hero.cta': 'Planung Starten',
@@ -925,6 +935,8 @@ export const translations = {
     'nav.logout': 'تسجيل الخروج',
     'nav.signup': 'إنشاء حساب',
     'nav.search': 'ابحث عن وجهات...',
+    'nav.discover': 'اكتشف',
+    'nav.flights': 'الرحلات الجوية',
     'hero.title': 'خطط لرحلة أحلامك',
     'hero.subtitle': 'تخطيط سفر مدعوم بالذكاء الاصطناعي مع أسعار فورية وطقس ومعلومات محلية',
     'hero.cta': 'ابدأ التخطيط',
@@ -1079,6 +1091,8 @@ export const translations = {
     'nav.logout': '退出',
     'nav.signup': '注册',
     'nav.search': '搜索目的地...',
+    'nav.discover': '发现',
+    'nav.flights': '航班',
     'hero.title': '规划您的梦想之旅',
     'hero.subtitle': '人工智能旅行规划，提供实时价格、天气和当地信息',
     'hero.cta': '开始规划',
@@ -1233,6 +1247,8 @@ export const translations = {
     'nav.logout': 'ログアウト',
     'nav.signup': '新規登録',
     'nav.search': '目的地を検索...',
+    'nav.discover': '発見',
+    'nav.flights': 'フライト',
     'hero.title': '夢の旅を計画しよう',
     'hero.subtitle': 'リアルタイム価格、天気、地元情報を備えたAI搭載の旅行計画',
     'hero.cta': '計画を始める',

@@ -56,7 +56,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   // Translation function with parameter substitution
   const t = (key: TranslationKey, params?: Record<string, string | number>): string => {
     const langTranslations = translations[language] || translations.en;
-    let text = langTranslations[key] || translations.en[key] || key;
+    let text: string = langTranslations[key] || translations.en[key] || key;
     
     // Replace parameters like {name} with actual values
     if (params) {

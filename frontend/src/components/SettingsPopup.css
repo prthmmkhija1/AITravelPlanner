@@ -1,0 +1,223 @@
+/* Settings Popup Styles */
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.settings-popup {
+  background: white;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-header {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.settings-header svg {
+  width: 22px;
+  height: 22px;
+}
+
+.settings-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.settings-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.settings-close svg {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.settings-content {
+  padding: 24px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.settings-section {
+  margin-bottom: 24px;
+}
+
+.settings-section:last-child {
+  margin-bottom: 0;
+}
+
+.settings-section label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.settings-section label svg {
+  width: 18px;
+  height: 18px;
+  color: #666;
+}
+
+.settings-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.settings-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+}
+
+.settings-option:hover {
+  border-color: #f97316;
+  background: #fff7ed;
+}
+
+.settings-option.active {
+  border-color: #f97316;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.2);
+}
+
+.option-flag {
+  font-size: 1.2rem;
+}
+
+.option-symbol {
+  font-weight: 700;
+  color: #f97316;
+}
+
+.option-name {
+  color: #333;
+}
+
+.settings-footer {
+  padding: 16px 24px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.settings-save-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.settings-save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
+
+/* Regional Selector Button (for navbar) */
+.regional-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.regional-selector:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.regional-selector .flag {
+  font-size: 1rem;
+}
+
+.regional-selector .currency-code {
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.regional-selector .divider {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.regional-selector .language {
+  color: white;
+  font-size: 0.85rem;
+}
+
+.regional-selector .dropdown-icon {
+  width: 16px;
+  height: 16px;
+  color: rgba(255, 255, 255, 0.7);
+}

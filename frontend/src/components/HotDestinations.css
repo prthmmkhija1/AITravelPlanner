@@ -1,0 +1,861 @@
+/* Hot Destinations Section */
+.hot-destinations {
+  position: relative;
+  padding: 100px 20px;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* Animated Background with Tourist Image */
+.hot-destinations-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: 
+    linear-gradient(
+      180deg,
+      rgba(10, 22, 40, 0.4) 0%,
+      rgba(15, 23, 42, 0.35) 30%,
+      rgba(30, 27, 75, 0.4) 60%,
+      rgba(10, 22, 40, 0.45) 100%
+    ),
+    url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&h=1080&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+}
+
+.floating-shapes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: floatShape 20s ease-in-out infinite;
+}
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  top: -100px;
+  right: -100px;
+  animation-delay: 0s;
+}
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  bottom: -50px;
+  left: -50px;
+  animation-delay: -5s;
+}
+
+.shape-3 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  top: 50%;
+  left: 20%;
+  animation-delay: -10s;
+}
+
+.shape-4 {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(135deg, #ec4899, #db2777);
+  top: 30%;
+  right: 10%;
+  animation-delay: -15s;
+}
+
+.shape-5 {
+  width: 180px;
+  height: 180px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  bottom: 20%;
+  right: 30%;
+  animation-delay: -7s;
+}
+
+.shape-6 {
+  width: 220px;
+  height: 220px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  top: 60%;
+  left: 10%;
+  animation-delay: -12s;
+}
+
+@keyframes floatShape {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  75% {
+    transform: translate(15px, 15px) scale(1.05);
+  }
+}
+
+/* Content */
+.hot-destinations-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.25), rgba(234, 88, 12, 0.15));
+  border: 2px solid rgba(249, 115, 22, 0.5);
+  border-radius: 50px;
+  color: #f97316;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.fire-icon {
+  font-size: 1.1rem;
+  animation: fireFlicker 1s ease-in-out infinite;
+}
+
+@keyframes fireFlicker {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.section-header h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.section-header p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ============================================
+   3D TILTED CAROUSEL STYLES
+   ============================================ */
+
+.carousel-3d-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 550px;
+  perspective: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.carousel-3d-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Navigation Arrows */
+.carousel-3d-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.carousel-3d-prev {
+  left: 20px;
+}
+
+.carousel-3d-next {
+  right: 20px;
+}
+
+.carousel-3d-nav:hover {
+  background: var(--accent-orange, #f97316);
+  border-color: var(--accent-orange, #f97316);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 10px 40px rgba(249, 115, 22, 0.4);
+}
+
+.carousel-3d-nav svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* 3D Track */
+.carousel-3d-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+/* 3D Cards */
+.carousel-3d-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 320px;
+  height: 450px;
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Card Positions - Reduced spacing */
+.carousel-3d-card.center {
+  transform: translate(-50%, -50%) translateZ(80px) rotateY(0deg);
+  z-index: 5;
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 0 80px rgba(249, 115, 22, 0.2);
+}
+
+.carousel-3d-card.left {
+  transform: translate(-135%, -50%) translateZ(-30px) rotateY(20deg);
+  z-index: 3;
+  opacity: 0.9;
+}
+
+.carousel-3d-card.right {
+  transform: translate(35%, -50%) translateZ(-30px) rotateY(-20deg);
+  z-index: 3;
+  opacity: 0.9;
+}
+
+.carousel-3d-card.far-left {
+  transform: translate(-210%, -50%) translateZ(-100px) rotateY(30deg);
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.carousel-3d-card.far-right {
+  transform: translate(110%, -50%) translateZ(-100px) rotateY(-30deg);
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.carousel-3d-card.hidden {
+  transform: translate(-50%, -50%) translateZ(-300px) rotateY(0deg);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Card Hover Effects */
+.carousel-3d-card.center:hover {
+  transform: translate(-50%, -52%) translateZ(120px) rotateY(0deg);
+  box-shadow: 
+    0 40px 80px rgba(0, 0, 0, 0.7),
+    0 0 0 2px rgba(249, 115, 22, 0.5),
+    0 0 100px rgba(249, 115, 22, 0.3);
+}
+
+.carousel-3d-card.left:hover,
+.carousel-3d-card.right:hover {
+  opacity: 1;
+}
+
+/* Card Image */
+.card-3d-image {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.card-3d-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.carousel-3d-card.center:hover .card-3d-image img {
+  transform: scale(1.1);
+}
+
+.card-3d-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 50%,
+    rgba(15, 23, 42, 0.8) 80%,
+    rgba(15, 23, 42, 1) 100%
+  );
+}
+
+/* Card Tag */
+.card-3d-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: tagPulse 2s ease-in-out infinite;
+}
+
+@keyframes tagPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Card Rating */
+.card-3d-rating {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+}
+
+.card-3d-rating .star {
+  color: #fbbf24;
+}
+
+/* Card Content */
+.card-3d-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-3d-location h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.card-3d-location .country {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-3d-location .country::before {
+  content: '📍';
+  font-size: 0.8rem;
+}
+
+/* Card Price */
+.card-3d-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.card-3d-price .price-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.card-3d-price .price-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-orange, #f97316);
+}
+
+/* Explore Button */
+.card-3d-explore-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.card-3d-explore-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.card-3d-explore-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4);
+}
+
+.card-3d-explore-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* Indicators */
+.carousel-3d-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.indicator-3d-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.indicator-3d-dot:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.indicator-3d-dot.active {
+  background: var(--accent-orange, #f97316);
+  border-color: rgba(249, 115, 22, 0.3);
+  transform: scale(1.2);
+  box-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
+}
+
+/* View All Button */
+.view-all-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.view-all-btn svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background: var(--accent-orange, #f97316);
+  border-color: var(--accent-orange, #f97316);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(249, 115, 22, 0.4);
+}
+
+.view-all-btn:hover svg {
+  transform: translateX(5px);
+}
+
+/* ============================================
+   RESPONSIVE STYLES
+   ============================================ */
+
+@media (max-width: 1200px) {
+  .carousel-3d-card {
+    width: 280px;
+    height: 400px;
+  }
+  
+  .card-3d-image {
+    height: 240px;
+  }
+  
+  .carousel-3d-card.left {
+    transform: translate(-160%, -50%) translateZ(-50px) rotateY(25deg);
+  }
+  
+  .carousel-3d-card.right {
+    transform: translate(60%, -50%) translateZ(-50px) rotateY(-25deg);
+  }
+  
+  .carousel-3d-card.far-left,
+  .carousel-3d-card.far-right {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 968px) {
+  .carousel-3d-container {
+    height: 480px;
+    padding: 0 40px;
+  }
+  
+  .carousel-3d-card {
+    width: 260px;
+    height: 380px;
+  }
+  
+  .card-3d-image {
+    height: 220px;
+  }
+  
+  .carousel-3d-card.left {
+    transform: translate(-140%, -50%) translateZ(-80px) rotateY(30deg);
+    opacity: 0.7;
+  }
+  
+  .carousel-3d-card.right {
+    transform: translate(40%, -50%) translateZ(-80px) rotateY(-30deg);
+    opacity: 0.7;
+  }
+  
+  .carousel-3d-nav {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .carousel-3d-prev {
+    left: 10px;
+  }
+  
+  .carousel-3d-next {
+    right: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hot-destinations {
+    padding: 60px 16px;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .carousel-3d-container {
+    height: 450px;
+    perspective: 800px;
+    padding: 0 20px;
+  }
+  
+  .carousel-3d-card {
+    width: 240px;
+    height: 360px;
+  }
+  
+  .card-3d-image {
+    height: 200px;
+  }
+  
+  .card-3d-content {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  .card-3d-location h3 {
+    font-size: 1.25rem;
+  }
+  
+  .card-3d-price .price-value {
+    font-size: 1.2rem;
+  }
+  
+  .card-3d-explore-btn {
+    padding: 12px 20px;
+    font-size: 0.85rem;
+  }
+  
+  /* Hide side cards on mobile */
+  .carousel-3d-card.left,
+  .carousel-3d-card.right,
+  .carousel-3d-card.far-left,
+  .carousel-3d-card.far-right {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .carousel-3d-card.center {
+    transform: translate(-50%, -50%) translateZ(0) rotateY(0deg);
+  }
+  
+  .carousel-3d-card.center:hover {
+    transform: translate(-50%, -52%) translateZ(0) rotateY(0deg);
+  }
+  
+  .carousel-3d-indicators {
+    margin-top: 30px;
+    gap: 8px;
+  }
+  
+  .indicator-3d-dot {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .view-all-wrapper {
+    margin-top: 30px;
+  }
+  
+  .view-all-btn {
+    padding: 14px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+/* All Destinations Grid View */
+.all-destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeInGrid 0.5s ease-out;
+}
+
+@keyframes fadeInGrid {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.destination-grid-card {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.destination-grid-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(249, 115, 22, 0.5);
+  box-shadow: 0 16px 48px rgba(249, 115, 22, 0.2);
+}
+
+.grid-card-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.grid-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.destination-grid-card:hover .grid-card-image img {
+  transform: scale(1.1);
+}
+
+.grid-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, transparent 60%);
+}
+
+.grid-card-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(234, 88, 12, 0.95));
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.grid-card-rating {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+}
+
+.grid-card-rating .star {
+  color: #fbbf24;
+}
+
+.grid-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.grid-card-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.grid-card-content .country {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.grid-card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.grid-card-price .price-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.grid-card-price .price-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f97316;
+}
+
+.grid-card-explore-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.grid-card-explore-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.4);
+}
+
+.grid-card-explore-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .all-destinations-grid {
+    grid-template-columns: 1fr;
+    padding: 20px 16px;
+    gap: 16px;
+  }
+  
+  .destination-grid-card {
+    border-radius: 16px;
+  }
+  
+  .grid-card-image {
+    height: 180px;
+  }
+}

@@ -3,7 +3,7 @@ import { useLanguage, SupportedLanguage } from '../i18n';
 import './LanguageSelector.css';
 
 interface LanguageSelectorProps {
-  variant?: 'dropdown' | 'inline';
+  variant?: 'dropdown' | 'inline' | 'navbar';
   showFlags?: boolean;
   showNativeName?: boolean;
 }
@@ -34,6 +34,52 @@ export default function LanguageSelector({
     setLanguage(code);
     setIsOpen(false);
   };
+
+  // Navbar variant - compact, same size as currency selector
+  if (variant === 'navbar') {
+    return (
+      <div className="language-selector-navbar" ref={dropdownRef}>
+        <button 
+          className="navbar-selector-btn"
+          onClick={() => setIsOpen(!isOpen)}
+          title={currentLanguage?.name}
+        >
+          <span className="selector-flag">{currentLanguage?.flag}</span>
+          <svg className={`selector-chevron ${isOpen ? 'open' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        {isOpen && (
+          <div className="navbar-dropdown language-dropdown-navbar">
+            <div className="navbar-dropdown-header">
+              <span>🌍</span> Select Language
+            </div>
+            <div className="navbar-dropdown-list">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  className={`navbar-dropdown-option ${language === lang.code ? 'selected' : ''}`}
+                  onClick={() => handleSelect(lang.code)}
+                >
+                  <span className="option-flag">{lang.flag}</span>
+                  <div className="option-info">
+                    <span className="option-native">{lang.nativeName}</span>
+                    <span className="option-name">{lang.name}</span>
+                  </div>
+                  {language === lang.code && (
+                    <svg className="option-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   if (variant === 'inline') {
     return (
