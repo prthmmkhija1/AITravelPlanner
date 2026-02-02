@@ -298,8 +298,15 @@ Powered by AI Travel Planner with Live APIs
 
       {/* Trip Planner Section */}
       <div className="page-section" id="plan-trip">
+        {/* Moving Waves */}
+        <div className="waves-container">
+          <div className="wave wave-1"></div>
+          <div className="wave wave-2"></div>
+          <div className="wave wave-3"></div>
+        </div>
+        
         <div className="section-title">
-          <h2>✨ Start Planning Your Trip</h2>
+          <h2><span className="title-icon">◆</span> Start Planning Your Trip</h2>
           <p>Choose how you'd like to plan - fill out a form or describe your trip in your own words</p>
         </div>
 
@@ -310,8 +317,10 @@ Powered by AI Travel Planner with Live APIs
               className={`mode-btn ${plannerMode === 'text' ? 'active' : ''}`}
               onClick={() => setPlannerMode('text')}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 7V4h16v3"/>
+                <path d="M9 20h6"/>
+                <path d="M12 4v16"/>
               </svg>
               Describe Trip
             </button>
@@ -319,8 +328,11 @@ Powered by AI Travel Planner with Live APIs
               className={`mode-btn ${plannerMode === 'form' ? 'active' : ''}`}
               onClick={() => setPlannerMode('form')}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path d="M9 11H3v10h6V11zM21 3h-6v18h6V3zM15 7H9v14h6V7z"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                <rect x="14" y="14" width="7" height="7" rx="1"/>
               </svg>
               Quick Planner
             </button>
@@ -337,7 +349,16 @@ Powered by AI Travel Planner with Live APIs
           {/* Text Mode */}
           {plannerMode === 'text' && (
             <>
-              <div className="section-header">📝 Tell us about your trip</div>
+              <div className="section-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+                Tell us about your trip
+              </div>
 
               <div className="row">
                 <div className="textarea-voice-wrapper">
@@ -365,27 +386,30 @@ Powered by AI Travel Planner with Live APIs
                   type="button"
                   onClick={() => handleExample("Plan a 3-day beach vacation to Goa from Delhi")}
                 >
-                  🏖️ Goa Beach Vacation
+                  <span className="example-icon beach">◈</span>
+                  Goa Beach Vacation
                 </button>
                 <button
                   className="btn example-btn"
                   type="button"
                   onClick={() => handleExample("Plan a 4-day heritage tour to Jaipur from Mumbai")}
                 >
-                  🏰 Jaipur Heritage Tour
+                  <span className="example-icon heritage">◇</span>
+                  Jaipur Heritage Tour
                 </button>
                 <button
                   className="btn example-btn"
                   type="button"
                   onClick={() => handleExample("Plan a 5-day backwaters and nature trip to Kerala from Bangalore")}
                 >
-                  🌴 Kerala Backwaters
+                  <span className="example-icon nature">◆</span>
+                  Kerala Backwaters
                 </button>
               </div>
             </>
           )}
 
-        {planning ? <p>🤖 AI is planning your trip...</p> : null}
+        {planning ? <p className="planning-status"><span className="pulse-dot"></span> AI is crafting your perfect trip...</p> : null}
 
         {result?.status === "error" ? (
           <div className="disclaimer-box">
@@ -400,10 +424,16 @@ Powered by AI Travel Planner with Live APIs
 
         {result?.status === "success" ? (
           <>
-            <div className="section-header">🎉 Your Personalized Trip Plan</div>
+            <div className="section-header success">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              Your Personalized Trip Plan
+            </div>
 
             <div className="live-badge">
-              🔴 LIVE DATA - Prices from real APIs (Amadeus, Hotels.com, Foursquare)
+              <span className="live-dot"></span> LIVE DATA — Real-time prices from Amadeus, Hotels.com, Foursquare
             </div>
 
             <div className="trip-card">{tripPlanText}</div>

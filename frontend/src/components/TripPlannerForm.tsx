@@ -137,7 +137,7 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
       {/* Dates Row */}
       <div className="form-row dates-row">
         <div className="form-field date-field">
-          <label>📅 Dates</label>
+          <label>When</label>
           <div className="date-range">
             <input
               type="date"
@@ -163,7 +163,7 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
       {/* Options Row: Travelers & Trip Style */}
       <div className="form-row options-row">
         <div className="form-field">
-          <label>👥 Who's going</label>
+          <label>Travelers</label>
           <select value={travelerStyle} onChange={handleTravelerChange}>
             {TRAVELER_OPTIONS.map(opt => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -171,7 +171,7 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
           </select>
         </div>
         <div className="form-field">
-          <label>✨ Trip style</label>
+          <label>Trip style</label>
           <select value={tripStyle} onChange={handleTripStyleChange}>
             {TRIP_STYLES.map(opt => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -187,7 +187,7 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
           className="toggle-btn"
           onClick={() => setShowPreferences(!showPreferences)}
         >
-          {showPreferences ? '➖' : '➕'} Special requests
+          <span className="toggle-icon">{showPreferences ? '−' : '+'}</span> Special requests
         </button>
         {showPreferences && (
           <div className="preferences-input">
@@ -213,7 +213,7 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
 
       {/* Submit */}
       <button type="submit" className="btn submit-btn" disabled={isPlanning}>
-        {isPlanning ? '⏳ Planning...' : '✨ Plan My Trip'}
+        {isPlanning ? 'Planning...' : 'Plan My Trip'}
       </button>
     </form>
   );

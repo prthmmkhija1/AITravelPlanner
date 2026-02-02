@@ -39,6 +39,7 @@ export default function Navbar({
   const { t } = useTranslation();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showTrackingMenu, setShowTrackingMenu] = useState(false);
+  const [showHomeMenu, setShowHomeMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchResults, setSearchResults] = useState<{ type: string; name: string; description: string }[]>([]);
@@ -125,10 +126,56 @@ export default function Navbar({
   return (
     <nav className={`navbar${isScrolled ? ' navbar--scrolled' : ''}`}>
       <div className="navbar-content">
+        {/* Home Icon with Popout Menu */}
+        <div 
+          className="navbar-home-wrapper"
+          onMouseEnter={() => setShowHomeMenu(true)}
+          onMouseLeave={() => setShowHomeMenu(false)}
+        >
+          <button 
+            className="navbar-home-btn"
+            onClick={() => setShowHomeMenu(!showHomeMenu)}
+          >
+            <svg className="navbar-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+          </button>
+          
+          {/* Home Menu Popout */}
+          <div className={`home-menu-popout ${showHomeMenu ? 'home-menu-popout--visible' : ''}`}>
+            <div className="home-menu-header">
+              <span className="home-menu-title">Quick Access</span>
+            </div>
+            <button className="home-menu-item" onClick={() => { onAdventureClick?.(); setShowHomeMenu(false); }}>
+              <span className="home-menu-icon">🏔️</span>
+              <span className="home-menu-text">Adventure</span>
+            </button>
+            <button className="home-menu-item" onClick={() => setShowHomeMenu(false)}>
+              <span className="home-menu-icon">ℹ️</span>
+              <span className="home-menu-text">About</span>
+            </button>
+            <button className="home-menu-item" onClick={() => { onDashboardClick?.(); setShowHomeMenu(false); }}>
+              <span className="home-menu-icon">📋</span>
+              <span className="home-menu-text">My Trips</span>
+            </button>
+            <div className="home-menu-divider"></div>
+            <div className="home-menu-subheader">Tracking</div>
+            <button className="home-menu-item" onClick={() => { onFlightTrackerClick?.(); setShowHomeMenu(false); }}>
+              <span className="home-menu-icon">✈️</span>
+              <span className="home-menu-text">Flight Tracker</span>
+            </button>
+            <button className="home-menu-item" onClick={() => { onTripTrackingClick?.(); setShowHomeMenu(false); }}>
+              <span className="home-menu-icon">📍</span>
+              <span className="home-menu-text">Trip Progress</span>
+            </button>
+            <button className="home-menu-item" onClick={() => { onLocationTrackerClick?.(); setShowHomeMenu(false); }}>
+              <span className="home-menu-icon">🌍</span>
+              <span className="home-menu-text">My Location</span>
+            </button>
+          </div>
+        </div>
+
         <div className="navbar-brand">
-          <svg className="navbar-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
           <span className="navbar-title">Adventure Travel Planner</span>
         </div>
 
@@ -176,85 +223,13 @@ export default function Navbar({
             <CurrencySelector variant="compact" />
           </div>
 
-          <button className="navbar-btn" onClick={onAdventureClick}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            <span>Adventure</span>
-          </button>
-          <button className="navbar-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>About</span>
-          </button>
-          <button className="navbar-btn" onClick={onDashboardClick}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <span>My Trips</span>
-          </button>
-
-          {/* Tracking Dropdown - Available for everyone */}
-          <div className="tracking-menu-wrapper">
-            <button 
-              className="navbar-btn tracking-btn"
-              onClick={() => setShowTrackingMenu(!showTrackingMenu)}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-              </svg>
-              <span>Track</span>
-              <svg viewBox="0 0 20 20" fill="currentColor" className="tracking-chevron" style={{width: '12px', height: '12px', marginLeft: '4px'}}>
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </button>
-
-            {showTrackingMenu && (
-              <div className="tracking-dropdown">
-                <button className="tracking-dropdown-item" onClick={() => { onFlightTrackerClick?.(); setShowTrackingMenu(false); }}>
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
-                  </svg>
-                  ✈️ Flight Tracker
-                </button>
-                <button className="tracking-dropdown-item" onClick={() => { onTripTrackingClick?.(); setShowTrackingMenu(false); }}>
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                  </svg>
-                  📍 Trip Progress
-                </button>
-                <button className="tracking-dropdown-item" onClick={() => { onLocationTrackerClick?.(); setShowTrackingMenu(false); }}>
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
-                  </svg>
-                  🌍 My Location
-                </button>
-              </div>
-            )}
-          </div>
-
           {isLoggedIn && (
-            <>
-              <button className="navbar-btn" onClick={onSavedTripsClick}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                </svg>
-                <span>{t('nav.myTrips')}</span>
-              </button>
-              <button className="navbar-btn" onClick={onBudgetClick}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>{t('nav.budget')}</span>
-              </button>
-              <button className="navbar-btn notification-btn" onClick={onNotificationClick}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-                <span>Alerts</span>
-              </button>
-            </>
+            <button className="navbar-icon-btn notification-bell" onClick={onNotificationClick} title="Notifications">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              <span className="notification-dot"></span>
+            </button>
           )}
 
           {isLoggedIn ? (

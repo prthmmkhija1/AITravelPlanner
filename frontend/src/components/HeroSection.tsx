@@ -28,7 +28,7 @@ const HERO_DESTINATIONS = [
     name: 'GREECE',
     tagline: 'Ancient Wonders',
     description: 'Walk through history in the land of gods, from Santorini sunsets to Athens\' ancient ruins.',
-    image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1920&h=1080&fit=crop'
+    image: 'https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?w=1920&h=1080&fit=crop'
   },
   {
     name: 'MALDIVES',
@@ -193,6 +193,7 @@ export default function HeroSection({ onExplore, onDestinationClick }: HeroSecti
                   </button>
                 </div>
                 <div className="card-content">
+                  <div className="card-destination-name">{dest.name}</div>
                   <div className="card-footer">
                     <span className="card-name">{dest.country}</span>
                     <span className="price-value">{dest.price}</span>

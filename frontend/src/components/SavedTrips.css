@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,15 +11,18 @@
 }
 
 .saved-trips-modal {
-  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-  border-radius: 20px;
+  background: linear-gradient(145deg, #0a0f1a 0%, #0f172a 50%, #1a1f35 100%);
+  border-radius: 24px;
   width: 100%;
   max-width: 1200px;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.2);
 }
 
 .saved-trips-header {
@@ -27,32 +30,56 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(249, 115, 22, 0.2);
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, transparent 100%);
+  position: relative;
+}
+
+.saved-trips-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(249, 115, 22, 0.1) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 .saved-trips-header h2 {
   color: white;
   font-size: 1.5rem;
   margin: 0;
+  font-family: var(--font-display, 'Audiowide', cursive);
+  background: linear-gradient(135deg, #ffffff, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
 }
 
 .saved-trips-header .close-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
   padding: 8px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .saved-trips-header .close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
 }
 
 .saved-trips-header .close-btn svg {
   width: 20px;
   height: 20px;
-  color: white;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.saved-trips-header .close-btn:hover svg {
+  color: #f87171;
 }
 
 /* Filter tabs */
@@ -60,31 +87,36 @@
   display: flex;
   gap: 8px;
   padding: 16px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   overflow-x: auto;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .filter-tab {
   padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
   white-space: nowrap;
   font-size: 14px;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-weight: 600;
 }
 
 .filter-tab:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(249, 115, 22, 0.1);
+  border-color: rgba(249, 115, 22, 0.3);
   color: white;
 }
 
 .filter-tab.active {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   border-color: transparent;
   color: white;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
 }
 
 /* Trips content */
@@ -100,14 +132,14 @@
   align-items: center;
   justify-content: center;
   padding: 60px 20px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .loading-state .spinner {
   width: 40px;
   height: 40px;
   border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #4f46e5;
+  border-top-color: #f97316;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -120,12 +152,14 @@
   width: 80px;
   height: 80px;
   margin-bottom: 16px;
-  opacity: 0.5;
+  opacity: 0.4;
+  color: #f97316;
 }
 
 .empty-state h3 {
   color: white;
   margin-bottom: 8px;
+  font-family: var(--font-display, 'Audiowide', cursive);
 }
 
 /* Trips grid */
@@ -136,18 +170,35 @@
 }
 
 .trip-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 20px;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
+  overflow: hidden;
+}
+
+.trip-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #f97316, #8b5cf6, #06b6d4);
+  opacity: 0.6;
 }
 
 .trip-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+  background: rgba(249, 115, 22, 0.08);
+  border-color: rgba(249, 115, 22, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(249, 115, 22, 0.15);
+}
+
+.trip-card:hover::before {
+  opacity: 1;
 }
 
 .trip-card-header {
@@ -162,11 +213,17 @@
   color: white;
   font-size: 1.2rem;
   margin: 0 0 4px 0;
+  font-family: var(--font-display, 'Audiowide', cursive);
+  background: linear-gradient(135deg, #ffffff, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .destination-info .source {
   color: rgba(255, 255, 255, 0.5);
   font-size: 13px;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 .status-badge {
@@ -178,6 +235,24 @@
   white-space: nowrap;
 }
 
+.status-badge.planned {
+  background: rgba(249, 115, 22, 0.2);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.status-badge.booked {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.status-badge.completed {
+  background: rgba(139, 92, 246, 0.2);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
 .trip-dates {
   display: flex;
   align-items: center;
@@ -185,7 +260,8 @@
   margin-bottom: 16px;
   padding: 12px;
   background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .date-item {
@@ -196,27 +272,33 @@
 
 .date-item .label {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  letter-spacing: 0.5px;
+}
 }
 
 .date-item .value {
   color: white;
   font-size: 14px;
   font-weight: 500;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 .date-divider {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(249, 115, 22, 0.5);
 }
 
 .travelers-badge {
   margin-left: auto;
-  background: rgba(79, 70, 229, 0.3);
+  background: rgba(249, 115, 22, 0.2);
   padding: 6px 12px;
   border-radius: 20px;
-  color: white;
+  color: #fb923c;
   font-size: 13px;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 /* Rating */
@@ -232,7 +314,7 @@
 }
 
 .rating-display:hover {
-  color: white;
+  color: #f97316;
 }
 
 .rating-display .no-rating {
@@ -261,13 +343,19 @@
 
 .cancel-rating {
   background: rgba(255, 255, 255, 0.1);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: white;
   width: 24px;
   height: 24px;
   border-radius: 50%;
   cursor: pointer;
   margin-left: 8px;
+  transition: all 0.25s ease;
+}
+
+.cancel-rating:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
 }
 
 /* Trip preview */
@@ -280,6 +368,7 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 /* Status selector */
@@ -293,16 +382,29 @@
 .status-selector label {
   color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 .status-selector select {
   flex: 1;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: 10px;
   color: white;
-  padding: 8px 12px;
+  padding: 10px 14px;
   cursor: pointer;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  transition: all 0.25s ease;
+}
+
+.status-selector select:focus {
+  border-color: rgba(249, 115, 22, 0.5);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.status-selector select option {
+  background: #0f172a;
 }
 
 /* Trip actions */
@@ -316,14 +418,16 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
   font-size: 13px;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-weight: 600;
 }
 
 .action-btn svg {
@@ -332,23 +436,26 @@
 }
 
 .action-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
+  background: rgba(249, 115, 22, 0.1);
+  border-color: rgba(249, 115, 22, 0.3);
+  color: #f97316;
 }
 
 .action-btn.primary {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   border-color: transparent;
   color: white;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
 }
 
 .action-btn.primary:hover {
-  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
 
 .action-btn.danger:hover {
-  background: rgba(239, 68, 68, 0.3);
-  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
   color: #f87171;
 }
 
@@ -356,18 +463,20 @@
 .delete-confirm {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  border-radius: 16px;
+  background: rgba(10, 15, 26, 0.95);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 16px;
+  backdrop-filter: blur(4px);
 }
 
 .delete-confirm p {
   color: white;
   font-size: 16px;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 .confirm-actions {
@@ -377,45 +486,51 @@
 
 .confirm-btn {
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 .confirm-btn.yes {
-  background: #ef4444;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
 }
 
 .confirm-btn.yes:hover {
-  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
 }
 
 .confirm-btn.no {
   background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
 }
 
 .confirm-btn.no:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* Trip meta */
 .trip-meta {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.4);
   font-size: 12px;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 /* Details modal */
 .details-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -424,14 +539,16 @@
 }
 
 .details-modal {
-  background: #1a1a2e;
-  border-radius: 16px;
+  background: linear-gradient(145deg, #0a0f1a 0%, #0f172a 50%, #1a1f35 100%);
+  border-radius: 24px;
   width: 100%;
   max-width: 800px;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
 }
 
 .details-header {
@@ -439,25 +556,42 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(249, 115, 22, 0.2);
+  background: rgba(249, 115, 22, 0.03);
 }
 
 .details-header h3 {
   color: white;
   margin: 0;
+  font-family: var(--font-display, 'Audiowide', cursive);
+  background: linear-gradient(135deg, #ffffff, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .details-header button {
-  background: none;
-  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
   cursor: pointer;
   padding: 8px;
+  transition: all 0.25s ease;
+}
+
+.details-header button:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
 }
 
 .details-header button svg {
   width: 20px;
   height: 20px;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.details-header button:hover svg {
+  color: #f87171;
 }
 
 .details-content {
@@ -471,16 +605,18 @@
 }
 
 .details-section h4 {
-  color: #818cf8;
+  color: #f97316;
   margin: 0 0 12px 0;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 .details-section p {
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 .trip-plan-content {
@@ -488,6 +624,7 @@
   line-height: 1.8;
   white-space: pre-wrap;
   font-size: 14px;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
 }
 
 /* Responsive */
@@ -503,5 +640,10 @@
   .travelers-badge {
     margin-left: 0;
     margin-top: 8px;
+  }
+
+  .saved-trips-modal {
+    border-radius: 20px 20px 0 0;
+    max-height: 95vh;
   }
 }
