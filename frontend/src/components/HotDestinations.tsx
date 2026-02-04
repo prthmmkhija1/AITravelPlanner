@@ -19,7 +19,7 @@ const destinations: Destination[] = [
     id: 1,
     name: "Bali",
     country: "Indonesia",
-    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&h=1000&fit=crop&q=90",
     price: 45000,
     currency: "₹",
     rating: 4.9,
@@ -31,7 +31,7 @@ const destinations: Destination[] = [
     id: 2,
     name: "Goa",
     country: "India",
-    image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&h=1000&fit=crop&q=90",
     price: 15000,
     currency: "₹",
     rating: 4.7,
@@ -43,7 +43,7 @@ const destinations: Destination[] = [
     id: 3,
     name: "Santorini",
     country: "Greece",
-    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&h=1000&fit=crop&q=90",
     price: 95000,
     currency: "₹",
     rating: 4.9,
@@ -55,7 +55,7 @@ const destinations: Destination[] = [
     id: 4,
     name: "Maldives",
     country: "Indian Ocean",
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&h=1000&fit=crop&q=90",
     price: 125000,
     currency: "₹",
     rating: 5.0,
@@ -67,7 +67,7 @@ const destinations: Destination[] = [
     id: 5,
     name: "Phuket",
     country: "Thailand",
-    image: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&h=1000&fit=crop&q=90",
     price: 38000,
     currency: "₹",
     rating: 4.8,
@@ -77,7 +77,7 @@ const destinations: Destination[] = [
     id: 6,
     name: "Dubai",
     country: "UAE",
-    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=1000&fit=crop&q=90",
     price: 65000,
     currency: "₹",
     rating: 4.8,
@@ -88,11 +88,22 @@ const destinations: Destination[] = [
     id: 7,
     name: "Kerala",
     country: "India",
-    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&h=1000&fit=crop&q=90",
     price: 22000,
     currency: "₹",
     rating: 4.7,
     reviews: 1756
+  },
+  {
+    id: 8,
+    name: "Manali",
+    country: "India",
+    image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&h=1000&fit=crop&q=90",
+    price: 18000,
+    currency: "₹",
+    rating: 4.6,
+    reviews: 2340,
+    tag: "🏔️ Mountain Escape"
   }
 ];
 
@@ -274,7 +285,7 @@ export default function HotDestinations() {
         {/* View All Button */}
         <div className="view-all-wrapper">
           <button className="view-all-btn" onClick={() => setShowAllDestinations(!showAllDestinations)}>
-            <span>{showAllDestinations ? 'Show Carousel' : 'View All Destinations'}</span>
+            <span>{showAllDestinations ? 'Show Less' : 'View All Destinations'}</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d={showAllDestinations ? "M19 12H5M12 19l-7-7 7-7" : "M5 12h14M12 5l7 7-7 7"}/>
             </svg>

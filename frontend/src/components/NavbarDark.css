@@ -34,49 +34,24 @@
 .navbar-dark-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
 .navbar-dark-brand:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .brand-icon {
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #06b6d4 100%);
-  background-size: 200% 200%;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
-    0 6px 20px rgba(79, 70, 229, 0.35),
-    0 0 15px rgba(6, 182, 212, 0.2);
-  position: relative;
-  animation: brandGradient 3s ease infinite;
-}
-
-@keyframes brandGradient {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.brand-icon::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #4f46e5, #06b6d4, #ec4899);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.navbar-dark-brand:hover .brand-icon::after {
-  opacity: 0.5;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
 }
 
 .brand-icon svg {
@@ -86,15 +61,13 @@
 }
 
 .brand-text {
-  font-family: 'Audiowide', 'Russo One', cursive;
-  font-size: 1.5rem;
-  font-weight: 400;
-  background: linear-gradient(135deg, #fff 0%, #06b6d4 100%);
+  font-size: 1.6rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #f97316 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: 4px;
-  text-transform: uppercase;
+  letter-spacing: -0.5px;
 }
 
 /* Navigation Links */
@@ -115,7 +88,7 @@
   background: none;
   border: none;
   color: rgba(255, 255, 255, 0.7);
-  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 500;
   padding: 10px 20px;
@@ -170,7 +143,7 @@
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
-  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-family: var(--font-body);
   font-size: 0.9rem;
   outline: none;
   transition: all 0.25s ease;
@@ -220,7 +193,7 @@
   padding: 8px 14px 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 14px;
-  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
@@ -269,7 +242,7 @@
 }
 
 .discover-tagline {
-  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-family: var(--font-body);
   color: rgba(255, 255, 255, 0.45);
   font-size: 0.75rem;
 }
@@ -295,7 +268,7 @@
   padding: 8px 14px 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 14px;
-  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
@@ -316,7 +289,7 @@
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
-  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-family: var(--font-body);
   font-size: 0.9rem;
   outline: none;
   transition: all 0.25s ease;
@@ -354,6 +327,48 @@
   width: 20px;
   height: 20px;
   color: white;
+}
+
+/* Explore Suggestions */
+.explore-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.explore-suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.explore-suggestion-item:hover {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
+  transform: translateX(4px);
+}
+
+.suggestion-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.suggestion-text {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
 }
 
 .explore-grid {
@@ -680,7 +695,7 @@
   background: rgba(15, 23, 42, 0.8);
   border: 1px solid rgba(249, 115, 22, 0.4);
   color: white;
-  font-family: 'Rajdhani', 'Exo 2', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.5px;

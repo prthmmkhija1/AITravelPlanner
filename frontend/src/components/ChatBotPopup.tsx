@@ -60,18 +60,17 @@ export default function ChatBotPopup({ isOpen, onToggle, initialMessage, onIniti
   }, [input, loading, sendMessage]);
 
   const prompts = [
-    { icon: "✈️", text: "Flights to ", highlight: "Goa" },
-    { icon: "🏨", text: "Hotels in ", highlight: "Mumbai" },
-    { icon: "🗺️", text: "Plan trip to ", highlight: "Manali" },
-    { icon: "🎯", text: "Best places in ", highlight: "Kerala" },
-    { icon: "💰", text: "Budget trip to ", highlight: "Jaipur" },
+    { icon: "✈️", text: "Cheapest flight ", highlight: "from Delhi to Spain" },
+    { icon: "🏖️", text: "Plan a relaxing getaway for ", highlight: "my parents" },
+    { icon: "🏔️", text: "Best hill stations ", highlight: "near Mumbai" },
   ];
 
-  const quickActions = [
-    { icon: "✈️", label: "Flights" },
+  const travelTabs = [
+    { icon: "✈️", label: "Flights", active: true },
     { icon: "🏨", label: "Hotels" },
-    { icon: "🚗", label: "Transport" },
-    { icon: "🎭", label: "Activities" },
+    { icon: "🚂", label: "Trains" },
+    { icon: "🚌", label: "Bus" },
+    { icon: "🎫", label: "Holiday" },
   ];
 
   return (
@@ -128,31 +127,47 @@ export default function ChatBotPopup({ isOpen, onToggle, initialMessage, onIniti
         <div className="chatbot-header">
           <div className="chatbot-header-info">
             <div className="chatbot-logo">
-              <span className="logo-icon">🧭</span>
+              <div className="logo-avatar">
+                <svg viewBox="0 0 32 32" fill="none" className="logo-svg">
+                  <circle cx="16" cy="16" r="14" fill="url(#logoGradient)" opacity="0.2"/>
+                  <path d="M16 8 L20 12 L16 16 L12 12 Z" fill="url(#logoGradient)"/>
+                  <circle cx="16" cy="16" r="2" fill="#f97316"/>
+                  <path d="M16 18 L19 24 M16 18 L13 24" stroke="#8b5cf6" strokeWidth="1.5" strokeLinecap="round"/>
+                  <defs>
+                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#f97316"/>
+                      <stop offset="100%" stopColor="#8b5cf6"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
               <div className="logo-text">
-                <h4>Voyager</h4>
-                <span className="status"><span className="status-dot"></span>Online</span>
+                <h4>Voyager AI</h4>
+                <span className="status">
+                  <span className="status-dot"></span>
+                  Ready to assist
+                </span>
               </div>
             </div>
           </div>
-          <button className="chatbot-close-corner" onClick={onToggle}>
+          <button className="chatbot-close-corner" onClick={onToggle} aria-label="Close chat">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        {/* Quick Actions */}
+        {/* Travel Tabs - MakeMyTrip Style */}
         {messages.length === 0 && (
-          <div className="chatbot-quick-actions">
-            {quickActions.map((action, idx) => (
+          <div className="mmt-travel-tabs">
+            {travelTabs.map((tab, idx) => (
               <button 
                 key={idx} 
-                className="quick-action-btn"
-                onClick={() => sendMessage(`Find ${action.label.toLowerCase()} for my trip`)}
+                className={`travel-tab ${tab.active ? 'active' : ''}`}
+                onClick={() => sendMessage(`Find ${tab.label.toLowerCase()} for my trip`)}
               >
-                <span className="action-icon">{action.icon}</span>
-                <span className="action-label">{action.label}</span>
+                <span className="tab-icon">{tab.icon}</span>
+                <span className="tab-label">{tab.label}</span>
               </button>
             ))}
           </div>
@@ -161,22 +176,24 @@ export default function ChatBotPopup({ isOpen, onToggle, initialMessage, onIniti
         {/* Content */}
         <div className="chatbot-content">
           {messages.length === 0 ? (
-            <div className="chatbot-welcome">
-              <div className="welcome-greeting">
-                <p className="welcome-text">Hi, I'm <strong>Voyager</strong> — your AI travel assistant.</p>
-                <p className="welcome-subtext">Ask me anything about flights, hotels, destinations, or let me plan your perfect trip!</p>
+            <div className="chatbot-welcome mmt-style">
+              {/* Search Header */}
+              <div className="mmt-search-header">
+                <h2 className="mmt-title">Where do you want to go?</h2>
+                <p className="mmt-subtitle">Let Voyager AI plan your perfect trip</p>
               </div>
 
-              {/* Prompts */}
-              <div className="prompt-list">
-                <p className="prompt-label">Try asking:</p>
+              {/* Suggestion Prompts */}
+              <div className="mmt-prompts">
+                <p className="prompts-label">Popular searches</p>
                 {prompts.map((p, idx) => (
-                  <button key={idx} className="prompt-btn" onClick={() => sendMessage(p.text + p.highlight)}>
+                  <button key={idx} className="mmt-prompt-btn" onClick={() => sendMessage(p.text + p.highlight)}>
                     <span className="prompt-icon">{p.icon}</span>
-                    <span className="prompt-text">{p.text}<span className="highlight">{p.highlight}</span></span>
-                    <svg className="prompt-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
+                    <span className="prompt-content">
+                      <span className="prompt-text">{p.text}</span>
+                      <span className="prompt-highlight">{p.highlight}</span>
+                    </span>
+                    <span className="prompt-arrow">→</span>
                   </button>
                 ))}
               </div>
@@ -206,20 +223,18 @@ export default function ChatBotPopup({ isOpen, onToggle, initialMessage, onIniti
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask anything about your trip..."
+              placeholder="What are you looking for?"
               onKeyDown={(e) => e.key === "Enter" && send()}
               disabled={loading}
             />
-            <button className="voice-btn" disabled={loading}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                <line x1="12" y1="19" x2="12" y2="23"/>
-                <line x1="8" y1="23" x2="16" y2="23"/>
+            <button className="search-btn-icon" disabled={loading}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
               </svg>
             </button>
           </div>
-          <button className="send-btn" onClick={() => send()} disabled={loading || !input.trim()}>
+          <button className="send-btn" onClick={() => send()} disabled={loading || !input.trim()} aria-label="Send message">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
               <path d="M22 2L11 13"/>
               <path d="M22 2L15 22L11 13L2 9L22 2Z"/>

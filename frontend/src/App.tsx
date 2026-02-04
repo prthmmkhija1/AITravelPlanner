@@ -68,6 +68,27 @@ export default function App() {
   const [showWelcomePopup, setShowWelcomePopup] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
 
+  // Saved destinations state (persisted to localStorage)
+  const [savedDestinations, setSavedDestinations] = useState<{id: number; name: string; country: string; image: string; price: string; rating: number}[]>(() => {
+    const saved = localStorage.getItem('savedDestinations');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Save to localStorage whenever savedDestinations changes
+  useEffect(() => {
+    localStorage.setItem('savedDestinations', JSON.stringify(savedDestinations));
+  }, [savedDestinations]);
+
+  const handleSaveDestination = (destination: {id: number; name: string; country: string; image: string; price: string; rating: number}) => {
+    setSavedDestinations(prev => {
+      const exists = prev.some(d => d.id === destination.id);
+      if (exists) {
+        return prev.filter(d => d.id !== destination.id);
+      }
+      return [...prev, destination];
+    });
+  };
+
   // Check auth on mount
   useEffect(() => {
     const authenticated = isAuthenticated();
@@ -292,6 +313,8 @@ Powered by AI Travel Planner with Live APIs
           setRequest(`Plan a trip to ${destination}`);
           setShowChatBot(true);
         }}
+        savedDestinations={savedDestinations}
+        onSaveDestination={handleSaveDestination}
       />
       
       <HotDestinations />
@@ -318,11 +341,9 @@ Powered by AI Travel Planner with Live APIs
               onClick={() => setPlannerMode('text')}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 7V4h16v3"/>
-                <path d="M9 20h6"/>
-                <path d="M12 4v16"/>
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
-              Describe Trip
+              Chat Mode
             </button>
             <button 
               className={`mode-btn ${plannerMode === 'form' ? 'active' : ''}`}
@@ -508,6 +529,8 @@ Powered by AI Travel Planner with Live APIs
         isVisible={showDashboard} 
         onClose={() => setShowDashboard(false)} 
         onPlanNewTrip={handlePlanNewTrip}
+        savedDestinations={savedDestinations}
+        onRemoveDestination={(id) => setSavedDestinations(prev => prev.filter(d => d.id !== id))}
       />
       <LiveTracking isVisible={showLiveTracking} onClose={() => setShowLiveTracking(false)} />
       <AuthModal 

@@ -1,229 +1,78 @@
-/* Welcome Popup Styles - Inspired by MakeMyTrip Myra */
+/* Welcome Popup - MakeMyTrip Style Simple Input Bar */
 .welcome-popup-container {
   position: fixed;
-  bottom: 100px;
+  bottom: 90px;
   right: 24px;
   z-index: 9998;
-  animation: popupSlideIn 0.4s ease;
+  animation: slideUp 0.3s ease-out;
 }
 
-@keyframes popupSlideIn {
+@keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
-.welcome-popup {
-  width: 320px;
-  background: linear-gradient(180deg, #e8f0ff 0%, #fce4ec 40%, #ffecd2 100%);
-  border-radius: 24px;
-  padding: 24px 20px 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  position: relative;
-  overflow: hidden;
-}
-
-.welcome-popup::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  background: linear-gradient(135deg, rgba(100, 150, 255, 0.3), rgba(255, 150, 200, 0.3));
-  filter: blur(30px);
-  z-index: 0;
-}
-
-/* Close & Settings Buttons */
-.welcome-close,
-.welcome-settings {
-  position: absolute;
-  top: 12px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
+.welcome-input-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  z-index: 2;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  border: 2px solid #008cff;
+  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.15),
+              0 0 0 1px rgba(0, 140, 255, 0.1);
+  min-width: 280px;
+  max-width: 320px;
+  gap: 12px;
 }
 
-.welcome-close {
-  right: 12px;
-}
-
-.welcome-settings {
-  left: 12px;
-}
-
-.welcome-close:hover,
-.welcome-settings:hover {
-  background: white;
-  transform: scale(1.1);
-}
-
-.welcome-close svg,
-.welcome-settings svg {
-  width: 18px;
-  height: 18px;
-  color: #666;
-}
-
-/* Avatar */
-.welcome-avatar {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 8px;
-}
-
-.avatar-robot {
-  width: 80px;
-  height: 80px;
-  animation: robotFloat 3s ease-in-out infinite;
-}
-
-.avatar-robot img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
-}
-
-@keyframes robotFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-/* Greeting */
-.welcome-greeting {
-  text-align: center;
-  position: relative;
-  z-index: 1;
-  margin-bottom: 20px;
-}
-
-.greeting-hi {
-  display: block;
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 4px;
-}
-
-.greeting-name {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #ec4899 50%, #f97316 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Suggested Prompts */
-.welcome-prompts {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-  position: relative;
-  z-index: 1;
-}
-
-.prompt-card {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 12px 16px;
-  background: white;
-  border: none;
-  border-radius: 12px;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.prompt-card:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.prompt-text {
-  color: #333;
-  font-size: 0.9rem;
-}
-
-.prompt-highlight {
-  color: #3b82f6;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-/* Search Input */
-.welcome-search {
-  display: flex;
-  gap: 8px;
-  position: relative;
-  z-index: 1;
-}
-
-.welcome-search input {
+.welcome-input {
   flex: 1;
-  padding: 14px 16px;
-  border: 2px solid #667eea;
-  border-radius: 30px;
-  font-size: 0.9rem;
-  background: rgba(102, 126, 234, 0.08);
+  border: none;
   outline: none;
-  transition: all 0.2s;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15), 0 2px 12px rgba(102, 126, 234, 0.15);
+  font-size: 14px;
+  color: #333;
+  background: transparent;
+  padding: 4px 0;
+  font-family: inherit;
 }
 
-.welcome-search input:focus {
-  border-color: #667eea;
-  background: white;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2), 0 4px 16px rgba(102, 126, 234, 0.25);
+.welcome-input::placeholder {
+  color: #666;
+  font-weight: 400;
 }
 
-.welcome-search input::placeholder {
+.welcome-input:focus::placeholder {
   color: #999;
 }
 
-.welcome-search .search-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: none;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  cursor: pointer;
+.welcome-ai-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
-.welcome-search .search-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+.welcome-ai-btn:hover {
+  transform: scale(1.1);
 }
 
-.welcome-search .search-btn svg {
-  width: 20px;
-  height: 20px;
-  color: white;
+.ai-sparkle-icon {
+  width: 22px;
+  height: 22px;
 }
 
 /* Responsive */
@@ -234,7 +83,9 @@
     left: 16px;
   }
   
-  .welcome-popup {
+  .welcome-input-bar {
+    min-width: unset;
+    max-width: unset;
     width: 100%;
   }
 }

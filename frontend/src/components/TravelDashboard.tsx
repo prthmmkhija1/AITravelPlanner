@@ -1,10 +1,21 @@
 import { useState, useEffect } from 'react';
 import { getTrips, updateTrip, deleteTrip, isAuthenticated } from '../api';
 
+interface SavedDestination {
+  id: number;
+  name: string;
+  country: string;
+  image: string;
+  price: string;
+  rating: number;
+}
+
 interface TravelDashboardProps {
   isVisible: boolean;
   onClose: () => void;
   onPlanNewTrip?: () => void;
+  savedDestinations?: SavedDestination[];
+  onRemoveDestination?: (id: number) => void;
 }
 
 interface Trip {
@@ -21,7 +32,7 @@ interface Trip {
   rating: number | null;
 }
 
-export default function TravelDashboard({ isVisible, onClose, onPlanNewTrip }: TravelDashboardProps) {
+export default function TravelDashboard({ isVisible, onClose, onPlanNewTrip, savedDestinations = [], onRemoveDestination }: TravelDashboardProps) {
   const [activeTab, setActiveTab] = useState<'current' | 'past' | 'saved'>('current');
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(false);
@@ -140,7 +151,7 @@ Generated on: ${new Date().toLocaleDateString()}
             className={`tab ${activeTab === 'saved' ? 'active' : ''}`}
             onClick={() => setActiveTab('saved')}
           >
-            Saved Destinations (3)
+            Saved Destinations ({savedDestinations.length})
           </button>
         </div>
 
@@ -246,7 +257,36 @@ Generated on: ${new Date().toLocaleDateString()}
 
           {activeTab === 'saved' && (
             <div className="saved-destinations">
-              <p className="empty-state">No saved destinations yet. Start exploring!</p>
+              {savedDestinations.length === 0 ? (
+                <p className="empty-state">No saved destinations yet. Start exploring!</p>
+              ) : (
+                <div className="saved-destinations-grid">
+                  {savedDestinations.map((dest) => (
+                    <div key={dest.id} className="saved-destination-card">
+                      <div className="saved-destination-image">
+                        <img src={dest.image} alt={dest.name} loading="lazy" />
+                        <button 
+                          className="remove-saved-btn"
+                          onClick={() => onRemoveDestination?.(dest.id)}
+                          title="Remove from saved"
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                      <div className="saved-destination-info">
+                        <h4>{dest.name}</h4>
+                        <p>{dest.country}</p>
+                        <div className="saved-destination-footer">
+                          <span className="saved-price">{dest.price}</span>
+                          <span className="saved-rating">⭐ {dest.rating}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

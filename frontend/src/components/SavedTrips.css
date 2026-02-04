@@ -47,7 +47,7 @@
   color: white;
   font-size: 1.5rem;
   margin: 0;
-  font-family: var(--font-display, 'Audiowide', cursive);
+  font-family: var(--font-display);
   background: linear-gradient(135deg, #ffffff, #f97316);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -102,7 +102,7 @@
   transition: all 0.3s ease;
   white-space: nowrap;
   font-size: 14px;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
   font-weight: 600;
 }
 
@@ -159,7 +159,7 @@
 .empty-state h3 {
   color: white;
   margin-bottom: 8px;
-  font-family: var(--font-display, 'Audiowide', cursive);
+  font-family: var(--font-display);
 }
 
 /* Trips grid */
@@ -213,7 +213,7 @@
   color: white;
   font-size: 1.2rem;
   margin: 0 0 4px 0;
-  font-family: var(--font-display, 'Audiowide', cursive);
+  font-family: var(--font-display);
   background: linear-gradient(135deg, #ffffff, #f97316);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -223,7 +223,7 @@
 .destination-info .source {
   color: rgba(255, 255, 255, 0.5);
   font-size: 13px;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 .status-badge {
@@ -274,7 +274,7 @@
   font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
   letter-spacing: 0.5px;
 }
 }
@@ -283,7 +283,7 @@
   color: white;
   font-size: 14px;
   font-weight: 500;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 .date-divider {
@@ -298,7 +298,7 @@
   color: #fb923c;
   font-size: 13px;
   border: 1px solid rgba(249, 115, 22, 0.3);
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 /* Rating */
@@ -368,7 +368,7 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 /* Status selector */
@@ -382,7 +382,7 @@
 .status-selector label {
   color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 .status-selector select {
@@ -393,7 +393,7 @@
   color: white;
   padding: 10px 14px;
   cursor: pointer;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
   transition: all 0.25s ease;
 }
 
@@ -426,7 +426,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 13px;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
   font-weight: 600;
 }
 
@@ -476,7 +476,7 @@
 .delete-confirm p {
   color: white;
   font-size: 16px;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 .confirm-actions {
@@ -491,7 +491,7 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.25s ease;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 .confirm-btn.yes {
@@ -522,7 +522,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.4);
   font-size: 12px;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 /* Details modal */
@@ -563,7 +563,7 @@
 .details-header h3 {
   color: white;
   margin: 0;
-  font-family: var(--font-display, 'Audiowide', cursive);
+  font-family: var(--font-display);
   background: linear-gradient(135deg, #ffffff, #f97316);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -610,13 +610,13 @@
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 .details-section p {
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 .trip-plan-content {
@@ -624,7 +624,7 @@
   line-height: 1.8;
   white-space: pre-wrap;
   font-size: 14px;
-  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-family: var(--font-body);
 }
 
 /* Responsive */

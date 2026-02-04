@@ -2,8 +2,8 @@
 .settings-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
   z-index: 10000;
   display: flex;
   align-items: center;
@@ -17,13 +17,14 @@
 }
 
 .settings-popup {
-  background: white;
+  background: #0a0f1a;
   border-radius: 20px;
   width: 90%;
   max-width: 480px;
   max-height: 85vh;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.3);
   animation: slideUp 0.3s ease;
 }
 
@@ -40,11 +41,12 @@
 
 .settings-header {
   padding: 20px 24px;
-  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f1525 0%, #0a0f1a 100%);
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .settings-header h3 {
@@ -53,15 +55,17 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  color: #f97316;
 }
 
 .settings-header svg {
   width: 22px;
   height: 22px;
+  color: #f97316;
 }
 
 .settings-close {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   border-radius: 50%;
   width: 36px;
@@ -74,7 +78,7 @@
 }
 
 .settings-close:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .settings-close svg {
@@ -87,6 +91,7 @@
   padding: 24px;
   max-height: 60vh;
   overflow-y: auto;
+  background: #0a0f1a;
 }
 
 .settings-section {
@@ -103,14 +108,14 @@
   gap: 8px;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
   margin-bottom: 12px;
 }
 
 .settings-section label svg {
   width: 18px;
   height: 18px;
-  color: #666;
+  color: #f97316;
 }
 
 .settings-options {
@@ -124,8 +129,8 @@
   align-items: center;
   gap: 6px;
   padding: 10px 14px;
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
+  background: #0f1525;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
@@ -133,13 +138,13 @@
 }
 
 .settings-option:hover {
-  border-color: #f97316;
-  background: #fff7ed;
+  border-color: rgba(249, 115, 22, 0.5);
+  background: rgba(249, 115, 22, 0.1);
 }
 
 .settings-option.active {
   border-color: #f97316;
-  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  background: rgba(249, 115, 22, 0.15);
   box-shadow: 0 2px 8px rgba(249, 115, 22, 0.2);
 }
 
@@ -153,13 +158,13 @@
 }
 
 .option-name {
-  color: #333;
+  color: #ffffff;
 }
 
 .settings-footer {
   padding: 16px 24px;
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
+  background: #080c14;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .settings-save-btn {

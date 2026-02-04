@@ -173,7 +173,7 @@ export default function AuthModal({ isVisible, onClose, onAuthSuccess }: AuthMod
         </div>
 
         {/* Social Sign In Options */}
-        <div style={{ padding: '0 24px' }}>
+        <div style={{ padding: '16px 24px 0' }}>
           {/* Real Google Sign-In Button */}
           {GOOGLE_CLIENT_ID ? (
             <div ref={googleButtonRef} className="google-btn-container"></div>
@@ -190,7 +190,7 @@ export default function AuthModal({ isVisible, onClose, onAuthSuccess }: AuthMod
           )}
 
           <button className="demo-login-btn" onClick={handleDemoLogin}>
-            🚀 Try Demo Account (No signup required)
+            🚀 Try Demo Account
           </button>
 
           <div className="auth-divider">

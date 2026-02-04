@@ -69,6 +69,25 @@ const DISCOVER_DESTINATIONS = [
   { name: 'Maldives', emoji: '🐚', tagline: 'Island Dreams' },
   { name: 'Bali', emoji: '🌺', tagline: 'Spiritual Escape' },
   { name: 'Dubai', emoji: '🏙️', tagline: 'Luxury Redefined' },
+  { name: 'Paris', emoji: '🗼', tagline: 'City of Love' },
+  { name: 'Japan', emoji: '🗾', tagline: 'Land of Rising Sun' },
+  { name: 'Switzerland', emoji: '⛰️', tagline: 'Alpine Beauty' },
+  { name: 'Singapore', emoji: '🦁', tagline: 'Garden City' },
+  { name: 'Vietnam', emoji: '🍜', tagline: 'Hidden Gems' },
+  { name: 'Australia', emoji: '🦘', tagline: 'Down Under' },
+  { name: 'Italy', emoji: '🍕', tagline: 'La Dolce Vita' },
+  { name: 'Spain', emoji: '💃', tagline: 'Vibrant Culture' },
+];
+
+const EXPLORE_SUGGESTIONS = [
+  { query: 'Best time to visit Bali', icon: '🗓️' },
+  { query: 'Budget travel tips Europe', icon: '💡' },
+  { query: 'Visa requirements for Thailand', icon: '📋' },
+  { query: 'Top honeymoon destinations', icon: '💕' },
+  { query: 'Adventure activities in New Zealand', icon: '🏔️' },
+  { query: 'Best street food cities', icon: '🍜' },
+  { query: 'Solo travel safety tips', icon: '🎒' },
+  { query: 'Family-friendly resorts', icon: '👨‍👩‍👧‍👦' },
 ];
 
 export default function NavbarDark({ 
@@ -214,20 +233,53 @@ export default function NavbarDark({
                     </svg>
                   </button>
                 </form>
-                <div className="discover-dropdown-header">
-                  <span>🌍 Popular Destinations</span>
-                </div>
-                <div className="discover-grid">
-                  {DISCOVER_DESTINATIONS.map((dest) => (
-                    <button key={dest.name} className="discover-item" onClick={() => handleDestinationClick(dest.name)}>
-                      <span className="discover-emoji">{dest.emoji}</span>
-                      <div className="discover-info">
-                        <span className="discover-name">{dest.name}</span>
-                        <span className="discover-tagline">{dest.tagline}</span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
+                {discoverSearch.trim() ? (
+                  <>
+                    <div className="discover-dropdown-header">
+                      <span>🔍 Suggestions</span>
+                    </div>
+                    <div className="discover-grid">
+                      {DISCOVER_DESTINATIONS
+                        .filter(dest => dest.name.toLowerCase().includes(discoverSearch.toLowerCase()))
+                        .slice(0, 3)
+                        .map((dest) => (
+                          <button key={dest.name} className="discover-item" onClick={() => handleDestinationClick(dest.name)}>
+                            <span className="discover-emoji">{dest.emoji}</span>
+                            <div className="discover-info">
+                              <span className="discover-name">{dest.name}</span>
+                              <span className="discover-tagline">{dest.tagline}</span>
+                            </div>
+                          </button>
+                        ))}
+                      {DISCOVER_DESTINATIONS.filter(dest => dest.name.toLowerCase().includes(discoverSearch.toLowerCase())).length === 0 && (
+                        <button className="discover-item" onClick={() => handleDestinationClick(discoverSearch)}>
+                          <span className="discover-emoji">✨</span>
+                          <div className="discover-info">
+                            <span className="discover-name">Plan trip to "{discoverSearch}"</span>
+                            <span className="discover-tagline">Ask AI for help</span>
+                          </div>
+                        </button>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="discover-dropdown-header">
+                      <span>🌍 Popular Destinations</span>
+                    </div>
+                    <div className="discover-grid">
+                      {DISCOVER_DESTINATIONS.slice(0, 8).map((dest) => (
+                        <button key={dest.name} className="discover-item" onClick={() => handleDestinationClick(dest.name)}>
+                          <span className="discover-emoji">{dest.emoji}</span>
+                          <div className="discover-info">
+                            <span className="discover-name">{dest.name}</span>
+                            <span className="discover-tagline">{dest.tagline}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -265,30 +317,70 @@ export default function NavbarDark({
                     </svg>
                   </button>
                 </form>
-                <div className="explore-dropdown-header">
-                  <span>🚀 Travel Command Center</span>
-                </div>
-                <div className="explore-grid">
-                  {EXPLORE_FEATURES.map((feature) => {
-                    const isDisabled = feature.requiresAuth && !isLoggedIn;
-                    return (
+                {exploreSearch.trim() ? (
+                  <>
+                    <div className="explore-dropdown-header">
+                      <span>🔍 Suggestions</span>
+                    </div>
+                    <div className="explore-suggestions">
+                      {EXPLORE_SUGGESTIONS
+                        .filter(s => s.query.toLowerCase().includes(exploreSearch.toLowerCase()))
+                        .slice(0, 3)
+                        .map((suggestion) => (
+                          <button 
+                            key={suggestion.query} 
+                            className="explore-suggestion-item"
+                            onClick={() => {
+                              setShowExploreMenu(false);
+                              onChatbotOpen?.(suggestion.query);
+                              setExploreSearch('');
+                            }}
+                          >
+                            <span className="suggestion-icon">{suggestion.icon}</span>
+                            <span className="suggestion-text">{suggestion.query}</span>
+                          </button>
+                        ))}
                       <button 
-                        key={feature.id} 
-                        className={`explore-item ${isDisabled ? 'disabled' : ''}`}
-                        onClick={() => !isDisabled && handleExploreClick(feature.id)}
-                        style={{ '--feature-color': feature.color } as React.CSSProperties}
+                        className="explore-suggestion-item"
+                        onClick={() => {
+                          setShowExploreMenu(false);
+                          onChatbotOpen?.(exploreSearch);
+                          setExploreSearch('');
+                        }}
                       >
-                        <span className="explore-icon">{feature.icon}</span>
-                        <div className="explore-info">
-                          <span className="explore-title">{feature.title}</span>
-                          <span className="explore-desc">{feature.description}</span>
-                        </div>
-                        <span className="explore-stats">{feature.stats}</span>
-                        {isDisabled && <span className="explore-lock">🔒</span>}
+                        <span className="suggestion-icon">✨</span>
+                        <span className="suggestion-text">Ask: "{exploreSearch}"</span>
                       </button>
-                    );
-                  })}
-                </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="explore-dropdown-header">
+                      <span>🚀 Travel Command Center</span>
+                    </div>
+                    <div className="explore-grid">
+                      {EXPLORE_FEATURES.map((feature) => {
+                        const isDisabled = feature.requiresAuth && !isLoggedIn;
+                        return (
+                          <button 
+                            key={feature.id} 
+                            className={`explore-item ${isDisabled ? 'disabled' : ''}`}
+                            onClick={() => !isDisabled && handleExploreClick(feature.id)}
+                            style={{ '--feature-color': feature.color } as React.CSSProperties}
+                          >
+                            <span className="explore-icon">{feature.icon}</span>
+                            <div className="explore-info">
+                              <span className="explore-title">{feature.title}</span>
+                              <span className="explore-desc">{feature.description}</span>
+                            </div>
+                            <span className="explore-stats">{feature.stats}</span>
+                            {isDisabled && <span className="explore-lock">🔒</span>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>

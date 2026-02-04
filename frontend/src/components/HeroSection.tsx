@@ -74,9 +74,11 @@ const FEATURED_CARDS: Destination[] = [
 interface HeroSectionProps {
   onExplore?: () => void;
   onDestinationClick?: (destination: string) => void;
+  savedDestinations?: Destination[];
+  onSaveDestination?: (destination: Destination) => void;
 }
 
-export default function HeroSection({ onExplore, onDestinationClick }: HeroSectionProps) {
+export default function HeroSection({ onExplore, onDestinationClick, savedDestinations = [], onSaveDestination }: HeroSectionProps) {
   const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -177,30 +179,40 @@ export default function HeroSection({ onExplore, onDestinationClick }: HeroSecti
         {/* Right Side - Destination Cards - RTL Diagonal Stack */}
         <div className="hero-right">
           <div className="destination-cards-stack">
-            {FEATURED_CARDS.map((dest, idx) => (
-              <div 
-                key={dest.id} 
-                className={`destination-card card-${idx + 1}`}
-                onClick={() => onDestinationClick?.(dest.country.split(',')[0])}
-              >
-                <div className="card-image-container">
-                  <img src={dest.image} alt={dest.name} loading="lazy" />
-                  <div className="card-overlay" />
-                  <button className="card-bookmark">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-                    </svg>
-                  </button>
-                </div>
-                <div className="card-content">
-                  <div className="card-destination-name">{dest.name}</div>
-                  <div className="card-footer">
-                    <span className="card-name">{dest.country}</span>
-                    <span className="price-value">{dest.price}</span>
+            {FEATURED_CARDS.map((dest, idx) => {
+              const isSaved = savedDestinations.some(d => d.id === dest.id);
+              return (
+                <div 
+                  key={dest.id} 
+                  className={`destination-card card-${idx + 1}`}
+                  onClick={() => onDestinationClick?.(dest.country.split(',')[0])}
+                >
+                  <div className="card-image-container">
+                    <img src={dest.image} alt={dest.name} loading="lazy" />
+                    <div className="card-overlay" />
+                    <button 
+                      className={`card-bookmark ${isSaved ? 'saved' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSaveDestination?.(dest);
+                      }}
+                      title={isSaved ? 'Remove from saved' : 'Save destination'}
+                    >
+                      <svg viewBox="0 0 24 24" fill={isSaved ? "currentColor" : "none"} stroke="currentColor" strokeWidth={2}>
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="card-content">
+                    <div className="card-destination-name">{dest.name}</div>
+                    <div className="card-footer">
+                      <span className="card-name">{dest.country}</span>
+                      <span className="price-value">{dest.price}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
