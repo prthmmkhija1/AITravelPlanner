@@ -15,49 +15,85 @@ export default function WelcomePopup({ onClose, onOpenChat }: WelcomePopupProps)
   const [input, setInput] = useState('');
   const [placeholder, setPlaceholder] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const fullPlaceholder = 'Where do you want to go?';
+  
+  const phrases = [
+    "Where do you want to go?",
+    "What are you looking for?",
+    "Plan your dream vacation",
+    "Discover new destinations"
+  ];
 
   useEffect(() => {
-    const hasSeenPopup = sessionStorage.getItem('welcomePopupSeen');
-    if (!hasSeenPopup) {
-      setTimeout(() => setIsVisible(true), 1000);
-    }
+    // Show popup after a short delay for smooth appearance
+    const timer = setTimeout(() => setIsVisible(true), 500);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (!isVisible) return;
     
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullPlaceholder.length) {
-        setPlaceholder(fullPlaceholder.slice(0, currentIndex));
-        currentIndex++;
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let animationId: ReturnType<typeof setTimeout>;
+    
+    const typeSpeed = 80;
+    const deleteSpeed = 40;
+    const pauseBeforeDelete = 1500;
+    const pauseBeforeNextPhrase = 500;
+    
+    const animate = () => {
+      const currentPhrase = phrases[phraseIndex];
+      
+      if (!isDeleting) {
+        // Typing forward
+        if (charIndex <= currentPhrase.length) {
+          setPlaceholder(currentPhrase.slice(0, charIndex));
+          charIndex++;
+          animationId = setTimeout(animate, typeSpeed);
+        } else {
+          // Finished typing, pause then start deleting
+          animationId = setTimeout(() => {
+            isDeleting = true;
+            charIndex = currentPhrase.length;
+            animate();
+          }, pauseBeforeDelete);
+        }
       } else {
-        clearInterval(typingInterval);
+        // Deleting backward
+        if (charIndex >= 0) {
+          setPlaceholder(currentPhrase.slice(0, charIndex));
+          charIndex--;
+          animationId = setTimeout(animate, deleteSpeed);
+        } else {
+          // Finished deleting, move to next phrase
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          animationId = setTimeout(() => {
+            isDeleting = false;
+            charIndex = 0;
+            animate();
+          }, pauseBeforeNextPhrase);
+        }
       }
-    }, 80);
+    };
+    
+    animationId = setTimeout(animate, typeSpeed);
 
-    return () => clearInterval(typingInterval);
+    return () => clearTimeout(animationId);
   }, [isVisible]);
-
-  const handleClose = () => {
-    setIsVisible(false);
-    sessionStorage.setItem('welcomePopupSeen', 'true');
-    onClose();
-  };
 
   const handleSubmit = () => {
     if (input.trim()) {
       // Open the main chat with the query
       onOpenChat();
-      handleClose();
+    } else {
+      onOpenChat();
     }
   };
 
   const handleInputClick = () => {
     // Open main chat when clicking the input
     onOpenChat();
-    handleClose();
   };
 
   if (!isVisible) return null;

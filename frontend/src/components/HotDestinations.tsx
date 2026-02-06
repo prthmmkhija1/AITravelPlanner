@@ -174,16 +174,6 @@ export default function HotDestinations() {
 
   return (
     <section className="hot-destinations" ref={sectionRef}>
-      {/* Animated Background */}
-      <div className="hot-destinations-bg">
-        <div className="bg-gradient"></div>
-        <div className="floating-shapes">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className={`shape shape-${i + 1}`}></div>
-          ))}
-        </div>
-      </div>
-
       <div className="hot-destinations-content">
         <div className="section-header">
           <div className="header-badge">
@@ -218,9 +208,9 @@ export default function HotDestinations() {
                     <img src={dest.image} alt={dest.name} loading="lazy" />
                     <div className="card-3d-overlay"></div>
                     
-                    {/* Tag */}
-                    {dest.tag && positionClass === 'center' && (
-                      <div className="card-3d-tag">{dest.tag}</div>
+                    {/* Tag - Show on all cards, CSS will handle visibility */}
+                    {dest.tag && (
+                      <div className={`card-3d-tag ${positionClass !== 'center' ? 'hidden-tag' : ''}`}>{dest.tag}</div>
                     )}
 
                     {/* Rating Badge */}

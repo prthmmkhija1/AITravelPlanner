@@ -58,7 +58,6 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
   });
   const [travelerStyle, setTravelerStyle] = useState('2-couple');
   const [tripStyle, setTripStyle] = useState('leisure-comfort');
-  const [showPreferences, setShowPreferences] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -98,31 +97,29 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
 
   return (
     <form onSubmit={handleSubmit} className="trip-form-compact">
-      {/* Route Row: From → To */}
-      <div className="form-row route-row">
+      {/* Row 1: Route (From → To) */}
+      <div className="form-row">
         <div className="form-field">
+          <label>From</label>
           <input
             type="text"
             name="source"
             value={formData.source}
             onChange={handleChange}
-            placeholder="From city..."
+            placeholder="Origin city"
             required
             list="all-cities"
           />
         </div>
-        <div className="route-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </div>
+        <span className="field-connector">→</span>
         <div className="form-field">
+          <label>To</label>
           <input
             type="text"
             name="destination"
             value={formData.destination}
             onChange={handleChange}
-            placeholder="To destination..."
+            placeholder="Destination"
             required
             list="all-cities"
           />
@@ -134,34 +131,35 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
         </datalist>
       </div>
 
-      {/* Dates Row */}
-      <div className="form-row dates-row">
-        <div className="form-field date-field">
-          <label>When</label>
-          <div className="date-range">
-            <input
-              type="date"
-              name="startDate"
-              value={formData.startDate}
-              onChange={handleChange}
-              min={minDate}
-              required
-            />
-            <span className="date-separator">→</span>
-            <input
-              type="date"
-              name="endDate"
-              value={formData.endDate}
-              onChange={handleChange}
-              min={formData.startDate || minDate}
-              required
-            />
-          </div>
+      {/* Row 2: Dates (Start → End) */}
+      <div className="form-row">
+        <div className="form-field">
+          <label>Start Date</label>
+          <input
+            type="date"
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleChange}
+            min={minDate}
+            required
+          />
+        </div>
+        <span className="field-connector">→</span>
+        <div className="form-field">
+          <label>End Date</label>
+          <input
+            type="date"
+            name="endDate"
+            value={formData.endDate}
+            onChange={handleChange}
+            min={formData.startDate || minDate}
+            required
+          />
         </div>
       </div>
 
-      {/* Options Row: Travelers & Trip Style */}
-      <div className="form-row options-row">
+      {/* Row 3: Options (Travelers & Trip Style) */}
+      <div className="form-row">
         <div className="form-field">
           <label>Travelers</label>
           <select value={travelerStyle} onChange={handleTravelerChange}>
@@ -171,7 +169,7 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
           </select>
         </div>
         <div className="form-field">
-          <label>Trip style</label>
+          <label>Trip Style</label>
           <select value={tripStyle} onChange={handleTripStyleChange}>
             {TRIP_STYLES.map(opt => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -180,17 +178,18 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
         </div>
       </div>
 
-      {/* Optional Preferences Toggle */}
-      <div className="preferences-toggle">
-        <button 
-          type="button" 
-          className="toggle-btn"
-          onClick={() => setShowPreferences(!showPreferences)}
-        >
-          <span className="toggle-icon">{showPreferences ? '−' : '+'}</span> Special requests
-        </button>
-        {showPreferences && (
-          <div className="preferences-input">
+      {/* Row 4: Preferences (Optional) */}
+      <div className="form-row preferences-row">
+        <div className="form-field full-width">
+          <label>Special Requests <span className="optional-tag">(optional)</span></label>
+          <div className="input-with-icon">
+            <input
+              type="text"
+              name="preferences"
+              value={formData.preferences}
+              onChange={handleChange}
+              placeholder="Vegetarian, wheelchair access, pet-friendly..."
+            />
             <VoiceInputButton 
               onTranscript={(text) => setFormData(prev => ({ 
                 ...prev, 
@@ -198,17 +197,10 @@ export default function TripPlannerForm({ onSubmit, isPlanning }: TripPlannerFor
               }))}
               disabled={isPlanning}
               size="small"
-              className="preferences-voice-btn"
-            />
-            <textarea
-              name="preferences"
-              value={formData.preferences}
-              onChange={handleChange}
-              placeholder="Vegetarian food, wheelchair access, pet-friendly..."
-              rows={2}
+              className="input-voice-btn"
             />
           </div>
-        )}
+        </div>
       </div>
 
       {/* Submit */}

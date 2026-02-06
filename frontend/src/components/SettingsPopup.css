@@ -17,14 +17,14 @@
 }
 
 .settings-popup {
-  background: #0a0f1a;
+  background: #111827;
   border-radius: 20px;
   width: 90%;
   max-width: 480px;
   max-height: 85vh;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(249, 115, 22, 0.1);
-  border: 1px solid rgba(249, 115, 22, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(201, 162, 39, 0.08);
+  border: 1px solid rgba(201, 162, 39, 0.2);
   animation: slideUp 0.3s ease;
 }
 
@@ -41,7 +41,7 @@
 
 .settings-header {
   padding: 20px 24px;
-  background: linear-gradient(135deg, #0f1525 0%, #0a0f1a 100%);
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
   color: white;
   display: flex;
   justify-content: space-between;
@@ -55,13 +55,13 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #f97316;
+  color: #c9a227;
 }
 
 .settings-header svg {
   width: 22px;
   height: 22px;
-  color: #f97316;
+  color: #c9a227;
 }
 
 .settings-close {
@@ -91,7 +91,7 @@
   padding: 24px;
   max-height: 60vh;
   overflow-y: auto;
-  background: #0a0f1a;
+  background: #111827;
 }
 
 .settings-section {
@@ -115,7 +115,7 @@
 .settings-section label svg {
   width: 18px;
   height: 18px;
-  color: #f97316;
+  color: #c9a227;
 }
 
 .settings-options {
@@ -129,7 +129,7 @@
   align-items: center;
   gap: 6px;
   padding: 10px 14px;
-  background: #0f1525;
+  background: #1f2937;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   cursor: pointer;
@@ -138,14 +138,14 @@
 }
 
 .settings-option:hover {
-  border-color: rgba(249, 115, 22, 0.5);
-  background: rgba(249, 115, 22, 0.1);
+  border-color: rgba(201, 162, 39, 0.4);
+  background: rgba(201, 162, 39, 0.08);
 }
 
 .settings-option.active {
-  border-color: #f97316;
-  background: rgba(249, 115, 22, 0.15);
-  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.2);
+  border-color: #c9a227;
+  background: rgba(201, 162, 39, 0.12);
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.15);
 }
 
 .option-flag {
@@ -154,7 +154,7 @@
 
 .option-symbol {
   font-weight: 700;
-  color: #f97316;
+  color: #c9a227;
 }
 
 .option-name {
@@ -170,7 +170,7 @@
 .settings-save-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #c9a227 0%, #a68921 100%);
   border: none;
   border-radius: 12px;
   color: white;

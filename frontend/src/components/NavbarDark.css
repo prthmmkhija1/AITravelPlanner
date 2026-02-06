@@ -13,13 +13,13 @@
 }
 
 .navbar-dark.scrolled {
-  background: rgba(15, 23, 42, 0.97);
+  background: rgba(17, 24, 39, 0.97);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   padding: 14px 60px;
   box-shadow: 
-    0 4px 40px rgba(0, 0, 0, 0.25),
-    0 0 1px rgba(79, 70, 229, 0.3);
+    0 4px 40px rgba(0, 0, 0, 0.2),
+    0 0 1px rgba(201, 162, 39, 0.2);
 }
 
 .navbar-dark-content {
@@ -46,12 +46,12 @@
 .brand-icon {
   width: 42px;
   height: 42px;
-  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+  background: linear-gradient(135deg, #c9a227 0%, #a68921 100%);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
 }
 
 .brand-icon svg {
@@ -63,7 +63,7 @@
 .brand-text {
   font-size: 1.6rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #fff 0%, #f97316 100%);
+  background: linear-gradient(135deg, #fff 0%, #c9a227 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -119,13 +119,13 @@
   left: 50%;
   transform: translateX(-50%);
   width: 440px;
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+  background: linear-gradient(145deg, rgba(31, 41, 55, 0.98), rgba(17, 24, 39, 0.98));
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
   animation: dropdownSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -139,7 +139,7 @@
 .discover-search-input {
   flex: 1;
   padding: 14px 18px;
-  border: 2px solid rgba(234, 88, 12, 0.25);
+  border: 2px solid rgba(201, 162, 39, 0.25);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
@@ -150,9 +150,9 @@
 }
 
 .discover-search-input:focus {
-  border-color: #f97316;
+  border-color: #c9a227;
   background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
+  box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.1);
 }
 
 .discover-search-input::placeholder {
@@ -163,19 +163,19 @@
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #ea580c, #f97316);
+  background: linear-gradient(135deg, #a68921, #c9a227);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.3);
+  box-shadow: 0 4px 16px rgba(201, 162, 39, 0.25);
 }
 
 .discover-search-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 24px rgba(234, 88, 12, 0.4);
+  box-shadow: 0 6px 24px rgba(201, 162, 39, 0.35);
 }
 
 .discover-search-btn svg {
@@ -219,8 +219,8 @@
 }
 
 .discover-item:hover {
-  background: rgba(234, 88, 12, 0.12);
-  border-color: rgba(234, 88, 12, 0.25);
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.2);
   transform: translateX(4px);
 }
 
@@ -254,13 +254,13 @@
   left: 50%;
   transform: translateX(-50%);
   width: 500px;
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+  background: linear-gradient(145deg, rgba(31, 41, 55, 0.98), rgba(17, 24, 39, 0.98));
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
   animation: dropdownSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -285,7 +285,7 @@
 .explore-search-input {
   flex: 1;
   padding: 14px 18px;
-  border: 2px solid rgba(5, 150, 105, 0.25);
+  border: 2px solid rgba(13, 148, 136, 0.25);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
@@ -296,7 +296,7 @@
 }
 
 .explore-search-input:focus {
-  border-color: #10b981;
+  border-color: #0d9488;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
 }
@@ -540,7 +540,7 @@
 .avatar-dark {
   width: 34px;
   height: 34px;
-  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+  background: linear-gradient(135deg, #c9a227 0%, #a68921 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -582,7 +582,7 @@
 .profile-header-avatar {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+  background: linear-gradient(135deg, #c9a227 0%, #a68921 100%);
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -649,7 +649,7 @@
 }
 
 .menu-badge {
-  background: linear-gradient(135deg, #f97316, #dc2626);
+  background: linear-gradient(135deg, #c9a227, #a68921);
   color: white;
   font-size: 0.7rem;
   padding: 2px 8px;
@@ -719,7 +719,7 @@
   transform: translateX(-50%);
   width: 60%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #f97316, transparent);
+  background: linear-gradient(90deg, transparent, #c9a227, transparent);
   opacity: 0.7;
   transition: all 0.3s ease;
 }
@@ -742,12 +742,12 @@
 .login-btn-dark svg {
   width: 18px;
   height: 18px;
-  stroke: #f97316;
+  stroke: #c9a227;
   transition: all 0.3s ease;
 }
 
 .login-btn-dark:hover svg {
-  stroke: #fb923c;
+  stroke: #ddb94d;
   transform: scale(1.1);
 }
 
@@ -848,7 +848,7 @@
 
 .mobile-login {
   margin-top: 12px;
-  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%) !important;
+  background: linear-gradient(135deg, #c9a227 0%, #a68921 100%) !important;
   color: white !important;
   text-align: center !important;
 }

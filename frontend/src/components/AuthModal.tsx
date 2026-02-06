@@ -173,7 +173,7 @@ export default function AuthModal({ isVisible, onClose, onAuthSuccess }: AuthMod
         </div>
 
         {/* Social Sign In Options */}
-        <div style={{ padding: '16px 24px 0' }}>
+        <div className="auth-social-section">
           {/* Real Google Sign-In Button */}
           {GOOGLE_CLIENT_ID ? (
             <div ref={googleButtonRef} className="google-btn-container"></div>
@@ -201,7 +201,7 @@ export default function AuthModal({ isVisible, onClose, onAuthSuccess }: AuthMod
         <form onSubmit={handleSubmit} className="auth-form">
           {mode === 'register' && (
             <>
-              <div className="form-group">
+              <div className="auth-form-group">
                 <label>Full Name</label>
                 <input
                   type="text"
@@ -211,7 +211,7 @@ export default function AuthModal({ isVisible, onClose, onAuthSuccess }: AuthMod
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="auth-form-group">
                 <label>Phone (Optional)</label>
                 <input
                   type="tel"
@@ -223,7 +223,7 @@ export default function AuthModal({ isVisible, onClose, onAuthSuccess }: AuthMod
             </>
           )}
 
-          <div className="form-group">
+          <div className="auth-form-group">
             <label>Email</label>
             <input
               type="email"
@@ -234,7 +234,7 @@ export default function AuthModal({ isVisible, onClose, onAuthSuccess }: AuthMod
             />
           </div>
 
-          <div className="form-group">
+          <div className="auth-form-group">
             <label>Password</label>
             <input
               type="password"
@@ -248,7 +248,7 @@ export default function AuthModal({ isVisible, onClose, onAuthSuccess }: AuthMod
 
           {error && <div className="auth-error">{error}</div>}
 
-          <button type="submit" className="btn auth-submit" disabled={loading}>
+          <button type="submit" className="auth-submit" disabled={loading}>
             {loading ? (
               <>
                 <span className="auth-spinner"></span>

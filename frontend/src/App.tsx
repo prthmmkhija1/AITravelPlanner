@@ -378,7 +378,7 @@ Powered by AI Travel Planner with Live APIs
                   <line x1="16" y1="17" x2="8" y2="17"/>
                   <polyline points="10 9 9 9 8 9"/>
                 </svg>
-                Tell us about your trip
+                <span>Tell us about your trip</span>
               </div>
 
               <div className="row">
@@ -386,7 +386,7 @@ Powered by AI Travel Planner with Live APIs
                   <textarea
                     value={request}
                     onChange={(e) => setRequest(e.target.value)}
-                    placeholder="Example: Plan a 3-day trip to Goa from Delhi starting Feb 12. I want beach activities and heritage sites."
+                    placeholder="Describe your dream trip... e.g., A 5-day romantic getaway to Paris with fine dining and scenic walks"
                   />
                   <VoiceInputButton 
                     onTranscript={(text) => setRequest(prev => prev ? `${prev} ${text}` : text)}
@@ -408,7 +408,7 @@ Powered by AI Travel Planner with Live APIs
                   onClick={() => handleExample("Plan a 3-day beach vacation to Goa from Delhi")}
                 >
                   <span className="example-icon beach">◈</span>
-                  Goa Beach Vacation
+                  Goa Beach
                 </button>
                 <button
                   className="btn example-btn"
@@ -416,7 +416,7 @@ Powered by AI Travel Planner with Live APIs
                   onClick={() => handleExample("Plan a 4-day heritage tour to Jaipur from Mumbai")}
                 >
                   <span className="example-icon heritage">◇</span>
-                  Jaipur Heritage Tour
+                  Jaipur Heritage
                 </button>
                 <button
                   className="btn example-btn"
@@ -573,12 +573,11 @@ Powered by AI Travel Planner with Live APIs
         }}
       />
 
-      {/* Welcome Popup - Shows on first visit */}
-      {showWelcomePopup && (
+      {/* Welcome Popup - Shows on first visit, hides when chatbot is open */}
+      {showWelcomePopup && !showChatBot && (
         <WelcomePopup
           onClose={() => setShowWelcomePopup(false)}
           onOpenChat={() => {
-            setShowWelcomePopup(false);
             setShowChatBot(true);
           }}
           onOpenSettings={() => {

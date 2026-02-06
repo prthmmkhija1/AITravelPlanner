@@ -13,9 +13,9 @@
   background: 
     linear-gradient(
       180deg,
-      rgba(10, 22, 40, 0.5) 0%,
-      rgba(15, 23, 42, 0.4) 50%,
-      rgba(10, 22, 40, 0.5) 100%
+      rgba(17, 24, 39, 0.5) 0%,
+      rgba(17, 24, 39, 0.4) 50%,
+      rgba(17, 24, 39, 0.5) 100%
     ),
     url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop');
   background-size: cover;
@@ -49,7 +49,7 @@
 .bg-glow.glow-1 {
   width: 500px;
   height: 500px;
-  background: #f97316;
+  background: #c9a227;
   top: -100px;
   left: -100px;
 }
@@ -57,7 +57,7 @@
 .bg-glow.glow-2 {
   width: 400px;
   height: 400px;
-  background: #3b82f6;
+  background: #1e3a5f;
   bottom: -100px;
   right: -100px;
 }
@@ -81,14 +81,14 @@
   align-items: center;
   gap: 8px;
   padding: 10px 24px;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
-  border: 2px solid rgba(249, 115, 22, 0.5);
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.9));
+  border: 2px solid rgba(201, 162, 39, 0.4);
   border-radius: 50px;
-  color: #f97316;
+  color: #c9a227;
   font-size: 0.95rem;
   font-weight: 700;
   margin-bottom: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(249, 115, 22, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 20px rgba(201, 162, 39, 0.1);
   backdrop-filter: blur(10px);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -100,8 +100,8 @@
   color: white;
   margin-bottom: 16px;
   letter-spacing: -1px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(135deg, #fff 0%, #f97316 100%);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #fff 0%, #c9a227 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -138,13 +138,13 @@
   position: relative;
   width: 280px;
   height: 280px;
-  background: rgba(10, 22, 40, 0.8);
+  background: rgba(17, 24, 39, 0.8);
   border-radius: 50%;
-  border: 2px solid rgba(249, 115, 22, 0.3);
+  border: 2px solid rgba(201, 162, 39, 0.25);
   box-shadow: 
-    0 0 60px rgba(249, 115, 22, 0.2),
-    0 0 100px rgba(249, 115, 22, 0.1),
-    inset 0 0 40px rgba(249, 115, 22, 0.1);
+    0 0 60px rgba(201, 162, 39, 0.15),
+    0 0 100px rgba(201, 162, 39, 0.08),
+    inset 0 0 40px rgba(201, 162, 39, 0.08);
   padding: 10px;
 }
 
@@ -194,7 +194,7 @@
   transform: translate(-50%, -50%);
   width: 40px;
   height: 40px;
-  color: #f97316;
+  color: #c9a227;
 }
 
 .globe-center svg {
@@ -218,7 +218,7 @@
 .stat-value {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f97316;
+  color: #c9a227;
 }
 
 .stat-label {
@@ -398,7 +398,7 @@
 .weather-temp {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--accent-orange);
+  color: var(--accent);
 }
 
 .weather-desc {

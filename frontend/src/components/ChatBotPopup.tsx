@@ -15,6 +15,102 @@ export default function ChatBotPopup({ isOpen, onToggle, initialMessage, onIniti
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [lastProcessedMessage, setLastProcessedMessage] = useState<string | null>(null);
+  
+  // Typing animation state
+  const [displayText, setDisplayText] = useState("");
+  const phrases = [
+    "Where do you want to go?",
+    "What are you looking for?",
+    "Plan your dream vacation",
+    "Discover new destinations"
+  ];
+  
+  useEffect(() => {
+    if (messages.length > 0) return; // Only animate when no messages
+    
+    let phraseIndex = 0;
+    let wordIndex = 0;
+    let isDeleting = false;
+    let currentText = "";
+    let charIndex = 0;
+    let animationId: ReturnType<typeof setTimeout>;
+    
+    const typeSpeed = 80; // Speed for typing each character
+    const deleteSpeed = 40; // Speed for deleting
+    const pauseBeforeDelete = 1500; // Pause before starting to delete
+    const pauseBeforeNextPhrase = 500; // Pause before starting next phrase
+    
+    const getCurrentWords = () => phrases[phraseIndex].split(" ");
+    
+    const animate = () => {
+      const words = getCurrentWords();
+      
+      if (!isDeleting) {
+        // Typing forward
+        if (wordIndex < words.length) {
+          const currentWord = words[wordIndex];
+          
+          if (charIndex <= currentWord.length) {
+            currentText = words.slice(0, wordIndex).join(" ") + 
+                         (wordIndex > 0 ? " " : "") + 
+                         currentWord.slice(0, charIndex);
+            setDisplayText(currentText);
+            charIndex++;
+            
+            if (charIndex > currentWord.length) {
+              wordIndex++;
+              charIndex = 0;
+            }
+            animationId = setTimeout(animate, typeSpeed);
+          }
+        } else {
+          // Finished typing, pause then start deleting
+          animationId = setTimeout(() => {
+            isDeleting = true;
+            wordIndex = words.length - 1;
+            charIndex = words[wordIndex].length;
+            animate();
+          }, pauseBeforeDelete);
+        }
+      } else {
+        // Deleting backward
+        if (wordIndex >= 0) {
+          const wordsToShow = words.slice(0, wordIndex + 1);
+          const lastWord = wordsToShow[wordsToShow.length - 1];
+          
+          if (charIndex >= 0) {
+            currentText = words.slice(0, wordIndex).join(" ") + 
+                         (wordIndex > 0 ? " " : "") + 
+                         lastWord.slice(0, charIndex);
+            setDisplayText(currentText);
+            charIndex--;
+            
+            if (charIndex < 0) {
+              wordIndex--;
+              if (wordIndex >= 0) {
+                charIndex = words[wordIndex].length;
+              }
+            }
+            animationId = setTimeout(animate, deleteSpeed);
+          }
+        } else {
+          // Finished deleting, move to next phrase
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          animationId = setTimeout(() => {
+            isDeleting = false;
+            wordIndex = 0;
+            charIndex = 0;
+            currentText = "";
+            animate();
+          }, pauseBeforeNextPhrase);
+        }
+      }
+    };
+    
+    animationId = setTimeout(animate, typeSpeed);
+    
+    return () => clearTimeout(animationId);
+  }, [messages.length]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -179,7 +275,7 @@ export default function ChatBotPopup({ isOpen, onToggle, initialMessage, onIniti
             <div className="chatbot-welcome mmt-style">
               {/* Search Header */}
               <div className="mmt-search-header">
-                <h2 className="mmt-title">Where do you want to go?</h2>
+                <h2 className="mmt-title">Plan Your Perfect Trip</h2>
                 <p className="mmt-subtitle">Let Voyager AI plan your perfect trip</p>
               </div>
 
@@ -223,7 +319,7 @@ export default function ChatBotPopup({ isOpen, onToggle, initialMessage, onIniti
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="What are you looking for?"
+              placeholder={displayText || "Where do you want to go?"}
               onKeyDown={(e) => e.key === "Enter" && send()}
               disabled={loading}
             />
